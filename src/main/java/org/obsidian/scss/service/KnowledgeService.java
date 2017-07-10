@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface KnowledgeService {
 
-    int addKnowledgeAndKey(String content, int level, List<String> keyList);
+    int addKnowledgeAndKey(String question, String answer ,int level, int author, long time , List<String> keyList);
 
     int removeKnowledge(int knowledgeId);
 

@@ -60,4 +60,12 @@ public class Knowledge {
     public void setTime(Long time) {
         this.time = time;
     }
+
+    public Knowledge(String question, String answer, Integer level, Integer author, Long time) {
+        this.question = question;
+        this.answer = answer;
+        this.level = level;
+        this.author = author;
+        this.time = time;
+    }
 }

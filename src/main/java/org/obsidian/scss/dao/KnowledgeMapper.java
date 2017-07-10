@@ -19,4 +19,6 @@ public interface KnowledgeMapper {
     int updateByExampleSelective(@Param("record") Knowledge record, @Param("example") KnowledgeExample example);
 
     int updateByExample(@Param("record") Knowledge record, @Param("example") KnowledgeExample example);
+
+    int selectLastId();
 }
