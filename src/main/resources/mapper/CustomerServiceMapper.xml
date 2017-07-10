@@ -6,7 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="group_id" jdbcType="INTEGER" property="groupId" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
     <result column="auto_message" jdbcType="VARCHAR" property="autoMessage" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -96,7 +96,7 @@
       nickname, employee_id, auto_message
       )
     values (#{serviceId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, 
-      #{nickname,jdbcType=VARCHAR}, #{employeeId,jdbcType=INTEGER}, #{autoMessage,jdbcType=VARCHAR}
+      #{nickname,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{autoMessage,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.obsidian.scss.entity.CustomerService">
@@ -135,7 +135,7 @@
         #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="employeeId != null">
-        #{employeeId,jdbcType=INTEGER},
+        #{employeeId,jdbcType=VARCHAR},
       </if>
       <if test="autoMessage != null">
         #{autoMessage,jdbcType=VARCHAR},
@@ -164,7 +164,7 @@
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
       <if test="record.employeeId != null">
-        employee_id = #{record.employeeId,jdbcType=INTEGER},
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
       </if>
       <if test="record.autoMessage != null">
         auto_message = #{record.autoMessage,jdbcType=VARCHAR},
@@ -180,10 +180,13 @@
       name = #{record.name,jdbcType=VARCHAR},
       group_id = #{record.groupId,jdbcType=INTEGER},
       nickname = #{record.nickname,jdbcType=VARCHAR},
-      employee_id = #{record.employeeId,jdbcType=INTEGER},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
       auto_message = #{record.autoMessage,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <delete id="deleteCustomerService" parameterType="java.lang.Integer">
+    delete from customer_service where service_id = #{serviceId}
+  </delete>
 </mapper>

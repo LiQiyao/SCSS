@@ -1,9 +1,10 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.entity.ServiceGroupExample;
+
+import java.util.List;
 
 public interface ServiceGroupMapper {
     long countByExample(ServiceGroupExample example);
@@ -19,4 +20,6 @@ public interface ServiceGroupMapper {
     int updateByExampleSelective(@Param("record") ServiceGroup record, @Param("example") ServiceGroupExample example);
 
     int updateByExample(@Param("record") ServiceGroup record, @Param("example") ServiceGroupExample example);
+
+    int deleteServiceGroup(int groupId);
 }

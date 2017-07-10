@@ -162,4 +162,13 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <delete id="deleteCommonLanguage" parameterType="java.lang.Integer">
+    delete from common_language where common_language_id = #{commonLanguageId}
+  </delete>
+  <update id="addCommonLanguageFrequency" parameterType="java.lang.Integer">
+    update common_language set frequency = frequency + 1 where common_language_id = #{commonLanguageId}
+  </update>
+  <update id="updateCommonLanguage" parameterType="org.obsidian.scss.entity.CommonLanguage">
+    update common_language set content = #{content} where common_language_id = #{commonLanguageId}
+  </update>
 </mapper>

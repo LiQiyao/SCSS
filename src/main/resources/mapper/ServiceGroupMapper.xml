@@ -138,4 +138,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <delete id="deleteServiceGroup" parameterType="java.lang.Integer">
+    delete from service_group where group_id = #{groupId}
+  </delete>
 </mapper>

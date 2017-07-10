@@ -9,7 +9,7 @@ public class CustomerService {
 
     private String nickname;
 
-    private Integer employeeId;
+    private String employeeId;
 
     private String autoMessage;
 
@@ -45,12 +45,12 @@ public class CustomerService {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public Integer getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId == null ? null : employeeId.trim();
     }
 
     public String getAutoMessage() {
