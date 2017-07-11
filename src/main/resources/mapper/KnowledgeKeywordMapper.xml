@@ -5,6 +5,13 @@
     <result column="keyword_id" jdbcType="INTEGER" property="keywordId" />
     <result column="knowledge_id" jdbcType="INTEGER" property="knowledgeId" />
   </resultMap>
+  <delete id="deleteByKnowledgeId">
+    DELETE FROM knowledge_keyword WHERE knowledge_id=#{knowledgeId}
+  </delete>
+  <select id="selectByKeywordId" resultType="java.lang.Integer">
+    select count(*) from knowledge_keyword where keyword_id=#{keywordId};
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

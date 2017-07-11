@@ -14,6 +14,12 @@
   <select id="selectAll" resultType="org.obsidian.scss.entity.Keyword">
     select * from keyword;
   </select>
+  <select id="selectById">
+    select * from keyword WHERE keyword_id=#{keywordId};
+  </select>
+  <delete id="deleteById">
+    DELETE FROM keyword WHERE keyword_id=#{keywordId}
+  </delete>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

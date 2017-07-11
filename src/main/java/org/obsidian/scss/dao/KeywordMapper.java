@@ -25,4 +25,8 @@ public interface KeywordMapper {
     Keyword selectByValue(String value);
 
     List<Keyword> selectAll();
+
+    int deleteById(int keywordId);
+
+    Keyword selectById(int keywordId);
 }

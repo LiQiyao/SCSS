@@ -8,9 +8,26 @@
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="author" jdbcType="INTEGER" property="author" />
     <result column="time" jdbcType="BIGINT" property="time" />
+    <collection property="keywordList" ofType="org.obsidian.scss.entity.Keyword">
+      <id column="keyword_id" property="keywordId"/>
+      <result column="value" property="value"/>
+    </collection>
   </resultMap>
   <select id="selectLastId" resultType="java.lang.Integer">
     select max(knowledge_id) from knowledge;
+  </select>
+  <select id="selectByKeywordId" resultType="org.obsidian.scss.entity.Knowledge">
+      select knowledge.* from knowledge, keyword, knowledge_keyword
+      where keyword.keyword_id=#{keywordId} and knowledge.knowledge_id=knowledge_keyword.knowledge_id
+      and keyword.keyword_id=knowledge_keyword.keyword_id;
+  </select>
+  <delete id="deleteById">
+    DELETE FROM knowledge WHERE knowledge_id=#{knowledgeId}
+  </delete>
+  <select id="selectByKnowledgeId" resultMap="BaseResultMap">
+      select knowledge.*, keyword.* from knowledge, keyword, knowledge_keyword
+      where knowledge.knowledge_id=#{knowledgeId} and knowledge.knowledge_id=knowledge_keyword.knowledge_id
+      and keyword.keyword_id=knowledge_keyword.keyword_id;
   </select>
   <sql id="Example_Where_Clause">
     <where>

@@ -21,4 +21,10 @@ public interface KnowledgeMapper {
     int updateByExample(@Param("record") Knowledge record, @Param("example") KnowledgeExample example);
 
     int selectLastId();
+
+    List<Knowledge> selectByKeywordId(int keywordId);
+
+    int deleteById(int knowledgeId);
+
+    Knowledge selectByKnowledgeId(int knowledgeId);
 }

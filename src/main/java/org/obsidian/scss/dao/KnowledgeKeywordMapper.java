@@ -19,4 +19,8 @@ public interface KnowledgeKeywordMapper {
     int updateByExampleSelective(@Param("record") KnowledgeKeyword record, @Param("example") KnowledgeKeywordExample example);
 
     int updateByExample(@Param("record") KnowledgeKeyword record, @Param("example") KnowledgeKeywordExample example);
+
+    int deleteByKnowledgeId(int knowledgeId);
+
+    int selectByKeywordId(int keywordId);
 }

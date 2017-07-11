@@ -25,4 +25,7 @@ public class KnowledgeKeyword {
         this.keywordId = keywordId;
         this.knowledgeId = knowledgeId;
     }
+
+    public KnowledgeKeyword() {
+    }
 }
