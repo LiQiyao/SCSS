@@ -1,11 +1,14 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.NotificationType;
 import org.obsidian.scss.entity.NotificationTypeExample;
 
+import java.util.List;
+
 public interface NotificationTypeMapper {
+    int updateNotificationType(@Param("ntId")int ntId,@Param("name")String name);
+
     long countByExample(NotificationTypeExample example);
 
     int deleteByExample(NotificationTypeExample example);

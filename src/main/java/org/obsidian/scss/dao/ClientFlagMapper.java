@@ -1,11 +1,14 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.ClientFlag;
 import org.obsidian.scss.entity.ClientFlagExample;
 
+import java.util.List;
+
 public interface ClientFlagMapper {
+    int deleteClientFlag(@Param("clientId") int clientId,@Param("flagId") int flagId);
+
     long countByExample(ClientFlagExample example);
 
     int deleteByExample(ClientFlagExample example);

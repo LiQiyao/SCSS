@@ -1,11 +1,16 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.entity.ClientExample;
 
+import java.util.List;
+
 public interface ClientMapper {
+    int updateClient(Client client);
+
+    int deleteClient(int clientId);
+
     long countByExample(ClientExample example);
 
     int deleteByExample(ClientExample example);

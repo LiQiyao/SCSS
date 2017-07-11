@@ -384,63 +384,113 @@ public class ClientExample {
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneEqualTo(String value) {
+        public Criteria andTelephoneEqualTo(Long value) {
             addCriterion("telephone =", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneNotEqualTo(String value) {
+        public Criteria andTelephoneNotEqualTo(Long value) {
             addCriterion("telephone <>", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneGreaterThan(String value) {
+        public Criteria andTelephoneGreaterThan(Long value) {
             addCriterion("telephone >", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneGreaterThanOrEqualTo(String value) {
+        public Criteria andTelephoneGreaterThanOrEqualTo(Long value) {
             addCriterion("telephone >=", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneLessThan(String value) {
+        public Criteria andTelephoneLessThan(Long value) {
             addCriterion("telephone <", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneLessThanOrEqualTo(String value) {
+        public Criteria andTelephoneLessThanOrEqualTo(Long value) {
             addCriterion("telephone <=", value, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneLike(String value) {
-            addCriterion("telephone like", value, "telephone");
-            return (Criteria) this;
-        }
-
-        public Criteria andTelephoneNotLike(String value) {
-            addCriterion("telephone not like", value, "telephone");
-            return (Criteria) this;
-        }
-
-        public Criteria andTelephoneIn(List<String> values) {
+        public Criteria andTelephoneIn(List<Long> values) {
             addCriterion("telephone in", values, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneNotIn(List<String> values) {
+        public Criteria andTelephoneNotIn(List<Long> values) {
             addCriterion("telephone not in", values, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneBetween(String value1, String value2) {
+        public Criteria andTelephoneBetween(Long value1, Long value2) {
             addCriterion("telephone between", value1, value2, "telephone");
             return (Criteria) this;
         }
 
-        public Criteria andTelephoneNotBetween(String value1, String value2) {
+        public Criteria andTelephoneNotBetween(Long value1, Long value2) {
             addCriterion("telephone not between", value1, value2, "telephone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIsNull() {
+            addCriterion("sex is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIsNotNull() {
+            addCriterion("sex is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexEqualTo(Integer value) {
+            addCriterion("sex =", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotEqualTo(Integer value) {
+            addCriterion("sex <>", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThan(Integer value) {
+            addCriterion("sex >", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sex >=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThan(Integer value) {
+            addCriterion("sex <", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThanOrEqualTo(Integer value) {
+            addCriterion("sex <=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIn(List<Integer> values) {
+            addCriterion("sex in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotIn(List<Integer> values) {
+            addCriterion("sex not in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexBetween(Integer value1, Integer value2) {
+            addCriterion("sex between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotBetween(Integer value1, Integer value2) {
+            addCriterion("sex not between", value1, value2, "sex");
             return (Criteria) this;
         }
     }

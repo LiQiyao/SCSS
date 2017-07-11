@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.NotificationTypeMapper">
+  <update id="updateNotificationType" parameterType="map">
+        update notification_type a,(select nt_id from notification_type where nt_id = #{ntId}) b set a.name = #{name} where a.nt_id = b.nt_id
+  </update>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.NotificationType">
     <result column="nt_id" jdbcType="INTEGER" property="ntId" />
     <result column="name" jdbcType="VARCHAR" property="name" />

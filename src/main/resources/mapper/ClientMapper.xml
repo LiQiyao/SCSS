@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.ClientMapper">
+  <update id="updateClient" parameterType="org.obsidian.scss.entity.Client">
+    update client a,(select client_id from client where client_id = #{clientId}) b set a.`name` = #{name},a.address = #{address},a.email = #{email},a.telephone = #{telephone},a.sex = #{sex} where a.client_id = b.client_id
+  </update>
+  <delete id="deleteClient" parameterType="java.lang.Integer">
+    delete from client where client_id = #{clientId}
+  </delete>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.Client">
     <result column="client_id" jdbcType="INTEGER" property="clientId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="telephone" jdbcType="BIGINT" property="telephone" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    client_id, name, address, email, telephone
+    client_id, name, address, email, telephone, sex
   </sql>
   <select id="selectByExample" parameterType="org.obsidian.scss.entity.ClientExample" resultMap="BaseResultMap">
     select
@@ -92,9 +99,11 @@
   </delete>
   <insert id="insert" parameterType="org.obsidian.scss.entity.Client">
     insert into client (client_id, name, address, 
-      email, telephone)
+      email, telephone, sex
+      )
     values (#{clientId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR})
+      #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=BIGINT}, #{sex,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.obsidian.scss.entity.Client">
     insert into client
@@ -114,6 +123,9 @@
       <if test="telephone != null">
         telephone,
       </if>
+      <if test="sex != null">
+        sex,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="clientId != null">
@@ -129,7 +141,10 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null">
-        #{telephone,jdbcType=VARCHAR},
+        #{telephone,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -155,7 +170,10 @@
         email = #{record.email,jdbcType=VARCHAR},
       </if>
       <if test="record.telephone != null">
-        telephone = #{record.telephone,jdbcType=VARCHAR},
+        telephone = #{record.telephone,jdbcType=BIGINT},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -168,7 +186,8 @@
       name = #{record.name,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
-      telephone = #{record.telephone,jdbcType=VARCHAR}
+      telephone = #{record.telephone,jdbcType=BIGINT},
+      sex = #{record.sex,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

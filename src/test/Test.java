@@ -1,4 +1,5 @@
 import org.junit.runner.RunWith;
+import org.obsidian.scss.service.NotificationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,9 +17,7 @@ public class Test {
 
     @Autowired
 
-
     @org.junit.Test
     public void test(){
-
     }
 }

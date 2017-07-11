@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.FlagMapper">
+  <select id="selectAllFlag" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select flag.name from client,client_flag,flag where client.client_id = #{clientId} and
+    client.client_id = client_flag.client_id and client_flag.flag_id = flag.flag_id;
+  </select>
+  <delete id="deleteFlag" parameterType="java.lang.Integer">
+    delete from flag where flag_id = #{flagId}
+  </delete>
+  <select id="selectFlagId" parameterType="java.lang.String" resultType="java.lang.Object">
+    select flag_id from flag where name = #{name}
+  </select>
+  <update id="updateFlag" parameterType="org.obsidian.scss.entity.Flag">
+    update flag set name = #{name} where flag_id = #{flagId}
+  </update>
+  <select id="selectName" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select name from flag where flag_id = #{flagId}
+  </select>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.Flag">
     <result column="flag_id" jdbcType="INTEGER" property="flagId" />
     <result column="name" jdbcType="VARCHAR" property="name" />

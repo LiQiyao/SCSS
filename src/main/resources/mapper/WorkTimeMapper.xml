@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.WorkTimeMapper">
+  <delete id="deleteWorkTime" parameterType="java.lang.Integer">
+    delete from work_time where work_time_id = #{workTimeId}
+  </delete>
+  <delete id="deleteAllWorkTimeList" parameterType="java.lang.Integer">
+    delete from work_time where service_id = #{serviceId}
+  </delete>
+  <update id="updateWorkTime" parameterType="map">
+    update work_time a,(select work_time_id from work_time where service_id = #{serviceId} and end_time is null) b set a.end_time = #{endTime} where a.work_time_id = b.work_time_id
+  </update>
+  <select id="selectAllWorkTimeSum" parameterType="java.lang.Integer" resultType="java.lang.Long">
+    select SUM(end_time-start_time) from work_time where service_id = #{serviceId};
+  </select>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.WorkTime">
     <result column="work_time_id" jdbcType="INTEGER" property="workTimeId" />
     <result column="service_id" jdbcType="INTEGER" property="serviceId" />

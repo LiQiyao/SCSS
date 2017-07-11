@@ -9,7 +9,9 @@ public class Client {
 
     private String email;
 
-    private String telephone;
+    private Long telephone;
+
+    private Integer sex;
 
     public Integer getClientId() {
         return clientId;
@@ -43,11 +45,19 @@ public class Client {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getTelephone() {
+    public Long getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone == null ? null : telephone.trim();
+    public void setTelephone(Long telephone) {
+        this.telephone = telephone;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 }

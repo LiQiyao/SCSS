@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.NotificationObjectTypeMapper">
+  <update id="updateNotificationObjectType" parameterType="map">
+    update notification_object_type a,(select not_id from notification_object_type where not_id = #{notId}) b set a.name = #{name} where a.not_id = b.not_id
+  </update>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.NotificationObjectType">
     <result column="not_id" jdbcType="INTEGER" property="notId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
