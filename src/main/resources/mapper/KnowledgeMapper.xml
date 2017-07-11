@@ -9,6 +9,9 @@
     <result column="author" jdbcType="INTEGER" property="author" />
     <result column="time" jdbcType="BIGINT" property="time" />
   </resultMap>
+  <select id="selectLastId" resultType="java.lang.Integer">
+    select max(knowledge_id) from knowledge;
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

@@ -19,4 +19,10 @@ public interface KeywordMapper {
     int updateByExampleSelective(@Param("record") Keyword record, @Param("example") KeywordExample example);
 
     int updateByExample(@Param("record") Keyword record, @Param("example") KeywordExample example);
+
+    int selectLastId();
+
+    Keyword selectByValue(String value);
+
+    List<Keyword> selectAll();
 }

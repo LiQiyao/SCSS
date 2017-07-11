@@ -5,6 +5,15 @@
     <result column="keyword_id" jdbcType="INTEGER" property="keywordId" />
     <result column="value" jdbcType="VARCHAR" property="value" />
   </resultMap>
+  <select id="selectLastId" resultType="java.lang.Integer">
+    select max(keyword_id) from keyword;
+  </select>
+  <select id="selectByValue" resultType="org.obsidian.scss.entity.Keyword">
+    select * from keyword where `value`=#{value};
+  </select>
+  <select id="selectAll" resultType="org.obsidian.scss.entity.Keyword">
+    select * from keyword;
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

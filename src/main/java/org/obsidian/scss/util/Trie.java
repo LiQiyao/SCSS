@@ -1,5 +1,7 @@
 package org.obsidian.scss.util;
 
+import org.obsidian.scss.entity.Keyword;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +14,15 @@ public class Trie {
     private TrieNode root;
 
     public Trie(){
-        root = new TrieNode();
+        this.root = new TrieNode();
         root.wordEnd = false;
+    }
+    public Trie(List<Keyword> list){
+        this.root = new TrieNode();
+        this.root.wordEnd = false;
+        for (Keyword keyword : list){
+            insert(keyword.getValue(), keyword.getKeywordId());
+        }
     }
 
     public void insert(String keyWord, int keyId){

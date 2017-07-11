@@ -20,4 +20,9 @@ public class KnowledgeKeyword {
     public void setKnowledgeId(Integer knowledgeId) {
         this.knowledgeId = knowledgeId;
     }
+
+    public KnowledgeKeyword(Integer keywordId, Integer knowledgeId) {
+        this.keywordId = keywordId;
+        this.knowledgeId = knowledgeId;
+    }
 }
