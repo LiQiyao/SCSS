@@ -69,4 +69,14 @@ public class NotificationObjectTypeServiceImpl implements NotificationObjectType
         }
         return list.get(0);
     }
+
+    @Transactional
+    public List<NotificationObjectType> selectAllNotificationObjectType() {
+        NotificationObjectTypeExample example = new NotificationObjectTypeExample();
+        List<NotificationObjectType> list = notificationObjectTypeMapper.selectByExample(example);
+        if(list.size() == 0 || list == null){
+            return null;
+        }
+        return list;
+    }
 }

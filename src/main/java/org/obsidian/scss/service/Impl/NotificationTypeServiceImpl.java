@@ -69,4 +69,14 @@ public class NotificationTypeServiceImpl implements NotificationTypeService {
         }
         return list.get(0);
     }
+
+    @Transactional
+    public List<NotificationType> selectAllNotificationType() {
+        NotificationTypeExample example = new NotificationTypeExample();
+        List<NotificationType> list = notificationTypeMapper.selectByExample(example);
+        if(list.size() == 0 || list == null){
+            return null;
+        }
+        return list;
+    }
 }
