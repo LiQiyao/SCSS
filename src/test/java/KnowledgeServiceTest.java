@@ -1,5 +1,3 @@
-package org.obsidian.scss.service;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;

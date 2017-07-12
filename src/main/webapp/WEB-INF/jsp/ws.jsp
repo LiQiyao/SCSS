@@ -21,7 +21,7 @@ class ClientConnectReq {
 	}
 }
 
-let webSocket=new WebSocket("ws://localhost:8080/ClientConnect");
+let webSocket=new WebSocket("ws://localhost:8080/knowledgeListWS");
 webSocket.onerror=function() {
 	console.log("ERROR!");
 };
@@ -31,7 +31,7 @@ webSocket.onopen=function() {
 	let connectionReq=new ClientConnectReq(1);
 	let connectionReqMsg=new Message('ClientConnectReq',connectionReq);
 	console.log(connectionReqMsg);
-	webSocket.send("connectionReqMsg");
+	/*webSocket.send("connectionReqMsg");*/
 };
 webSocket.onmessage=(event)=>{
 	console.log(event);

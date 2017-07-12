@@ -1,5 +1,8 @@
 package org.obsidian.scss.service.Impl;
 
+import org.obsidian.scss.bean.KnowledgeList;
+import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.RobotAns;
 import org.obsidian.scss.dao.KeywordMapper;
 import org.obsidian.scss.dao.KnowledgeKeywordMapper;
 import org.obsidian.scss.dao.KnowledgeMapper;
@@ -83,7 +86,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
      * 根据内容反馈知识库
      */
     @Transactional
-    public List<Knowledge> getKnowledgeByContent(String content) {
+    public Message<KnowledgeList> getKnowledgeByContent(String content) {
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, List<Keyword>> map = new HashMap<Knowledge, List<Keyword>>();
@@ -104,28 +107,44 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             key.setKeywordList(map.get(key));
             res.add(key);
         }
-        return res;
+        Message<KnowledgeList> message = new Message<KnowledgeList>(new KnowledgeList(res));
+        return message;
     }
 
     /**
      * 根据客户提问，机器人作出回答并关联推送
      */
     @Transactional
-    public Map<Knowledge, Integer> getRobotAns(String content) {
+    public Message<RobotAns> getRobotAns(String content) {
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, Integer> map = new HashMap<Knowledge, Integer>();
+        int maxHit = 1;
         for (Keyword keyword : found){
             List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId(keyword.getKeywordId());
             for (Knowledge knowledge : knowledgeList){
                 if (map.containsKey(knowledge)){
                     map.put(knowledge, map.get(knowledge) + 1);
+                    maxHit = Math.max(maxHit, map.get(knowledge));
                 }else {
                     map.put(knowledge, 1);
                 }
             }
         }
-        System.out.println(map);
-        return map;
+        boolean first = true;
+        List<String> pushQuestion = new ArrayList<String>();
+        String ans = null;
+        System.out.println(maxHit);
+        for (Knowledge knowledge : map.keySet()){
+            if (map.get(knowledge) == maxHit && first){
+                ans = knowledge.getAnswer();
+                System.out.println("!!");
+                first = false;
+            } else {
+                pushQuestion.add(knowledge.getQuestion());
+            }
+        }
+        System.out.println("!!!" + ans);
+        return new Message<RobotAns>(new RobotAns(ans, pushQuestion));
     }
 }

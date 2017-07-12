@@ -1,5 +1,8 @@
 package org.obsidian.scss.service;
 
+import org.obsidian.scss.bean.KnowledgeList;
+import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.RobotAns;
 import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.util.Trie;
 
@@ -19,7 +22,7 @@ public interface KnowledgeService {
 
     Trie readTrieFromFile();
 
-    List<Knowledge> getKnowledgeByContent(String content);
+    Message<KnowledgeList> getKnowledgeByContent(String content);
 
-    Map<Knowledge, Integer> getRobotAns(String content);
+    Message<RobotAns> getRobotAns(String content);
 }

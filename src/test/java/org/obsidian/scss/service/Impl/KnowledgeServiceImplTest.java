@@ -35,7 +35,7 @@ public class KnowledgeServiceImplTest {
 
     @Test
     public void removeKnowledge() throws Exception {
-        knowledgeService.removeKnowledge(7);
+        knowledgeService.removeKnowledge(2);
     }
 
     @Test

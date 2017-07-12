@@ -12,8 +12,8 @@ public class Message<T> {
 
     public Message(T content){
         this.content = content;
-        type = content.getClass().getName();
-        type = type.substring(type.lastIndexOf(".") + 1);
+        String tmp = content.getClass().getName();
+        this.type = tmp.substring(tmp.lastIndexOf(".") + 1);
     }
 
     public String getType() {
@@ -32,4 +32,6 @@ public class Message<T> {
         this.content = content;
     }
 
+    public Message() {
+    }
 }
