@@ -1,12 +1,15 @@
 package org.obsidian.scss.service.resolver;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.ClientChat;
 import org.obsidian.scss.bean.Message;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Type;
 
 /**
  * Created by Lee on 2017/7/12.
@@ -22,13 +25,11 @@ public class ResolverFactory implements ApplicationContextAware{
         this.applicationContext = applicationContext;
     }
 
-    public String doAction(String msg){
+    public String doAction(String msgJson){
         Gson gson = new Gson();
-        Message message = gson.fromJson(msg, Message.class);
+        Message message = gson.fromJson(msgJson, Message.class);
         String type = message.getType() + "Resolver";
-        Object object = message.getContent();
-        System.out.println(object + "!!" + object.getClass());
-        System.out.println("??");
-        return ((ContentResolver)applicationContext.getBean(type)).resolve(message.getContent());
+        System.out.println(type);
+        return ((ContentResolver)applicationContext.getBean(type)).resolve(msgJson);
     }
 }

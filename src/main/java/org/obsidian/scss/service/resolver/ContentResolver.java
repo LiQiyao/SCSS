@@ -7,5 +7,5 @@ import org.obsidian.scss.bean.ClientChat;
  * Created by Lee on 2017/7/12.
  */
 public interface ContentResolver{
-    String resolve(Object object);
+    String resolve(String msgJson);
 }
