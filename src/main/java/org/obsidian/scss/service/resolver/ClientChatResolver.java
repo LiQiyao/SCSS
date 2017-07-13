@@ -16,7 +16,6 @@ import java.lang.reflect.Type;
 public class ClientChatResolver implements ContentResolver {
 
     public String resolve(String msgJson) {
-        System.out.println("!!");
         Gson gson = new Gson();
         Type objectType = new TypeToken<Message<ClientChat>>(){}.getType();
         Message<ClientChat> message = gson.fromJson(msgJson, objectType);

@@ -1,5 +1,7 @@
 package org.obsidian.scss.entity;
 
+import java.util.List;
+
 public class Conversation {
     private Integer conversationId;
 
@@ -12,6 +14,8 @@ public class Conversation {
     private Long stopTime;
 
     private Integer score;
+
+    private List<ChatLog> chatLogList;
 
     public Integer getConversationId() {
         return conversationId;
@@ -59,5 +63,35 @@ public class Conversation {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public List<ChatLog> getChatLogList() {
+        return chatLogList;
+    }
+
+    public void setChatLogList(List<ChatLog> chatLogList) {
+        this.chatLogList = chatLogList;
+    }
+
+    public Conversation() {
+    }
+
+    public Conversation(Integer clientId, Integer serviceId, Long startTime) {
+        this.clientId = clientId;
+        this.serviceId = serviceId;
+        this.startTime = startTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Conversation{" +
+                "conversationId=" + conversationId +
+                ", clientId=" + clientId +
+                ", serviceId=" + serviceId +
+                ", startTime=" + startTime +
+                ", stopTime=" + stopTime +
+                ", score=" + score +
+                ", chatLogList=" + chatLogList +
+                '}';
     }
 }

@@ -284,63 +284,123 @@ public class ChatLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdIsNull() {
-            addCriterion("reciver_id is null");
+        public Criteria andReceiverIdIsNull() {
+            addCriterion("receiver_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdIsNotNull() {
-            addCriterion("reciver_id is not null");
+        public Criteria andReceiverIdIsNotNull() {
+            addCriterion("receiver_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdEqualTo(Integer value) {
-            addCriterion("reciver_id =", value, "reciverId");
+        public Criteria andReceiverIdEqualTo(Integer value) {
+            addCriterion("receiver_id =", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdNotEqualTo(Integer value) {
-            addCriterion("reciver_id <>", value, "reciverId");
+        public Criteria andReceiverIdNotEqualTo(Integer value) {
+            addCriterion("receiver_id <>", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdGreaterThan(Integer value) {
-            addCriterion("reciver_id >", value, "reciverId");
+        public Criteria andReceiverIdGreaterThan(Integer value) {
+            addCriterion("receiver_id >", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("reciver_id >=", value, "reciverId");
+        public Criteria andReceiverIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("receiver_id >=", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdLessThan(Integer value) {
-            addCriterion("reciver_id <", value, "reciverId");
+        public Criteria andReceiverIdLessThan(Integer value) {
+            addCriterion("receiver_id <", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdLessThanOrEqualTo(Integer value) {
-            addCriterion("reciver_id <=", value, "reciverId");
+        public Criteria andReceiverIdLessThanOrEqualTo(Integer value) {
+            addCriterion("receiver_id <=", value, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdIn(List<Integer> values) {
-            addCriterion("reciver_id in", values, "reciverId");
+        public Criteria andReceiverIdIn(List<Integer> values) {
+            addCriterion("receiver_id in", values, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdNotIn(List<Integer> values) {
-            addCriterion("reciver_id not in", values, "reciverId");
+        public Criteria andReceiverIdNotIn(List<Integer> values) {
+            addCriterion("receiver_id not in", values, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdBetween(Integer value1, Integer value2) {
-            addCriterion("reciver_id between", value1, value2, "reciverId");
+        public Criteria andReceiverIdBetween(Integer value1, Integer value2) {
+            addCriterion("receiver_id between", value1, value2, "receiverId");
             return (Criteria) this;
         }
 
-        public Criteria andReciverIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("reciver_id not between", value1, value2, "reciverId");
+        public Criteria andReceiverIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("receiver_id not between", value1, value2, "receiverId");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeIsNull() {
+            addCriterion("content_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeIsNotNull() {
+            addCriterion("content_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeEqualTo(Integer value) {
+            addCriterion("content_type =", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeNotEqualTo(Integer value) {
+            addCriterion("content_type <>", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeGreaterThan(Integer value) {
+            addCriterion("content_type >", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("content_type >=", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeLessThan(Integer value) {
+            addCriterion("content_type <", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("content_type <=", value, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeIn(List<Integer> values) {
+            addCriterion("content_type in", values, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeNotIn(List<Integer> values) {
+            addCriterion("content_type not in", values, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeBetween(Integer value1, Integer value2) {
+            addCriterion("content_type between", value1, value2, "contentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("content_type not between", value1, value2, "contentType");
             return (Criteria) this;
         }
 
@@ -471,6 +531,66 @@ public class ChatLogExample {
 
         public Criteria andTimeNotBetween(Long value1, Long value2) {
             addCriterion("time not between", value1, value2, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientIsNull() {
+            addCriterion("from_client is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientIsNotNull() {
+            addCriterion("from_client is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientEqualTo(Integer value) {
+            addCriterion("from_client =", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientNotEqualTo(Integer value) {
+            addCriterion("from_client <>", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientGreaterThan(Integer value) {
+            addCriterion("from_client >", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientGreaterThanOrEqualTo(Integer value) {
+            addCriterion("from_client >=", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientLessThan(Integer value) {
+            addCriterion("from_client <", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientLessThanOrEqualTo(Integer value) {
+            addCriterion("from_client <=", value, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientIn(List<Integer> values) {
+            addCriterion("from_client in", values, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientNotIn(List<Integer> values) {
+            addCriterion("from_client not in", values, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientBetween(Integer value1, Integer value2) {
+            addCriterion("from_client between", value1, value2, "fromClient");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromClientNotBetween(Integer value1, Integer value2) {
+            addCriterion("from_client not between", value1, value2, "fromClient");
             return (Criteria) this;
         }
     }

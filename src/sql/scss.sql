@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-10 13:53:49
+Date: 2017-07-13 14:13:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,15 @@ CREATE TABLE `access` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`access_id`),
   UNIQUE KEY `access_id` (`access_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of access
+-- ----------------------------
+INSERT INTO `access` VALUES ('1', '网页');
+INSERT INTO `access` VALUES ('2', 'QQ');
+INSERT INTO `access` VALUES ('3', '微信');
+INSERT INTO `access` VALUES ('4', '微博');
 
 -- ----------------------------
 -- Table structure for chat_log
@@ -34,14 +42,20 @@ CREATE TABLE `chat_log` (
   `chat_log_id` int(20) NOT NULL AUTO_INCREMENT,
   `conversation_id` int(20) NOT NULL,
   `sender_id` int(20) NOT NULL,
-  `reciver_id` int(20) NOT NULL,
+  `receiver_id` int(20) NOT NULL,
+  `content_type` int(20) NOT NULL DEFAULT '0',
   `content` varchar(5000) DEFAULT NULL,
   `time` bigint(20) NOT NULL,
+  `from_client` int(20) NOT NULL COMMENT '若为1，则本消息来自客户，0 则反之',
   PRIMARY KEY (`chat_log_id`),
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chat_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for client
@@ -52,10 +66,15 @@ CREATE TABLE `client` (
   `name` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `telephone` varchar(255) DEFAULT NULL,
+  `telephone` bigint(20) DEFAULT NULL,
+  `sex` int(20) DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_id` (`client_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of client
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for client_flag
@@ -69,6 +88,10 @@ CREATE TABLE `client_flag` (
   CONSTRAINT `client_flag_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `client_tag_ibfk_2` FOREIGN KEY (`flag_id`) REFERENCES `flag` (`flag_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of client_flag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for common_language
@@ -86,6 +109,10 @@ CREATE TABLE `common_language` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of common_language
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for conversation
 -- ----------------------------
 DROP TABLE IF EXISTS `conversation`;
@@ -94,7 +121,7 @@ CREATE TABLE `conversation` (
   `client_id` int(20) NOT NULL,
   `service_id` int(20) NOT NULL,
   `start_time` bigint(20) NOT NULL,
-  `stop_time` bigint(20) NOT NULL,
+  `stop_time` bigint(20) DEFAULT NULL,
   `score` int(20) DEFAULT NULL,
   PRIMARY KEY (`conversation_id`),
   UNIQUE KEY `conversation_id` (`conversation_id`) USING BTREE,
@@ -105,6 +132,10 @@ CREATE TABLE `conversation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of conversation
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for customer_service
 -- ----------------------------
 DROP TABLE IF EXISTS `customer_service`;
@@ -113,13 +144,18 @@ CREATE TABLE `customer_service` (
   `name` varchar(20) NOT NULL,
   `group_id` int(20) NOT NULL,
   `nickname` varchar(20) NOT NULL,
-  `employee_id` int(11) NOT NULL,
+  `employee_id` varchar(20) NOT NULL,
   `auto_message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`service_id`),
   UNIQUE KEY `service_id` (`service_id`) USING BTREE,
+  UNIQUE KEY `employee_id` (`employee_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `customer_service_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `service_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer_service
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for flag
@@ -131,6 +167,10 @@ CREATE TABLE `flag` (
   PRIMARY KEY (`flag_id`),
   UNIQUE KEY `tag_id` (`flag_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for join_up
@@ -151,6 +191,10 @@ CREATE TABLE `join_up` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of join_up
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for keyword
 -- ----------------------------
 DROP TABLE IF EXISTS `keyword`;
@@ -159,7 +203,17 @@ CREATE TABLE `keyword` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`keyword_id`),
   UNIQUE KEY `key_word` (`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of keyword
+-- ----------------------------
+INSERT INTO `keyword` VALUES ('1', '买房');
+INSERT INTO `keyword` VALUES ('2', '平方');
+INSERT INTO `keyword` VALUES ('4', '我要买房价买房，多少钱一平方啊？');
+INSERT INTO `keyword` VALUES ('3', '房价');
+INSERT INTO `keyword` VALUES ('8', '最近的房价涨价了吗');
+INSERT INTO `keyword` VALUES ('7', '涨价');
 
 -- ----------------------------
 -- Table structure for knowledge
@@ -174,7 +228,13 @@ CREATE TABLE `knowledge` (
   `time` bigint(20) NOT NULL,
   PRIMARY KEY (`knowledge_id`),
   UNIQUE KEY `knowledge_id` (`knowledge_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of knowledge
+-- ----------------------------
+INSERT INTO `knowledge` VALUES ('1', '我要买房价买房，多少钱一平方啊？', '不知道', '1', '1', '1');
+INSERT INTO `knowledge` VALUES ('3', '最近的房价涨价了吗', '涨价了', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for knowledge_keyword
@@ -183,10 +243,19 @@ DROP TABLE IF EXISTS `knowledge_keyword`;
 CREATE TABLE `knowledge_keyword` (
   `keyword_id` int(20) NOT NULL,
   `knowledge_id` int(20) NOT NULL,
-  PRIMARY KEY (`keyword_id`),
-  UNIQUE KEY `key_id` (`keyword_id`) USING BTREE,
-  KEY `knowledge_id` (`knowledge_id`)
+  PRIMARY KEY (`keyword_id`,`knowledge_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of knowledge_keyword
+-- ----------------------------
+INSERT INTO `knowledge_keyword` VALUES ('1', '1');
+INSERT INTO `knowledge_keyword` VALUES ('2', '1');
+INSERT INTO `knowledge_keyword` VALUES ('3', '1');
+INSERT INTO `knowledge_keyword` VALUES ('3', '3');
+INSERT INTO `knowledge_keyword` VALUES ('4', '1');
+INSERT INTO `knowledge_keyword` VALUES ('7', '3');
+INSERT INTO `knowledge_keyword` VALUES ('8', '3');
 
 -- ----------------------------
 -- Table structure for notification
@@ -196,7 +265,7 @@ CREATE TABLE `notification` (
   `notification_id` int(20) NOT NULL AUTO_INCREMENT,
   `nt_id` int(20) NOT NULL,
   `not_id` int(20) NOT NULL,
-  `object_id` int(20) NOT NULL,
+  `object_id` int(20) NOT NULL DEFAULT '0',
   `content` varchar(5000) DEFAULT NULL,
   `time` bigint(20) NOT NULL,
   PRIMARY KEY (`notification_id`),
@@ -206,6 +275,10 @@ CREATE TABLE `notification` (
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`nt_id`) REFERENCES `notification_type` (`nt_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`not_id`) REFERENCES `notification_object_type` (`not_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of notification
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for notification_object_type
@@ -219,6 +292,10 @@ CREATE TABLE `notification_object_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of notification_object_type
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for notification_type
 -- ----------------------------
 DROP TABLE IF EXISTS `notification_type`;
@@ -230,16 +307,25 @@ CREATE TABLE `notification_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of notification_type
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for operation_user
 -- ----------------------------
 DROP TABLE IF EXISTS `operation_user`;
 CREATE TABLE `operation_user` (
   `user_id` int(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
-  `password` varchar(20) DEFAULT NULL,
+  `password` varchar(20) NOT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_id` (`user_id`) USING BTREE
+  UNIQUE KEY `user_id` (`user_id`) USING BTREE,
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of operation_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for question_push
@@ -255,6 +341,10 @@ CREATE TABLE `question_push` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of question_push
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for service_group
 -- ----------------------------
 DROP TABLE IF EXISTS `service_group`;
@@ -266,15 +356,23 @@ CREATE TABLE `service_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of service_group
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for work_time
 -- ----------------------------
 DROP TABLE IF EXISTS `work_time`;
 CREATE TABLE `work_time` (
   `work_time_id` int(11) NOT NULL AUTO_INCREMENT,
-  `service_id` int(11) DEFAULT NULL,
+  `service_id` int(11) NOT NULL,
   `start_time` bigint(20) DEFAULT NULL,
   `end_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`work_time_id`),
   KEY `service_id` (`service_id`),
   CONSTRAINT `work_time_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of work_time
+-- ----------------------------

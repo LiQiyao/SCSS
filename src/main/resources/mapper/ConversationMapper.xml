@@ -8,7 +8,46 @@
     <result column="start_time" jdbcType="BIGINT" property="startTime" />
     <result column="stop_time" jdbcType="BIGINT" property="stopTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
+    <collection property="chatLogList" ofType="org.obsidian.scss.entity.ChatLog">
+      <id column="chat_log_id" property="chatLogId"/>
+      <result column="conversation_id" property="conversationId"/>
+      <result column="sender_id" property="senderId"/>
+      <result column="receiver_id" property="receiverId"/>
+      <result column="content_type" property="contentType"/>
+      <result column="content" property="content"/>
+      <result column="time" property="time"/>
+    </collection>
   </resultMap>
+  <select id="selectByClientId" resultType="BaseResultMap">
+    select conversation.*, chat_log.* from conversation, chat_log
+    where conversation.conversation_id=chat_log.conversation_id
+    and conversation.client_id=#{clientId};
+  </select>
+  <select id="selectByServiceId" resultType="BaseResultMap">
+    select conversation.*, chat_log.* from conversation, chat_log
+    where conversation.conversation_id=chat_log.conversation_id
+    and conversation.service_id=#{serviceId};
+  </select>
+  <select id="selectByConversationId" resultType="BaseResultMap">
+    select conversation.*, chat_log.* from conversation, chat_log
+    where conversation.conversation_id=chat_log.conversation_id
+    and conversation.conversation_id=#{conversationId};
+  </select>
+  <select id="selectCountByServiceId" resultType="java.lang.Integer">
+    select count(*) from conversation
+    where conversation.service_id=#{serviceId};
+  </select>
+  <select id="selectAvgScoreByServiceId" resultType="java.lang.Integer">
+    select AVG(score) from conversation where service_id=#{serviceId}
+    and score IS NOT NULL ;
+  </select>
+  <update id="updateStopTime">
+    update conversation set stop_time = #{stopTime}, score=#{score}
+    where conversation_id=#{conversationId};
+  </update>
+  <select id="selectLastIdByClientId" resultType="java.lang.Integer">
+    select max(conversation_id) from conversation where client_id=#{clientId} and stop_time IS NULL;
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

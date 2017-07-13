@@ -19,4 +19,18 @@ public interface ConversationMapper {
     int updateByExampleSelective(@Param("record") Conversation record, @Param("example") ConversationExample example);
 
     int updateByExample(@Param("record") Conversation record, @Param("example") ConversationExample example);
+
+    List<Conversation> selectByClientId(int clientId);
+
+    List<Conversation> selectByServiceId(int serviceId);
+
+    List<Conversation> selectByConversationId(int conversationId);
+
+    int selectCountByServiceId(int serviceId);
+
+    int selectAvgScoreByServiceId(int serviceId);
+
+    int updateStopTime(@Param("conversationId") int conversationId,@Param("stopTime") long stopTime,@Param("score") int score);
+
+    int selectLastIdByClientId(int clientId);
 }

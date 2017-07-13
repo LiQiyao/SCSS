@@ -7,11 +7,15 @@ public class ChatLog {
 
     private Integer senderId;
 
-    private Integer reciverId;
+    private Integer receiverId;
+
+    private Integer contentType;
 
     private String content;
 
     private Long time;
+
+    private Integer fromClient;
 
     public Integer getChatLogId() {
         return chatLogId;
@@ -37,12 +41,20 @@ public class ChatLog {
         this.senderId = senderId;
     }
 
-    public Integer getReciverId() {
-        return reciverId;
+    public Integer getReceiverId() {
+        return receiverId;
     }
 
-    public void setReciverId(Integer reciverId) {
-        this.reciverId = reciverId;
+    public void setReceiverId(Integer receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public Integer getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(Integer contentType) {
+        this.contentType = contentType;
     }
 
     public String getContent() {
@@ -59,5 +71,40 @@ public class ChatLog {
 
     public void setTime(Long time) {
         this.time = time;
+    }
+
+    public Integer getFromClient() {
+        return fromClient;
+    }
+
+    public void setFromClient(Integer fromClient) {
+        this.fromClient = fromClient;
+    }
+
+    public ChatLog(Integer conversationId, Integer senderId, Integer receiverId, Integer contentType, String content, Long time, Integer fromClient) {
+        this.conversationId = conversationId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.contentType = contentType;
+        this.content = content;
+        this.time = time;
+        this.fromClient = fromClient;
+    }
+
+    public ChatLog() {
+    }
+
+    @Override
+    public String toString() {
+        return "ChatLog{" +
+                "chatLogId=" + chatLogId +
+                ", conversationId=" + conversationId +
+                ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
+                ", contentType=" + contentType +
+                ", content='" + content + '\'' +
+                ", time=" + time +
+                ", fromClient=" + fromClient +
+                '}';
     }
 }

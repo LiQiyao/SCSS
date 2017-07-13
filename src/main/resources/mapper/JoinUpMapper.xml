@@ -7,7 +7,17 @@
     <result column="client_id" jdbcType="INTEGER" property="clientId" />
     <result column="time" jdbcType="BIGINT" property="time" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <association property="access" javaType="org.obsidian.scss.entity.Access">
+      <id column="access_id" property="accessId"/>
+      <result column="name" property="name"/>
+    </association>
   </resultMap>
+  <select id="selectByClientId" resultType="BaseResultMap">
+    select join_up.*, access.* from join_up WHERE client_id=#{clientId} AND join_up.access_id=access.access_id;
+  </select>
+  <select id="selectByRecord" resultType="BaseResultMap">
+    select join_up.*, access.* from join_up WHERE access_id=#{accessId} AND account=#{account} AND join_up.access_id=access.access_id;
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

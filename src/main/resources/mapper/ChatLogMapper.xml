@@ -5,10 +5,15 @@
     <result column="chat_log_id" jdbcType="INTEGER" property="chatLogId" />
     <result column="conversation_id" jdbcType="INTEGER" property="conversationId" />
     <result column="sender_id" jdbcType="INTEGER" property="senderId" />
-    <result column="reciver_id" jdbcType="INTEGER" property="reciverId" />
+    <result column="receiver_id" jdbcType="INTEGER" property="receiverId" />
+    <result column="content_type" jdbcType="INTEGER" property="contentType" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="from_client" jdbcType="INTEGER" property="fromClient" />
   </resultMap>
+  <select id="selectByConversationId" resultType="BaseResultMap">
+    select * from chat_log where conversation_id=#{conversationId};
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -68,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    chat_log_id, conversation_id, sender_id, reciver_id, content, time
+    chat_log_id, conversation_id, sender_id, receiver_id, content_type, content, time, 
+    from_client
   </sql>
   <select id="selectByExample" parameterType="org.obsidian.scss.entity.ChatLogExample" resultMap="BaseResultMap">
     select
@@ -93,11 +99,11 @@
   </delete>
   <insert id="insert" parameterType="org.obsidian.scss.entity.ChatLog">
     insert into chat_log (chat_log_id, conversation_id, sender_id, 
-      reciver_id, content, time
-      )
+      receiver_id, content_type, content, 
+      time, from_client)
     values (#{chatLogId,jdbcType=INTEGER}, #{conversationId,jdbcType=INTEGER}, #{senderId,jdbcType=INTEGER}, 
-      #{reciverId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}
-      )
+      #{receiverId,jdbcType=INTEGER}, #{contentType,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{time,jdbcType=BIGINT}, #{fromClient,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="org.obsidian.scss.entity.ChatLog">
     insert into chat_log
@@ -111,14 +117,20 @@
       <if test="senderId != null">
         sender_id,
       </if>
-      <if test="reciverId != null">
-        reciver_id,
+      <if test="receiverId != null">
+        receiver_id,
+      </if>
+      <if test="contentType != null">
+        content_type,
       </if>
       <if test="content != null">
         content,
       </if>
       <if test="time != null">
         time,
+      </if>
+      <if test="fromClient != null">
+        from_client,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -131,14 +143,20 @@
       <if test="senderId != null">
         #{senderId,jdbcType=INTEGER},
       </if>
-      <if test="reciverId != null">
-        #{reciverId,jdbcType=INTEGER},
+      <if test="receiverId != null">
+        #{receiverId,jdbcType=INTEGER},
+      </if>
+      <if test="contentType != null">
+        #{contentType,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         #{time,jdbcType=BIGINT},
+      </if>
+      <if test="fromClient != null">
+        #{fromClient,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -160,14 +178,20 @@
       <if test="record.senderId != null">
         sender_id = #{record.senderId,jdbcType=INTEGER},
       </if>
-      <if test="record.reciverId != null">
-        reciver_id = #{record.reciverId,jdbcType=INTEGER},
+      <if test="record.receiverId != null">
+        receiver_id = #{record.receiverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentType != null">
+        content_type = #{record.contentType,jdbcType=INTEGER},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null">
         time = #{record.time,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromClient != null">
+        from_client = #{record.fromClient,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -179,9 +203,11 @@
     set chat_log_id = #{record.chatLogId,jdbcType=INTEGER},
       conversation_id = #{record.conversationId,jdbcType=INTEGER},
       sender_id = #{record.senderId,jdbcType=INTEGER},
-      reciver_id = #{record.reciverId,jdbcType=INTEGER},
+      receiver_id = #{record.receiverId,jdbcType=INTEGER},
+      content_type = #{record.contentType,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=BIGINT}
+      time = #{record.time,jdbcType=BIGINT},
+      from_client = #{record.fromClient,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

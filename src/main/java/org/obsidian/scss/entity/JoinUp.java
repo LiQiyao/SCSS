@@ -11,6 +11,8 @@ public class JoinUp {
 
     private String account;
 
+    private Access access;
+
     public Integer getJoinUpId() {
         return joinUpId;
     }
@@ -49,5 +51,35 @@ public class JoinUp {
 
     public void setAccount(String account) {
         this.account = account == null ? null : account.trim();
+    }
+
+    public Access getAccess() {
+        return access;
+    }
+
+    public void setAccess(Access access) {
+        this.access = access;
+    }
+
+    @Override
+    public String toString() {
+        return "JoinUp{" +
+                "joinUpId=" + joinUpId +
+                ", accessId=" + accessId +
+                ", clientId=" + clientId +
+                ", time=" + time +
+                ", account='" + account + '\'' +
+                ", access=" + access +
+                '}';
+    }
+
+    public JoinUp() {
+    }
+
+    public JoinUp(Integer accessId, Integer clientId, Long time, String account) {
+        this.accessId = accessId;
+        this.clientId = clientId;
+        this.time = time;
+        this.account = account;
     }
 }

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <!-- 数据库驱动-->
-    <classPathEntry  location="F:\ideaworkspace\SCSS\src\main\resources\mysql-connector-java-6.0.6.jar"/>
+    <classPathEntry  location="E:\JavaWeb_WorkSpace\SCSS\src\main\resources\mysql-connector-java-6.0.6.jar"/>
     <context id="DB2Tables"  targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -37,13 +37,13 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="access" domainObjectName="Access"
+<!--        <table tableName="access" domainObjectName="Access"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"/>
+               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
         <table tableName="chat_log" domainObjectName="ChatLog"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"/>
-        <table tableName="client" domainObjectName="Client"
+<!--        <table tableName="client" domainObjectName="Client"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="client_flag" domainObjectName="ClientFlag"
@@ -51,11 +51,11 @@
                enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="common_language" domainObjectName="CommonLanguage"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"/>
-        <table tableName="conversation" domainObjectName="Conversation"
+               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+<!--        <table tableName="conversation" domainObjectName="Conversation"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"/>
-        <table tableName="customer_service" domainObjectName="CustomerService"
+               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
+<!--        <table tableName="customer_service" domainObjectName="CustomerService"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="flag" domainObjectName="Flag"
@@ -93,7 +93,7 @@
                enableSelectByExample="true" selectByExampleQueryId="true"/>
         <table tableName="work_time" domainObjectName="WorkTime"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true"/>
+               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
 
     </context>
 </generatorConfiguration>

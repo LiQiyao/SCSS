@@ -19,4 +19,8 @@ public interface JoinUpMapper {
     int updateByExampleSelective(@Param("record") JoinUp record, @Param("example") JoinUpExample example);
 
     int updateByExample(@Param("record") JoinUp record, @Param("example") JoinUpExample example);
+
+    List<JoinUp> selectByClientId(int clientId);
+
+    JoinUp selectByRecord(@Param("access_id") int access_id,@Param("account") String account);
 }
