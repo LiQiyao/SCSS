@@ -30,8 +30,9 @@ public class KnowledgeListWS {
     private ResolverFactory resolverFactory;
 
     @OnOpen
-    public void onOpen(Session session){
+    public void onOpen(Session session, EndpointConfig config){
         this.session = session;
+        System.out.println(config.getUserProperties());
         knowledgeListVector.add(this);
     }
 

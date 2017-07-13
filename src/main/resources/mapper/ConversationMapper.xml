@@ -18,17 +18,17 @@
       <result column="time" property="time"/>
     </collection>
   </resultMap>
-  <select id="selectByClientId" resultType="BaseResultMap">
+  <select id="selectByClientId" resultMap="BaseResultMap">
     select conversation.*, chat_log.* from conversation, chat_log
     where conversation.conversation_id=chat_log.conversation_id
     and conversation.client_id=#{clientId};
   </select>
-  <select id="selectByServiceId" resultType="BaseResultMap">
+  <select id="selectByServiceId" resultMap="BaseResultMap">
     select conversation.*, chat_log.* from conversation, chat_log
     where conversation.conversation_id=chat_log.conversation_id
     and conversation.service_id=#{serviceId};
   </select>
-  <select id="selectByConversationId" resultType="BaseResultMap">
+  <select id="selectByConversationId" resultMap="BaseResultMap">
     select conversation.*, chat_log.* from conversation, chat_log
     where conversation.conversation_id=chat_log.conversation_id
     and conversation.conversation_id=#{conversationId};

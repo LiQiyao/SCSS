@@ -1,8 +1,11 @@
 package org.obsidian.scss.service.Impl;
 
+import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.service.ConversationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,23 +14,32 @@ import java.util.List;
  */
 @Service
 public class ConversationServiceImpl implements ConversationService {
+
+    @Autowired
+    private ConversationMapper conversationMapper;
+
+    @Transactional
     public List<Conversation> getByClientId(int clientId) {
-        return null;
+        return conversationMapper.selectByClientId(clientId);
     }
 
+    @Transactional
     public List<Conversation> getByServiceId(int serviceId) {
-        return null;
+        return conversationMapper.selectByServiceId(serviceId);
     }
 
+    @Transactional
     public int getAvgScoreByServiceId(int serviceId) {
-        return 0;
+        return conversationMapper.selectAvgScoreByServiceId(serviceId);
     }
 
+    @Transactional
     public int startConversation(int clientId, int serviceId, long startTime) {
-        return 0;
+        return conversationMapper.insertSelective(new Conversation(clientId,serviceId,startTime));
     }
 
-    public int endConversation(long stopTime, int score) {
-        return 0;
+    @Transactional
+    public int endConversation(int conversationId, long stopTime, int score) {
+        return conversationMapper.updateStopTime(conversationId, stopTime, score);
     }
 }

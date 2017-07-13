@@ -12,10 +12,10 @@
       <result column="name" property="name"/>
     </association>
   </resultMap>
-  <select id="selectByClientId" resultType="BaseResultMap">
+  <select id="selectByClientId" resultMap="BaseResultMap">
     select join_up.*, access.* from join_up WHERE client_id=#{clientId} AND join_up.access_id=access.access_id;
   </select>
-  <select id="selectByRecord" resultType="BaseResultMap">
+  <select id="selectByRecord" resultMap="BaseResultMap">
     select join_up.*, access.* from join_up WHERE access_id=#{accessId} AND account=#{account} AND join_up.access_id=access.access_id;
   </select>
   <sql id="Example_Where_Clause">

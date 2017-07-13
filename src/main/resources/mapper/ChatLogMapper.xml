@@ -11,7 +11,7 @@
     <result column="time" jdbcType="BIGINT" property="time" />
     <result column="from_client" jdbcType="INTEGER" property="fromClient" />
   </resultMap>
-  <select id="selectByConversationId" resultType="BaseResultMap">
+  <select id="selectByConversationId" resultMap="BaseResultMap">
     select * from chat_log where conversation_id=#{conversationId};
   </select>
   <sql id="Example_Where_Clause">
