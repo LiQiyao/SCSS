@@ -2,6 +2,7 @@ package org.obsidian.scss.service;
 
 
 import org.obsidian.scss.entity.Conversation;
+import org.obsidian.scss.entity.DayAndTime;
 
 import java.util.List;
 
@@ -22,5 +23,13 @@ public interface ConversationService {
 
     int getLastIdByClientId(int clientId);
 
+    /**
+     * Create By cjn
+     * @return
+     */
     int selectConversationNotFinish();
+    List<DayAndTime> selectRecentMonth();
+    List<DayAndTime> selectRecentWeekend();
+    List<DayAndTime> selectRecentHour();
+    List<DayAndTime> selectRecentMinute();
 }

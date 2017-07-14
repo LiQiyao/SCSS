@@ -2,11 +2,13 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.Conversation;
+import org.obsidian.scss.entity.DayAndTime;
 import org.obsidian.scss.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,5 +57,25 @@ public class ConversationServiceImpl implements ConversationService {
     @Transactional
     public int selectConversationNotFinish() {
         return conversationMapper.selectConversationNotFinish();
+    }
+    
+    @Transactional
+    public List<DayAndTime> selectRecentMonth() {
+//        System.out.println(System.currentTimeMillis());
+        return conversationMapper.selectRecentMonth(System.currentTimeMillis());
+    }
+
+    public List<DayAndTime> selectRecentWeekend() {
+//        System.out.println(System.currentTimeMillis());
+        return conversationMapper.selectRecentWeekend(System.currentTimeMillis());
+    }
+    @Transactional
+    public List<DayAndTime> selectRecentHour() {
+        return conversationMapper.selectRecentHour(System.currentTimeMillis());
+    }
+
+    public List<DayAndTime> selectRecentMinute() {
+        System.out.println(System.currentTimeMillis());
+        return conversationMapper.selectRecentMinute(System.currentTimeMillis());
     }
 }

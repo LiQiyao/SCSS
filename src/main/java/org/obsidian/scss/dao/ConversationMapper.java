@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.ConversationExample;
+import org.obsidian.scss.entity.DayAndTime;
 
 public interface ConversationMapper {
     long countByExample(ConversationExample example);
@@ -37,4 +38,9 @@ public interface ConversationMapper {
      * Create By Cjn
      */
     int selectConversationNotFinish();
+    List<DayAndTime> selectRecentMonth(@Param("timestamp") Long timestamp);
+    List<DayAndTime> selectRecentWeekend(@Param("timestamp") Long timestamp);
+    List<DayAndTime> selectRecentHour(@Param("timestamp") Long timestamp);
+    List<DayAndTime> selectRecentMinute(@Param("timestamp") Long timestamp);
+    
 }

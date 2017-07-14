@@ -225,7 +225,71 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  <!--Create By Cjn-->
   <select id="selectConversationNotFinish" resultType="int">
     SELECT  COUNT(*) FROM conversation WHERE  stop_time IS  NULL ;
+  </select>
+  <select id="selectRecentMonth" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    month,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt; 1
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+  
+  <select id="selectRecentWeekend"  parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    day,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+    ) &lt; 7
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+  
+  <select id="selectRecentHour" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    hour,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt;24
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h');
+  </select>
+
+  <select id="selectRecentMinute" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    MINUTE,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt;10
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h%i');
   </select>
 </mapper>
