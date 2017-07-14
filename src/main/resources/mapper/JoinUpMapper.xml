@@ -18,6 +18,10 @@
   <select id="selectByRecord" resultMap="BaseResultMap">
     select join_up.*, access.* from join_up,access WHERE join_up.access_id=#{accessId} AND account=#{account} AND join_up.access_id=access.access_id;
   </select>
+  <select id="selectLastJoinByClientId" resultMap="BaseResultMap">
+    select join_up.*, access.* from join_up,access WHERE join_up.access_id=access.access_id
+AND join_up_id = (SELECT MAX(join_up_id) FROM join_up WHERE client_id= #{clientId})
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

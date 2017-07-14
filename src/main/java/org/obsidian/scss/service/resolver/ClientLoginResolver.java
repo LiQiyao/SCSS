@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.ClientLogin;
 import org.obsidian.scss.bean.ConversationStart;
 import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.service.ChatLogService;
 import org.obsidian.scss.service.ClientService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.websocket.Session;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Random;
@@ -37,8 +40,9 @@ public class ClientLoginResolver implements ContentResolver {
     private ClientService clientService;
 
     @Transactional
-    public String resolve(String msgJson) {
+    public void resolve(String msgJson, WebSocket webSocket) {
         System.out.println("resolve");
+        Session session = webSocket.getSession();
         ConversationStart conversationStart = new ConversationStart();
         Gson gson = new Gson();
         Type type = new  TypeToken<Message<ClientLogin>>(){}.getType();
@@ -54,7 +58,8 @@ public class ClientLoginResolver implements ContentResolver {
             if (joinUp != null){
                 account = joinUp.getAccount();
                 clientId = joinUp.getClientId();
-                conversationStart.setChatLogList(chatLogService.getByClientId(joinUp.getClientId()));
+                joinUpService.addJoinUp(accessId, clientId, new Date().getTime(),account);
+                conversationStart.setChatLogList(chatLogService.getByClientId(clientId));
             }
         } else {
             account = getNewAccount(accessId);
@@ -66,7 +71,11 @@ public class ClientLoginResolver implements ContentResolver {
         conversationService.startConversation(clientId, 0, new Date().getTime());
         conversationStart.setConversationId(conversationService.getLastIdByClientId(clientId));
         Message<ConversationStart> ret = new Message<ConversationStart>(conversationStart);
-        return gson.toJson(ret);
+        try {
+            session.getBasicRemote().sendText(gson.toJson(ret));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getNewAccount(int accessId){

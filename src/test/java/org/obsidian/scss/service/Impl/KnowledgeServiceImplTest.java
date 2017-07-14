@@ -67,6 +67,6 @@ public class KnowledgeServiceImplTest {
     @Test
     public void getKnowledgeByContent() throws Exception {
         /*knowledgeService.getKnowledgeByContent("我要买房价买房，售楼部在哪里啊，多少钱一平方啊？");*/
-        knowledgeService.getRobotAns("我要买房价买房，售楼部在哪里啊，多少钱一平方啊？");
+        knowledgeService.getRobotChat("我要买房价买房，售楼部在哪里啊，多少钱一平方啊？");
     }
 }

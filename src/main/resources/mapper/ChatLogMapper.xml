@@ -15,7 +15,7 @@
     select * from chat_log where conversation_id=#{conversationId};
   </select>
   <select id="selectByClientId" resultMap="BaseResultMap">
-    select * from chat_log where receiver_id=#{clientId} AND sender_id=#{clientId};
+    select * from chat_log where receiver_id=#{clientId} OR sender_id=#{clientId};
   </select>
   <sql id="Example_Where_Clause">
     <where>

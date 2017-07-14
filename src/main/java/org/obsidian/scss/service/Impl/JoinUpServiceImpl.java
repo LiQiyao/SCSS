@@ -38,4 +38,8 @@ public class JoinUpServiceImpl implements JoinUpService {
         return joinUpMapper.selectByClientId(clientId);
     }
 
+    public JoinUp getLastByClientId(int clientId) {
+        return joinUpMapper.selectLastJoinByClientId(clientId);
+    }
+
 }

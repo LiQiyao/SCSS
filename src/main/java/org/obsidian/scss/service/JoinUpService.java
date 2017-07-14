@@ -14,4 +14,6 @@ public interface JoinUpService {
     int addJoinUp(int accessId, int clientId, long time, String account);
 
     List<JoinUp> getByClientId(int clientId);
+
+    JoinUp getLastByClientId(int clientId);
 }

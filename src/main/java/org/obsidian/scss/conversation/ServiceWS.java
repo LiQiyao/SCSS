@@ -3,49 +3,74 @@ package org.obsidian.scss.conversation;
 import com.google.gson.Gson;
 import org.obsidian.scss.service.KnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
  * Created by Lee on 2017/7/12.
  */
-@ServerEndpoint("/robotAns")
-public class ServiceWS {
+@ServerEndpoint(value="/ServiceWS", configurator = SpringConfigurator.class)
+public class ServiceWS implements WebSocket {
 
-    public static Vector<ServiceWS> robotAnsVector = new Vector<ServiceWS>();
+    public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
 
     private Session session;
 
-    @Autowired
-    private KnowledgeService knowledgeService;
+    private int clientId;
+
+    private int serviceId;
 
     @OnOpen
     public void onOpen(Session session){
         this.session = session;
-        robotAnsVector.add(this);
+        wsVector.add(this);
     }
 
     @OnMessage
-    public void onMessage(String msg){
-        System.out.println("收到消息" + msg);
+    public void onMessage(String msgString){
+        System.out.println("收到消息" + msgString);
 
         Gson gson = new Gson();
-        try {
-            this.session.getBasicRemote().sendText(gson.toJson(knowledgeService.getRobotAns(msg)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @OnError
     public void onError(Throwable t){
-        robotAnsVector.remove(this);
+        wsVector.remove(this);
     }
 
     @OnClose
     public void onClose(){
-        robotAnsVector.remove(this);
+        wsVector.remove(this);
+    }
+
+    public Vector<WebSocket> getWsVector() {
+        return wsVector;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 }
