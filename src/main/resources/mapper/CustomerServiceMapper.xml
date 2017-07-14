@@ -189,4 +189,9 @@
   <delete id="deleteCustomerService" parameterType="java.lang.Integer">
     delete from customer_service where service_id = #{serviceId}
   </delete>
+  
+  <!--Create By Cjn-->
+  <select id="selectAllServerNum" resultType="int">
+    SELECT COUNT(*) FROM customer_service;
+  </select>
 </mapper>

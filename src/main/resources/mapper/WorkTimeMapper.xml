@@ -174,4 +174,10 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  
+  <!--Create By Cjn-->
+  <select id="selectOnlineServerNum" resultType="int">
+    SELECT  COUNT(service_id) FROM work_time WHERE  end_time IS  NULL;
+  </select>
 </mapper>

@@ -21,4 +21,6 @@ public interface ConversationService {
     int endConversation(int conversationId,long stopTime, int score);
 
     int getLastIdByClientId(int clientId);
+
+    int selectConversationNotFinish();
 }

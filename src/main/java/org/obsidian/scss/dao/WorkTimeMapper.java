@@ -28,4 +28,8 @@ public interface WorkTimeMapper {
     int updateByExampleSelective(@Param("record") WorkTime record, @Param("example") WorkTimeExample example);
 
     int updateByExample(@Param("record") WorkTime record, @Param("example") WorkTimeExample example);
+    /**
+     * Create By CJN
+     */
+    int selectOnlineServerNum();
 }

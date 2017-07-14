@@ -43,8 +43,17 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationMapper.updateStopTime(conversationId, stopTime, score);
     }
 
+
     @Transactional
-    public int getLastIdByClientId(int clientId){
+    public int getLastIdByClientId(int clientId) {
         return conversationMapper.selectLastIdByClientId(clientId);
+    }
+    /**
+     * create By cjn
+     * @return
+     */
+    @Transactional
+    public int selectConversationNotFinish() {
+        return conversationMapper.selectConversationNotFinish();
     }
 }

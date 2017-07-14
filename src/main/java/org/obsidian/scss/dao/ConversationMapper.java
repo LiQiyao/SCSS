@@ -33,4 +33,8 @@ public interface ConversationMapper {
     int updateStopTime(@Param("conversationId") int conversationId,@Param("stopTime") long stopTime,@Param("score") int score);
 
     int selectLastIdByClientId(int clientId);
+    /**
+     * Create By Cjn
+     */
+    int selectConversationNotFinish();
 }
