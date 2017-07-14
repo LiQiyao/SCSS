@@ -139,4 +139,13 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
         }
         return list.get(0);
     }
+
+    /**
+     * Create By cjn
+     * @return
+     */
+    @Transactional
+    public int selectTotalServer() {
+        return customerServiceMapper.selectAllServerNum();
+    }
 }

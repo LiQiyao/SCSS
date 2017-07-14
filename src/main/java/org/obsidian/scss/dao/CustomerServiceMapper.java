@@ -22,4 +22,6 @@ public interface CustomerServiceMapper {
     int updateByExample(@Param("record") CustomerService record, @Param("example") CustomerServiceExample example);
 
     int deleteCustomerService(int serviceId);
+    
+    int selectAllServerNum();
 }

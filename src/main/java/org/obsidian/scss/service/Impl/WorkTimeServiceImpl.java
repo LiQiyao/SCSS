@@ -94,4 +94,14 @@ public class WorkTimeServiceImpl implements WorkTimeService {
         return allWorkTime;
     }
 
+    /**
+     * create By cjn
+     *查询当前在线客服总人数 
+     * @return
+     */
+    @Transactional
+    public int OnlineServer() {
+        return  workTimeMapper.selectOnlineServerNum();
+    }
+    
 }

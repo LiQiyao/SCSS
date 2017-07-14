@@ -23,5 +23,9 @@ public interface CustomerServiceService {
 
     CustomerService selectCustomerServiceByEmployeeId(String employeeId);
 
+    /**
+     * create By cjn
+     */
+    int selectTotalServer();
 
 }
