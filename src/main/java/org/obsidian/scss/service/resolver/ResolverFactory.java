@@ -19,13 +19,12 @@ public class ResolverFactory implements ApplicationContextAware{
 
     private ApplicationContext applicationContext;
 
-    private ContentResolver contentResolver;
-
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     public String doAction(String msgJson){
+        System.out.println("doAction");
         Gson gson = new Gson();
         Message message = gson.fromJson(msgJson, Message.class);
         String type = message.getType() + "Resolver";

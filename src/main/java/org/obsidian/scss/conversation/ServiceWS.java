@@ -12,9 +12,9 @@ import java.util.Vector;
  * Created by Lee on 2017/7/12.
  */
 @ServerEndpoint("/robotAns")
-public class RobotAnsWS {
+public class ServiceWS {
 
-    private static Vector<RobotAnsWS> robotAnsVector = new Vector<RobotAnsWS>();
+    public static Vector<ServiceWS> robotAnsVector = new Vector<ServiceWS>();
 
     private Session session;
 

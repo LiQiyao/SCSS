@@ -7,6 +7,9 @@
   <delete id="deleteClient" parameterType="java.lang.Integer">
     delete from client where client_id = #{clientId}
   </delete>
+  <select id="selectLastId" resultType="java.lang.Integer">
+    select max(client_id) from client;
+  </select>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.Client">
     <result column="client_id" jdbcType="INTEGER" property="clientId" />
     <result column="name" jdbcType="VARCHAR" property="name" />

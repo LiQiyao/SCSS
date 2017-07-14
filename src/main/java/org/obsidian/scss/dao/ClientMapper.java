@@ -24,4 +24,6 @@ public interface ClientMapper {
     int updateByExampleSelective(@Param("record") Client record, @Param("example") ClientExample example);
 
     int updateByExample(@Param("record") Client record, @Param("example") ClientExample example);
+
+    int selectLastId();
 }

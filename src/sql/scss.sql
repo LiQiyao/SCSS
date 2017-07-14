@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-13 14:13:16
+Date: 2017-07-13 16:53:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,11 +51,12 @@ CREATE TABLE `chat_log` (
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chat_log
 -- ----------------------------
+INSERT INTO `chat_log` VALUES ('1', '1', '1', '1', '0', 'hhhh', '122222', '1');
 
 -- ----------------------------
 -- Table structure for client
@@ -70,11 +71,12 @@ CREATE TABLE `client` (
   `sex` int(20) DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_id` (`client_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of client
 -- ----------------------------
+INSERT INTO `client` VALUES ('1', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for client_flag
@@ -129,11 +131,12 @@ CREATE TABLE `conversation` (
   KEY `service_id` (`service_id`),
   CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of conversation
 -- ----------------------------
+INSERT INTO `conversation` VALUES ('1', '1', '1', '100000', '199999', '3');
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -151,11 +154,12 @@ CREATE TABLE `customer_service` (
   UNIQUE KEY `employee_id` (`employee_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `customer_service_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `service_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer_service
 -- ----------------------------
+INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好');
 
 -- ----------------------------
 -- Table structure for flag
@@ -353,11 +357,12 @@ CREATE TABLE `service_group` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of service_group
 -- ----------------------------
+INSERT INTO `service_group` VALUES ('1', '售后组');
 
 -- ----------------------------
 -- Table structure for work_time

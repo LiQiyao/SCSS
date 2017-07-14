@@ -38,7 +38,12 @@ public class ChatLogServiceImpl implements ChatLogService {
      *根据客户编号获取聊天记录
      */
     @Transactional
-    public List<ChatLog> getByClientId(int conversationId) {
+    public List<ChatLog> getByClientId(int clientId) {
+        return chatLogMapper.selectByClientId(clientId);
+    }
+
+    @Transactional
+    public List<ChatLog> getByConversationId(int conversationId) {
         return chatLogMapper.selectByConversationId(conversationId);
     }
 }

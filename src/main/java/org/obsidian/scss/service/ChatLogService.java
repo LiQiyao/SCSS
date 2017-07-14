@@ -11,5 +11,7 @@ public interface ChatLogService {
 
     int add(int senderId, int receiverId, int contentType, String content, Long time, int fromClient);
 
-    List<ChatLog> getByClientId(int conversationId);
+    List<ChatLog> getByClientId(int clientId);
+
+    List<ChatLog> getByConversationId(int conversationId);
 }

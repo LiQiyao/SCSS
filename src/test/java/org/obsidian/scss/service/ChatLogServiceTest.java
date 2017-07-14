@@ -19,6 +19,9 @@ public class ChatLogServiceTest {
     @Autowired
     private ChatLogService chatLogService;
 
+    @Autowired
+    private ClientService clientService;
+
     @Test
     public void add() throws Exception {
         chatLogService.add(1,1,0,"hhhh",122222L,1);
@@ -26,6 +29,6 @@ public class ChatLogServiceTest {
 
     @Test
     public void getByClientId() throws Exception {
-        chatLogService.getByClientId(1);
+        clientService.insertClient(null, null, null, null, 0);
     }
 }

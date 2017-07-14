@@ -46,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
         client.setTelephone(telephone);
         client.setSex(sex);
         int insertSum = clientMapper.insert(client);
-        return insertSum;
+        return clientMapper.selectLastId();
     }
 
     /**

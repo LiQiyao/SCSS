@@ -21,4 +21,6 @@ public interface ChatLogMapper {
     int updateByExample(@Param("record") ChatLog record, @Param("example") ChatLogExample example);
 
     List<ChatLog> selectByConversationId(int conversationId);
+
+    List<ChatLog> selectByClientId(int clientId);
 }

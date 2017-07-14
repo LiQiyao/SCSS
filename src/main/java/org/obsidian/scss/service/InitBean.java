@@ -1,4 +1,4 @@
-package org.obsidian.scss.bean;
+package org.obsidian.scss.service;
 
 import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
@@ -23,6 +23,9 @@ public class InitBean implements Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
         CompanyName = companyName;
+    }
+
+    public InitBean() {
     }
 
     public Long getStartTime() {
