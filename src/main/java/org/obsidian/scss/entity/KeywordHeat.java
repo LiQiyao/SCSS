@@ -21,11 +21,19 @@ public class KeywordHeat {
         this.heatTime = heatTime;
     }
 
-    public KeywordHeat() {
-    }
-
     public KeywordHeat(Integer keywordId, Long heatTime) {
         this.keywordId = keywordId;
         this.heatTime = heatTime;
+    }
+
+    public KeywordHeat() {
+    }
+
+    @Override
+    public String toString() {
+        return "KeywordHeat{" +
+                "keywordId=" + keywordId +
+                ", heatTime=" + heatTime +
+                '}';
     }
 }

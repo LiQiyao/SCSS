@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : cjn
-Source Server Version : 50617
-Source Host           : localhost:3306
+Source Server         : 127.0.0.1_3306
+Source Server Version : 50634
+Source Host           : 127.0.0.1:3306
 Source Database       : scss
 
 Target Server Type    : MYSQL
-Target Server Version : 50617
+Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-15 09:40:44
+Date: 2017-07-15 12:12:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,8 +57,8 @@ CREATE TABLE `adv_flag` (
   `adv_id` int(20) NOT NULL,
   KEY `flag_id` (`flag_id`),
   KEY `adv_id` (`adv_id`),
-  CONSTRAINT `adv_flag_ibfk_2` FOREIGN KEY (`adv_id`) REFERENCES `advertisement` (`adv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `adv_flag_ibfk_1` FOREIGN KEY (`flag_id`) REFERENCES `flag` (`flag_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `adv_flag_ibfk_1` FOREIGN KEY (`flag_id`) REFERENCES `flag` (`flag_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `adv_flag_ibfk_2` FOREIGN KEY (`adv_id`) REFERENCES `advertisement` (`adv_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -241,6 +241,7 @@ DROP TABLE IF EXISTS `keyword`;
 CREATE TABLE `keyword` (
   `keyword_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(255) NOT NULL,
+  `heat` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`keyword_id`),
   UNIQUE KEY `key_word` (`value`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
@@ -248,12 +249,12 @@ CREATE TABLE `keyword` (
 -- ----------------------------
 -- Records of keyword
 -- ----------------------------
-INSERT INTO `keyword` VALUES ('1', '买房');
-INSERT INTO `keyword` VALUES ('2', '平方');
-INSERT INTO `keyword` VALUES ('4', '我要买房价买房，多少钱一平方啊？');
-INSERT INTO `keyword` VALUES ('3', '房价');
-INSERT INTO `keyword` VALUES ('8', '最近的房价涨价了吗');
-INSERT INTO `keyword` VALUES ('7', '涨价');
+INSERT INTO `keyword` VALUES ('1', '买房', '0');
+INSERT INTO `keyword` VALUES ('2', '平方', '0');
+INSERT INTO `keyword` VALUES ('3', '房价', '0');
+INSERT INTO `keyword` VALUES ('4', '我要买房价买房，多少钱一平方啊？', '0');
+INSERT INTO `keyword` VALUES ('7', '涨价', '0');
+INSERT INTO `keyword` VALUES ('8', '最近的房价涨价了吗', '0');
 
 -- ----------------------------
 -- Table structure for knowledge

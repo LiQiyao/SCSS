@@ -19,5 +19,4 @@ public interface KeywordHeatMapper {
     int updateByExampleSelective(@Param("record") KeywordHeat record, @Param("example") KeywordHeatExample example);
 
     int updateByExample(@Param("record") KeywordHeat record, @Param("example") KeywordHeatExample example);
-
 }
