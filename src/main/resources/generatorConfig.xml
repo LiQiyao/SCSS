@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <!-- 数据库驱动-->
-    <classPathEntry  location="E:\JavaWeb_WorkSpace\SCSS\src\main\resources\mysql-connector-java-6.0.6.jar"/>
+    <classPathEntry  location="F:\ideaworkspace\SCSS\src\main\resources\mysql-connector-java-6.0.6.jar"/>
     <context id="DB2Tables"  targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -35,9 +35,12 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="org.obsidian.scss.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="keyword_heat" domainObjectName="KeywordHeat"
+        <table tableName="group_word" domainObjectName="GroupWord"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true"/>
+<!--        <table tableName="keyword_heat" domainObjectName="KeywordHeat"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true"/>-->
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
 <!--        <table tableName="access" domainObjectName="Access"
                enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"

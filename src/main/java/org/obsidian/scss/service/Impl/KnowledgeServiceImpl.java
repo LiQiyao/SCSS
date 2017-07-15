@@ -89,7 +89,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
      * 根据内容反馈知识库
      */
     @Transactional
-    public Message<KnowledgeList> getKnowledgeByContent(String content) {
+    public List<Knowledge> getKnowledgeByContent(String content) {
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, List<Keyword>> map = new HashMap<Knowledge, List<Keyword>>();
@@ -111,8 +111,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             key.setKeywordList(map.get(key));
             res.add(key);
         }
-        Message<KnowledgeList> message = new Message<KnowledgeList>(new KnowledgeList(res));
-        return message;
+        return res;
     }
 
     /**
@@ -125,8 +124,8 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         Map<Knowledge, Integer> map = new HashMap<Knowledge, Integer>();
         int maxHit = 1;
         for (Keyword keyword : found){
-
-            List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId(keyword.getKeywordId());
+            keywordHeatMapper.insert(new KeywordHeat(keyword.getKeywordId(), new Date().getTime()));
+            List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId1(keyword.getKeywordId());
             for (Knowledge knowledge : knowledgeList){
                 if (map.containsKey(knowledge)){
                     map.put(knowledge, map.get(knowledge) + 1);

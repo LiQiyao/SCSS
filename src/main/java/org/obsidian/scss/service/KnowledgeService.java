@@ -3,6 +3,7 @@ package org.obsidian.scss.service;
 import org.obsidian.scss.bean.KnowledgeList;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.RobotChat;
+import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.util.Trie;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface KnowledgeService {
 
     Trie readTrieFromFile();
 
-    Message<KnowledgeList> getKnowledgeByContent(String content);
+    List<Knowledge> getKnowledgeByContent(String content);
 
     Message<RobotChat> getRobotChat(String content);
 }

@@ -22,7 +22,11 @@ public interface KnowledgeMapper {
 
     int selectLastId();
 
+    //查询到的是所有知识库，最高权限
     List<Knowledge> selectByKeywordId(int keywordId);
+
+    //level小于等于1，即机器人能看到的知识库
+    List<Knowledge> selectByKeywordId1(int keywordId);
 
     int deleteById(int knowledgeId);
 
