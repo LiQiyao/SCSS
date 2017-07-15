@@ -7,9 +7,11 @@ import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.dao.ChatLogMapper;
 import org.obsidian.scss.entity.Client;
+import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.service.ChatLogService;
 import org.obsidian.scss.service.ClientService;
+import org.obsidian.scss.service.ConversationService;
 import org.obsidian.scss.service.KnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private KnowledgeService knowledgeService;
 
+    @Autowired
+    private ConversationService conversationService;
+
     public void resolve(String msgJson, WebSocket webSocket) {
         System.out.println("!!1" +msgJson + webSocket.getServiceId() +webSocket.getClientId());
         Session session = webSocket.getSession();
@@ -46,6 +51,9 @@ public class ClientChatResolver implements ContentResolver {
         System.out.println("!!2");
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
+            if ("转接到人工客服".equals(clientChat.getContent())){
+                this.transfer(webSocket, clientChat);
+            }
             chatLogService.add(clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
             if (webSocket.getServiceId() == 0){//如果该消息是发送给机器人的
                 System.out.println("!!4");
@@ -74,7 +82,9 @@ public class ClientChatResolver implements ContentResolver {
                     e.printStackTrace();
                 }
             }
-
         }
+    }
+    private void transfer(WebSocket webSocket, ClientChat clientChat){
+        conversationService.endConversation(clientChat.getConversationId(),new Date().getTime(), null);
     }
 }

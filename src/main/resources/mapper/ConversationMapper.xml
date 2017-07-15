@@ -45,6 +45,10 @@
     update conversation set stop_time = #{stopTime}, score=#{score}
     where conversation_id=#{conversationId};
   </update>
+  <update id="updateStopTimeWithoutScore">
+    update conversation set stop_time = #{stopTime}
+    where conversation_id=#{conversationId};
+  </update>
   <select id="selectLastIdByClientId" resultType="java.lang.Integer">
     select max(conversation_id) from conversation where client_id=#{clientId} and stop_time IS NULL;
   </select>
