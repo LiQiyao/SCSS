@@ -6,6 +6,7 @@ import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.service.GroupWordService;
 import org.obsidian.scss.util.Trie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * Created by Lee on 2017/7/15.
  */
+@Service
 public class GroupWordServiceImpl implements GroupWordService {
 
     @Autowired
@@ -41,15 +43,21 @@ public class GroupWordServiceImpl implements GroupWordService {
                 stringList.add(content.substring(i, j));
             }
         }
+        int maxHeat = 1;
+        int maxId = 0;
         for (String s : stringList){
             if (trie.search(s) != null){
                 if (map.get(trie.search(s)) == null){
                     map.put(trie.search(s), 1);
                 } else {
-                    map.put(trie.search(s), 1 + map.get(trie.search(s))) ;
+                    if (maxHeat < 1 + map.get(trie.search(s))){
+                        maxHeat = 1 + map.get(trie.search(s));
+                        maxId = trie.search(s);
+                    }
+                    map.put(trie.search(s), 1 + map.get(trie.search(s)));
                 }
             }
         }
-        return 0;
+        return maxId;
     }
 }
