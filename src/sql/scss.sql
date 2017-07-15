@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1_3306
-Source Server Version : 50634
-Source Host           : 127.0.0.1:3306
+Source Server         : cjn
+Source Server Version : 50617
+Source Host           : localhost:3306
 Source Database       : scss
 
 Target Server Type    : MYSQL
-Target Server Version : 50634
+Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-07-14 13:56:42
+Date: 2017-07-15 09:40:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,6 +35,37 @@ INSERT INTO `access` VALUES ('3', '微信');
 INSERT INTO `access` VALUES ('4', '微博');
 
 -- ----------------------------
+-- Table structure for advertisement
+-- ----------------------------
+DROP TABLE IF EXISTS `advertisement`;
+CREATE TABLE `advertisement` (
+  `adv_id` int(20) NOT NULL AUTO_INCREMENT,
+  `adv_content` varchar(600) NOT NULL,
+  PRIMARY KEY (`adv_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of advertisement
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for adv_flag
+-- ----------------------------
+DROP TABLE IF EXISTS `adv_flag`;
+CREATE TABLE `adv_flag` (
+  `flag_id` int(20) NOT NULL,
+  `adv_id` int(20) NOT NULL,
+  KEY `flag_id` (`flag_id`),
+  KEY `adv_id` (`adv_id`),
+  CONSTRAINT `adv_flag_ibfk_2` FOREIGN KEY (`adv_id`) REFERENCES `advertisement` (`adv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `adv_flag_ibfk_1` FOREIGN KEY (`flag_id`) REFERENCES `flag` (`flag_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of adv_flag
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for chat_log
 -- ----------------------------
 DROP TABLE IF EXISTS `chat_log`;
@@ -56,7 +87,7 @@ CREATE TABLE `chat_log` (
 -- ----------------------------
 -- Records of chat_log
 -- ----------------------------
-INSERT INTO `chat_log` VALUES ('1', '1', '0', '1', '0', 'hhhh', '122222', '1');
+INSERT INTO `chat_log` VALUES ('1', '1', '1', '1', '0', 'hhhh', '122222', '1');
 
 -- ----------------------------
 -- Table structure for client
@@ -71,16 +102,12 @@ CREATE TABLE `client` (
   `sex` int(20) DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_id` (`client_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of client
 -- ----------------------------
 INSERT INTO `client` VALUES ('1', null, null, null, null, null);
-INSERT INTO `client` VALUES ('2', null, null, null, null, '0');
-INSERT INTO `client` VALUES ('5', null, null, null, null, '0');
-INSERT INTO `client` VALUES ('6', null, null, null, null, '0');
-INSERT INTO `client` VALUES ('7', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for client_flag
@@ -135,17 +162,16 @@ CREATE TABLE `conversation` (
   KEY `service_id` (`service_id`),
   CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of conversation
 -- ----------------------------
-INSERT INTO `conversation` VALUES ('1', '1', '1', '100000', '199999', '3');
-INSERT INTO `conversation` VALUES ('4', '5', '0', '1500005602109', null, null);
-INSERT INTO `conversation` VALUES ('5', '6', '0', '1500005679217', null, null);
-INSERT INTO `conversation` VALUES ('6', '7', '0', '1500005718001', null, null);
-INSERT INTO `conversation` VALUES ('7', '7', '0', '1500005814656', null, null);
-INSERT INTO `conversation` VALUES ('8', '7', '0', '1500005989078', null, null);
+INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '1499443470000', '3');
+INSERT INTO `conversation` VALUES ('2', '1', '1', '1499011200000', '1499013200000', '4');
+INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1499616999000', '5');
+INSERT INTO `conversation` VALUES ('4', '1', '1', '1499991300000', '1499991500000', null);
+INSERT INTO `conversation` VALUES ('5', '1', '1', '1499991000000', '1499991200000', null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -158,18 +184,18 @@ CREATE TABLE `customer_service` (
   `nickname` varchar(20) NOT NULL,
   `employee_id` varchar(20) NOT NULL,
   `auto_message` varchar(255) DEFAULT NULL,
+  `is_dimission` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`service_id`),
   UNIQUE KEY `service_id` (`service_id`) USING BTREE,
   UNIQUE KEY `employee_id` (`employee_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `customer_service_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `service_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer_service
 -- ----------------------------
-INSERT INTO `customer_service` VALUES ('0', '机器人', '1', '小Robot', '000', '我是000号机器人');
-INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好');
+INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0');
 
 -- ----------------------------
 -- Table structure for flag
@@ -202,14 +228,11 @@ CREATE TABLE `join_up` (
   KEY `access_id` (`access_id`) USING BTREE,
   CONSTRAINT `join_up_ibfk_1` FOREIGN KEY (`access_id`) REFERENCES `access` (`access_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `join_up_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of join_up
 -- ----------------------------
-INSERT INTO `join_up` VALUES ('3', '1', '1', '1500005601934', '0453363425');
-INSERT INTO `join_up` VALUES ('4', '1', '6', '1500005679098', '7817187968');
-INSERT INTO `join_up` VALUES ('5', '1', '7', '1500005717890', '5284207158');
 
 -- ----------------------------
 -- Table structure for keyword
@@ -231,21 +254,6 @@ INSERT INTO `keyword` VALUES ('4', '我要买房价买房，多少钱一平方�
 INSERT INTO `keyword` VALUES ('3', '房价');
 INSERT INTO `keyword` VALUES ('8', '最近的房价涨价了吗');
 INSERT INTO `keyword` VALUES ('7', '涨价');
-
--- ----------------------------
--- Table structure for keyword_heat
--- ----------------------------
-DROP TABLE IF EXISTS `keyword_heat`;
-CREATE TABLE `keyword_heat` (
-  `keyword_id` int(11) NOT NULL,
-  `heat_time` bigint(20) NOT NULL,
-  KEY `keyword_id` (`keyword_id`),
-  CONSTRAINT `keyword_heat_ibfk_1` FOREIGN KEY (`keyword_id`) REFERENCES `keyword` (`keyword_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of keyword_heat
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for knowledge

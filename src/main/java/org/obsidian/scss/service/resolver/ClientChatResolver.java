@@ -34,6 +34,7 @@ public class ClientChatResolver implements ContentResolver {
     private KnowledgeService knowledgeService;
 
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("!!1" +msgJson + webSocket.getServiceId() +webSocket.getClientId());
         Session session = webSocket.getSession();
         System.out.println(chatLogService.getByClientId(1));
         Gson gson = new Gson();
@@ -42,21 +43,26 @@ public class ClientChatResolver implements ContentResolver {
         message.getContent().setTime(new Date().getTime());
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
+        System.out.println("!!2");
         if (contentType == 0){
+            System.out.println("!!3");
             chatLogService.add(clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
             if (webSocket.getServiceId() == 0){
+                System.out.println("!!4");
+                Message<RobotChat> res = knowledgeService.getRobotChat(clientChat.getContent());
+                chatLogService.add(webSocket.getServiceId(), clientChat.getClientId(),0,res.getContent().getAnswer(),new Date().getTime(),0);
+                try {
+                    System.out.println("!!5");
+                    session.getBasicRemote().sendText(gson.toJson(message));
+                    session.getBasicRemote().sendText(gson.toJson(res));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //TODO 添加聊天记录到数据库,根据编号发送给Vector中的某个人
 
             }
-            Message<RobotChat> res = knowledgeService.getRobotChat(clientChat.getContent());
 
-
-            //TODO 添加聊天记录到数据库,根据编号发送给Vector中的某个人
-            try {
-                session.getBasicRemote().sendText(gson.toJson(message));
-                session.getBasicRemote().sendText(gson.toJson(res));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
