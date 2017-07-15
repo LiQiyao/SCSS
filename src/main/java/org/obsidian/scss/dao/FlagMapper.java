@@ -7,6 +7,8 @@ import org.obsidian.scss.entity.FlagExample;
 import java.util.List;
 
 public interface FlagMapper {
+    List<Flag> selectAllUnusedFlag(int clientId);
+
     List<Flag> selectAllFlag(int clientId);
 
     int deleteFlag(int flagId);

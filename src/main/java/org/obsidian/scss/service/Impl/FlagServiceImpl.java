@@ -96,5 +96,12 @@ public class FlagServiceImpl implements FlagService {
         return list;
     }
 
-
+    @Transactional
+    public List<Flag> selectAllUnusedFlag(int clientId){
+        List<Flag> list = flagMapper.selectAllUnusedFlag(clientId);
+        if(list.size() == 0 || list == null){
+            return null;
+        }
+        return list;
+    }
 }

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.FlagMapper">
+  <select id="selectAllUnusedFlag" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select flag_id,name from flag where flag_id not in (select flag_id from client_flag where client_id = #{clientId});
+  </select>
   <select id="selectAllFlag" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select flag.name from client,client_flag,flag where client.client_id = #{clientId} and
-    client.client_id = client_flag.client_id and client_flag.flag_id = flag.flag_id;
+    select flag.flag_id,flag.name from client_flag,flag where
+    client_flag.client_id = #{clientId} and client_flag.flag_id = flag.flag_id;
   </select>
   <delete id="deleteFlag" parameterType="java.lang.Integer">
     delete from flag where flag_id = #{flagId}
