@@ -2,13 +2,12 @@ package org.obsidian.scss.service.resolver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.obsidian.scss.bean.ClientChat;
-import org.obsidian.scss.bean.KnowledgeList;
-import org.obsidian.scss.bean.Message;
-import org.obsidian.scss.bean.RobotChat;
+import org.obsidian.scss.bean.*;
+import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.dao.ChatLogMapper;
 import org.obsidian.scss.entity.Client;
+import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.service.ChatLogService;
 import org.obsidian.scss.service.ClientService;
 import org.obsidian.scss.service.KnowledgeService;
@@ -19,6 +18,7 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Lee on 2017/7/12.
@@ -44,10 +44,10 @@ public class ClientChatResolver implements ContentResolver {
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
         System.out.println("!!2");
-        if (contentType == 0){
+        if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
             chatLogService.add(clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
-            if (webSocket.getServiceId() == 0){
+            if (webSocket.getServiceId() == 0){//如果该消息是发送给机器人的
                 System.out.println("!!4");
                 Message<RobotChat> res = knowledgeService.getRobotChat(clientChat.getContent());
                 chatLogService.add(webSocket.getServiceId(), clientChat.getClientId(),0,res.getContent().getAnswer(),new Date().getTime(),0);
@@ -59,8 +59,20 @@ public class ClientChatResolver implements ContentResolver {
                     e.printStackTrace();
                 }
             } else {
-                //TODO 添加聊天记录到数据库,根据编号发送给Vector中的某个人
-
+                //如果该消息是发送给客服人员的
+                List<Knowledge> knowledgeList = knowledgeService.getKnowledgeByContent(clientChat.getContent());
+                Message<RecommandKnowledges> res = new Message<RecommandKnowledges>(new RecommandKnowledges(clientChat.getConversationId(),knowledgeList));
+                try {
+                    session.getBasicRemote().sendText(gson.toJson(message));
+                    for (WebSocket sws : ServiceWS.wsVector){
+                        if (sws.getServiceId() == webSocket.getServiceId()){
+                            sws.getSession().getBasicRemote().sendText(gson.toJson(message));
+                            sws.getSession().getBasicRemote().sendText(gson.toJson(res));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         }

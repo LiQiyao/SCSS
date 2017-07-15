@@ -21,6 +21,11 @@
       where keyword.keyword_id=#{keywordId} and knowledge.knowledge_id=knowledge_keyword.knowledge_id
       and keyword.keyword_id=knowledge_keyword.keyword_id;
   </select>
+  <select id="selectByKeywordId1" resultType="org.obsidian.scss.entity.Knowledge">
+    select knowledge.* from knowledge, keyword, knowledge_keyword
+    where keyword.keyword_id=#{keywordId} and knowledge.knowledge_id=knowledge_keyword.knowledge_id
+    and keyword.keyword_id=knowledge_keyword.keyword_id AND knowledge.`level`<![CDATA[<=1 ]]>;
+  </select>
   <delete id="deleteById">
     DELETE FROM knowledge WHERE knowledge_id=#{knowledgeId}
   </delete>

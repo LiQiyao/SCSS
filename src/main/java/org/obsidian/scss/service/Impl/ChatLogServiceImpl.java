@@ -30,6 +30,8 @@ public class ChatLogServiceImpl implements ChatLogService {
         int conversationId = 0;
         if (fromClient == 1){
             conversationId = conversationMapper.selectLastIdByClientId(senderId);
+        } else {
+            conversationId = conversationMapper.selectLastIdByClientId(receiverId);
         }
         return chatLogMapper.insertSelective(new ChatLog(conversationId,senderId,receiverId,contentType,content,time, fromClient));
     }
