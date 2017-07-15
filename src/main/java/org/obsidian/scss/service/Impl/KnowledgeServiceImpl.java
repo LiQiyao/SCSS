@@ -3,10 +3,12 @@ package org.obsidian.scss.service.Impl;
 import org.obsidian.scss.bean.KnowledgeList;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.RobotChat;
+import org.obsidian.scss.dao.KeywordHeatMapper;
 import org.obsidian.scss.dao.KeywordMapper;
 import org.obsidian.scss.dao.KnowledgeKeywordMapper;
 import org.obsidian.scss.dao.KnowledgeMapper;
 import org.obsidian.scss.entity.Keyword;
+import org.obsidian.scss.entity.KeywordHeat;
 import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.entity.KnowledgeKeyword;
 import org.obsidian.scss.service.KnowledgeService;
@@ -87,7 +89,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
      * 根据内容反馈知识库
      */
     @Transactional
-    public Message<KnowledgeList> getKnowledgeByContent(String content) {
+    public List<Knowledge> getKnowledgeByContent(String content) {
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, List<Keyword>> map = new HashMap<Knowledge, List<Keyword>>();
@@ -109,8 +111,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             key.setKeywordList(map.get(key));
             res.add(key);
         }
-        Message<KnowledgeList> message = new Message<KnowledgeList>(new KnowledgeList(res));
-        return message;
+        return res;
     }
 
     /**
@@ -123,8 +124,8 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         Map<Knowledge, Integer> map = new HashMap<Knowledge, Integer>();
         int maxHit = 1;
         for (Keyword keyword : found){
-
-            List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId(keyword.getKeywordId());
+            keywordHeatMapper.insert(new KeywordHeat(keyword.getKeywordId(), new Date().getTime()));
+            List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId1(keyword.getKeywordId());
             for (Knowledge knowledge : knowledgeList){
                 if (map.containsKey(knowledge)){
                     map.put(knowledge, map.get(knowledge) + 1);
