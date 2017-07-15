@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-15 13:11:06
+Date: 2017-07-15 13:58:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,12 +82,14 @@ CREATE TABLE `chat_log` (
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chat_log
 -- ----------------------------
 INSERT INTO `chat_log` VALUES ('1', '1', '1', '1', '0', 'hhhh', '122222', '1');
+INSERT INTO `chat_log` VALUES ('2', '5', '1', '0', '0', '涨价了吗?', '1500097538209', '1');
+INSERT INTO `chat_log` VALUES ('4', '5', '1', '0', '0', '涨价了吗?', '1500097884460', '1');
 
 -- ----------------------------
 -- Table structure for client
@@ -171,7 +173,7 @@ INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '149944347000
 INSERT INTO `conversation` VALUES ('2', '1', '1', '1499011200000', '1499013200000', '4');
 INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1499616999000', '5');
 INSERT INTO `conversation` VALUES ('4', '1', '1', '1499991300000', '1499991500000', null);
-INSERT INTO `conversation` VALUES ('5', '1', '1', '1499991000000', '1499991200000', null);
+INSERT INTO `conversation` VALUES ('5', '1', '1', '1499991000000', null, null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -262,13 +264,14 @@ DROP TABLE IF EXISTS `keyword_heat`;
 CREATE TABLE `keyword_heat` (
   `keyword_id` int(11) NOT NULL,
   `heat_time` bigint(20) NOT NULL,
-  PRIMARY KEY (`keyword_id`),
+  KEY `keyword_id` (`keyword_id`),
   CONSTRAINT `keyword_heat_ibfk_1` FOREIGN KEY (`keyword_id`) REFERENCES `keyword` (`keyword_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of keyword_heat
 -- ----------------------------
+INSERT INTO `keyword_heat` VALUES ('7', '1500097538384');
 
 -- ----------------------------
 -- Table structure for knowledge
