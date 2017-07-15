@@ -12,6 +12,16 @@ public class CustomerService {
     private String employeeId;
 
     private String autoMessage;
+    
+    private int isDimission;
+
+    public int getIsDimission() {
+        return isDimission;
+    }
+
+    public void setIsDimission(int isDimission) {
+        this.isDimission = isDimission;
+    }
 
     public Integer getServiceId() {
         return serviceId;

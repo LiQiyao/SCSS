@@ -8,6 +8,7 @@
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
     <result column="auto_message" jdbcType="VARCHAR" property="autoMessage" />
+    <result column="is_dimission" javaType="INTEGER" property="isDimission"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -169,11 +170,15 @@
       <if test="record.autoMessage != null">
         auto_message = #{record.autoMessage,jdbcType=VARCHAR},
       </if>
+      <if test="record.isDimission != null">
+        auto_message = #{record.isDimission,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
   <update id="updateByExample" parameterType="map">
     update customer_service
     set service_id = #{record.serviceId,jdbcType=INTEGER},
@@ -193,5 +198,8 @@
   <!--Create By Cjn-->
   <select id="selectAllServerNum" resultType="int">
     SELECT COUNT(*) FROM customer_service;
+  </select>
+  <select id="selectNotDimssionPerson" resultType="org.obsidian.scss.entity.CustomerService">
+    SELECT * FROM customer_service WHERE is_dimission = 0;
   </select>
 </mapper>

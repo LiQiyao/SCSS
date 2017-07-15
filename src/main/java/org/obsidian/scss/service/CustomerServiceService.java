@@ -13,7 +13,8 @@ public interface CustomerServiceService {
 
     int deleteCustomerService(int serviceId);
 
-    int updateCustomerService(int serviceId,String name,int groupId,String nickName,String employeeId,String autoMessage);
+    int updateCustomerService(int serviceId,String name,int groupId,String nickName,
+                              String employeeId,String autoMessage,int isDimission);
 
     List<CustomerService> selectAllCustomerService();
 
@@ -27,5 +28,5 @@ public interface CustomerServiceService {
      * create By cjn
      */
     int selectTotalServer();
-
+    List<CustomerService> selectNotDimssionPerson();
 }

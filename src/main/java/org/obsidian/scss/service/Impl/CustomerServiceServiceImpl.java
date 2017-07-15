@@ -7,6 +7,7 @@ import org.obsidian.scss.service.CustomerServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -59,16 +60,19 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
      * @param nickName
      * @param employeeId
      * @param autoMessage
+     * @param isDimission
      * @return
      */
     @Transactional
-    public int updateCustomerService(int serviceId,String name,int groupId,String nickName,String employeeId,String autoMessage){
+    public int updateCustomerService(int serviceId,String name,int groupId,String nickName,
+                                     String employeeId,String autoMessage,int isDimission){
         CustomerService customerService = new CustomerService();
         customerService.setName(name);
         customerService.setGroupId(groupId);
         customerService.setNickname(nickName);
         customerService.setEmployeeId(employeeId);
         customerService.setAutoMessage(autoMessage);
+        customerService.setIsDimission(isDimission);
         CustomerServiceExample example = new CustomerServiceExample();
         example.or().andServiceIdEqualTo(serviceId);
         int updateSum = customerServiceMapper.updateByExampleSelective(customerService,example);
@@ -113,6 +117,7 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
      * @param serviceId
      * @return
      */
+    @Transactional
     public CustomerService selectCustomerServiceByServiceId(int serviceId) {
         List<CustomerService> list;
         CustomerServiceExample example = new CustomerServiceExample();
@@ -148,5 +153,9 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
     public int selectTotalServer() {
         return customerServiceMapper.selectAllServerNum();
     }
-    
+
+    public List<CustomerService> selectNotDimssionPerson() {
+        List<CustomerService> res =  customerServiceMapper.selectNotDimssionPerson();
+        return res;
+    }
 }
