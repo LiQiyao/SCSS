@@ -19,4 +19,6 @@ public interface FlagService {
     int selectFlagId(String name);
 
     List<Flag> selectAllFlag(int clientId);
+
+    List<Flag> selectAllUnusedFlag(int clientId);
 }

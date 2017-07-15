@@ -20,4 +20,12 @@ public class Access {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Access{" +
+                "accessId=" + accessId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

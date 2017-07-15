@@ -22,4 +22,6 @@ public interface ClientService {
     int deleteFlag(int clientId,int flagId);
 
     List<Flag> selectAllFlag(int clientId);
+
+    List<Flag> selectAllUnusedFlag(int clientId);
 }
