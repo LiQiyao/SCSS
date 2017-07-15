@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.ConversationExample;
+import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.DayAndTime;
 
 public interface ConversationMapper {
@@ -34,6 +35,8 @@ public interface ConversationMapper {
     int updateStopTime(@Param("conversationId") int conversationId,@Param("stopTime") long stopTime,@Param("score") int score);
 
     int updateStopTimeWithoutScore(@Param("conversationId") int conversationId,@Param("stopTime") long stopTime);
+
+    CustomerService selectLastChatServiceId(int clientId);
 
     int selectLastIdByClientId(int clientId);
     /**

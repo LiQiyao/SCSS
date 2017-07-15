@@ -23,9 +23,9 @@ public class TestController {
         return "ws";
     }
 
-    @RequestMapping(value = "/x", method = RequestMethod.GET)
+    @RequestMapping(value = "/serviceWS", method = RequestMethod.GET)
     public String xws(){
         System.out.println(initBean);
-        return "ws";
+        return "serviceWS";
     }
 }

@@ -2,6 +2,7 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.Conversation;
+import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.DayAndTime;
 import org.obsidian.scss.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class ConversationServiceImpl implements ConversationService {
     public int getLastIdByClientId(int clientId) {
         return conversationMapper.selectLastIdByClientId(clientId);
     }
+
+    public CustomerService getLastChatServiceId(int clientId) {
+        return conversationMapper.selectLastChatServiceId(clientId);
+    }
+
     /**
      * create By cjn
      * @return

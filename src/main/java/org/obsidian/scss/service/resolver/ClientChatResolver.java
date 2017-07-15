@@ -8,11 +8,9 @@ import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.dao.ChatLogMapper;
 import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.entity.Conversation;
+import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.Knowledge;
-import org.obsidian.scss.service.ChatLogService;
-import org.obsidian.scss.service.ClientService;
-import org.obsidian.scss.service.ConversationService;
-import org.obsidian.scss.service.KnowledgeService;
+import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,18 +29,21 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private ChatLogService chatLogService;
 
-
     @Autowired
     private KnowledgeService knowledgeService;
 
     @Autowired
     private ConversationService conversationService;
 
+    @Autowired
+    private CustomerServiceService customerServiceService;
+
+    private Gson gson = new Gson();
+
     public void resolve(String msgJson, WebSocket webSocket) {
         System.out.println("!!1" +msgJson + webSocket.getServiceId() +webSocket.getClientId());
         Session session = webSocket.getSession();
         System.out.println(chatLogService.getByClientId(1));
-        Gson gson = new Gson();
         Type objectType = new TypeToken<Message<ClientChat>>(){}.getType();
         Message<ClientChat> message = gson.fromJson(msgJson, objectType);
         message.getContent().setTime(new Date().getTime());
@@ -85,6 +86,22 @@ public class ClientChatResolver implements ContentResolver {
         }
     }
     private void transfer(WebSocket webSocket, ClientChat clientChat){
+        System.out.println("7");
         conversationService.endConversation(clientChat.getConversationId(),new Date().getTime(), null);
+        System.out.println("8");
+        CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
+        System.out.println("9");
+        for (WebSocket ws : ServiceWS.wsVector){
+            if (ws.getServiceId() == target.getServiceId()){
+                Message<ServiceChat> message =
+                        new Message<ServiceChat>(new ServiceChat(clientChat.getConversationId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime()));
+                try {
+                    System.out.println("11");
+                    webSocket.getSession().getBasicRemote().sendText(gson.toJson(message));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

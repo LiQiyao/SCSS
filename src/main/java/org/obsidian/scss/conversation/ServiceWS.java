@@ -24,7 +24,7 @@ public class ServiceWS implements WebSocket {
 
     private int clientId;
 
-    private int serviceId;
+    private int serviceId = 1;
 
     @OnOpen
     public void onOpen(Session session){
