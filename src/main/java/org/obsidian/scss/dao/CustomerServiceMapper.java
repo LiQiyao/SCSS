@@ -24,5 +24,5 @@ public interface CustomerServiceMapper {
     int deleteCustomerService(int serviceId);
     
     int selectAllServerNum();
-    List<CustomerService> selectNotDimssionPerson();
+    List<CustomerService> selectNotDimissionPerson();
 }

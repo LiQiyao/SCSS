@@ -28,5 +28,5 @@ public interface CustomerServiceService {
      * create By cjn
      */
     int selectTotalServer();
-    List<CustomerService> selectNotDimssionPerson();
+    List<CustomerService> selectNotDimissionPerson();
 }

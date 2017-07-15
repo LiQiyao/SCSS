@@ -154,8 +154,8 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
         return customerServiceMapper.selectAllServerNum();
     }
 
-    public List<CustomerService> selectNotDimssionPerson() {
-        List<CustomerService> res =  customerServiceMapper.selectNotDimssionPerson();
+    public List<CustomerService> selectNotDimissionPerson() {
+        List<CustomerService> res =  customerServiceMapper.selectNotDimissionPerson();
         return res;
     }
 }

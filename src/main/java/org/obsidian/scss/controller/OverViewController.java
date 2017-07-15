@@ -45,7 +45,7 @@ public class OverViewController {
         overViewInfo.setOnlineServer(workTimeService.OnlineServer());
         overViewInfo.setTotalServer(customerService.selectTotalServer());
         overViewInfo.setOnlineClient(conversationService.selectConversationNotFinish());
-        System.out.println(customerService.selectNotDimssionPerson().get(0).getIsDimission());
+        System.out.println(customerService.selectNotDimissionPerson().get(0).getIsDimission());
         Show show = new Show();
         show.setData(overViewInfo);
         return show;

@@ -199,7 +199,7 @@
   <select id="selectAllServerNum" resultType="int">
     SELECT COUNT(*) FROM customer_service;
   </select>
-  <select id="selectNotDimssionPerson" resultType="org.obsidian.scss.entity.CustomerService">
+  <select id="selectNotDimissionPerson" resultType="org.obsidian.scss.entity.CustomerService">
     SELECT * FROM customer_service WHERE is_dimission = 0;
   </select>
 </mapper>
