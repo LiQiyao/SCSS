@@ -41,7 +41,10 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Transactional
-    public int endConversation(int conversationId, long stopTime, int score) {
+    public int endConversation(int conversationId, long stopTime, Integer score) {
+        if (score == null){
+            return conversationMapper.updateStopTimeWithoutScore(conversationId,stopTime);
+        }
         return conversationMapper.updateStopTime(conversationId, stopTime, score);
     }
 

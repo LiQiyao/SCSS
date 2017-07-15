@@ -12,7 +12,7 @@ import java.util.Vector;
 /**
  * Created by Administrator on 2017/7/15.
  */
-@ServerEndpoint(value = "ClientDetailWS",configurator = SpringConfigurator.class)
+@ServerEndpoint(value = "/ClientDetailWS",configurator = SpringConfigurator.class)
 public class ClientDetailWS implements WebSocket{
 
     @Autowired

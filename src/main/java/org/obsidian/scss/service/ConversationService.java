@@ -19,7 +19,7 @@ public interface ConversationService {
 
     int startConversation(int clientId, int serviceId, long startTime);
 
-    int endConversation(int conversationId,long stopTime, int score);
+    int endConversation(int conversationId,long stopTime, Integer score);
 
     int getLastIdByClientId(int clientId);
 
