@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1_3306
-Source Server Version : 50634
-Source Host           : 127.0.0.1:3306
+Source Server         : cjn
+Source Server Version : 50617
+Source Host           : localhost:3306
 Source Database       : scss
 
 Target Server Type    : MYSQL
-Target Server Version : 50634
+Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-07-13 16:53:16
+Date: 2017-07-15 09:40:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,6 +33,37 @@ INSERT INTO `access` VALUES ('1', '网页');
 INSERT INTO `access` VALUES ('2', 'QQ');
 INSERT INTO `access` VALUES ('3', '微信');
 INSERT INTO `access` VALUES ('4', '微博');
+
+-- ----------------------------
+-- Table structure for advertisement
+-- ----------------------------
+DROP TABLE IF EXISTS `advertisement`;
+CREATE TABLE `advertisement` (
+  `adv_id` int(20) NOT NULL AUTO_INCREMENT,
+  `adv_content` varchar(600) NOT NULL,
+  PRIMARY KEY (`adv_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of advertisement
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for adv_flag
+-- ----------------------------
+DROP TABLE IF EXISTS `adv_flag`;
+CREATE TABLE `adv_flag` (
+  `flag_id` int(20) NOT NULL,
+  `adv_id` int(20) NOT NULL,
+  KEY `flag_id` (`flag_id`),
+  KEY `adv_id` (`adv_id`),
+  CONSTRAINT `adv_flag_ibfk_2` FOREIGN KEY (`adv_id`) REFERENCES `advertisement` (`adv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `adv_flag_ibfk_1` FOREIGN KEY (`flag_id`) REFERENCES `flag` (`flag_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of adv_flag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chat_log
@@ -131,12 +162,16 @@ CREATE TABLE `conversation` (
   KEY `service_id` (`service_id`),
   CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of conversation
 -- ----------------------------
-INSERT INTO `conversation` VALUES ('1', '1', '1', '100000', '199999', '3');
+INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '1499443470000', '3');
+INSERT INTO `conversation` VALUES ('2', '1', '1', '1499011200000', '1499013200000', '4');
+INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1499616999000', '5');
+INSERT INTO `conversation` VALUES ('4', '1', '1', '1499991300000', '1499991500000', null);
+INSERT INTO `conversation` VALUES ('5', '1', '1', '1499991000000', '1499991200000', null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -149,6 +184,7 @@ CREATE TABLE `customer_service` (
   `nickname` varchar(20) NOT NULL,
   `employee_id` varchar(20) NOT NULL,
   `auto_message` varchar(255) DEFAULT NULL,
+  `is_dimission` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`service_id`),
   UNIQUE KEY `service_id` (`service_id`) USING BTREE,
   UNIQUE KEY `employee_id` (`employee_id`),
@@ -159,7 +195,7 @@ CREATE TABLE `customer_service` (
 -- ----------------------------
 -- Records of customer_service
 -- ----------------------------
-INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好');
+INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0');
 
 -- ----------------------------
 -- Table structure for flag

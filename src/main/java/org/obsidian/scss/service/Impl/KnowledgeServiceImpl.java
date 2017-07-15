@@ -2,11 +2,13 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.bean.KnowledgeList;
 import org.obsidian.scss.bean.Message;
-import org.obsidian.scss.bean.RobotAns;
+import org.obsidian.scss.bean.RobotChat;
+import org.obsidian.scss.dao.KeywordHeatMapper;
 import org.obsidian.scss.dao.KeywordMapper;
 import org.obsidian.scss.dao.KnowledgeKeywordMapper;
 import org.obsidian.scss.dao.KnowledgeMapper;
 import org.obsidian.scss.entity.Keyword;
+import org.obsidian.scss.entity.KeywordHeat;
 import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.entity.KnowledgeKeyword;
 import org.obsidian.scss.service.KnowledgeService;
@@ -15,10 +17,8 @@ import org.obsidian.scss.util.Trie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * Created by Lee on 2017/7/9.
@@ -34,6 +34,9 @@ public class KnowledgeServiceImpl implements KnowledgeService{
 
     @Autowired
     private KnowledgeKeywordMapper knowledgeKeywordMapper;
+
+    @Autowired
+    private KeywordHeatMapper keywordHeatMapper;
 
     /**
      * 添加知识库以及其对应的关键词
@@ -91,6 +94,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, List<Keyword>> map = new HashMap<Knowledge, List<Keyword>>();
         for (Keyword keyword : found){
+            keywordHeatMapper.insert(new KeywordHeat(keyword.getKeywordId(), new Date().getTime()));
             List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId(keyword.getKeywordId());
             for (Knowledge knowledge : knowledgeList){
                 if (map.containsKey(knowledge)){
@@ -115,12 +119,13 @@ public class KnowledgeServiceImpl implements KnowledgeService{
      * 根据客户提问，机器人作出回答并关联推送
      */
     @Transactional
-    public Message<RobotAns> getRobotAns(String content) {
+    public Message<RobotChat> getRobotChat(String content) {
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, Integer> map = new HashMap<Knowledge, Integer>();
         int maxHit = 1;
         for (Keyword keyword : found){
+
             List<Knowledge> knowledgeList = knowledgeMapper.selectByKeywordId(keyword.getKeywordId());
             for (Knowledge knowledge : knowledgeList){
                 if (map.containsKey(knowledge)){
@@ -132,7 +137,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             }
         }
         boolean first = true;
-        List<String> pushQuestion = new ArrayList<String>();
+        List<String> questionPush = new ArrayList<String>();
         String ans = null;
         System.out.println(maxHit);
         for (Knowledge knowledge : map.keySet()){
@@ -141,10 +146,10 @@ public class KnowledgeServiceImpl implements KnowledgeService{
                 System.out.println("!!");
                 first = false;
             } else {
-                pushQuestion.add(knowledge.getQuestion());
+                questionPush.add(knowledge.getQuestion());
             }
         }
         System.out.println("!!!" + ans);
-        return new Message<RobotAns>(new RobotAns(ans, pushQuestion));
+        return new Message<RobotChat>(new RobotChat(ans, questionPush, new Date().getTime()));
     }
 }

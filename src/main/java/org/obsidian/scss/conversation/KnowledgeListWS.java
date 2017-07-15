@@ -39,7 +39,7 @@ public class KnowledgeListWS {
     @OnMessage
     public void onMessage(String msg){
         System.out.println("收到消息" + msg);
-        System.out.println(resolverFactory.doAction(msg));
+
 /*        Gson gson = new Gson();
         try {
             this.session.getBasicRemote().sendText(gson.toJson(knowledgeService.getKnowledgeByContent(msg)));
