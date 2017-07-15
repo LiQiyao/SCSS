@@ -2,6 +2,7 @@ package org.obsidian.scss.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.obsidian.scss.entity.KeywordAndHeat;
 import org.obsidian.scss.entity.KeywordHeat;
 import org.obsidian.scss.entity.KeywordHeatExample;
 
@@ -19,4 +20,8 @@ public interface KeywordHeatMapper {
     int updateByExampleSelective(@Param("record") KeywordHeat record, @Param("example") KeywordHeatExample example);
 
     int updateByExample(@Param("record") KeywordHeat record, @Param("example") KeywordHeatExample example);
+    /**
+     * CJN
+     */
+    List<KeywordAndHeat> getDayHeat(@Param("timestamp") long timestamp);
 }
