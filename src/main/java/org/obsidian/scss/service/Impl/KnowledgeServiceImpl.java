@@ -1,6 +1,5 @@
 package org.obsidian.scss.service.Impl;
 
-import org.obsidian.scss.bean.KnowledgeList;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.RobotChat;
 import org.obsidian.scss.dao.KeywordHeatMapper;

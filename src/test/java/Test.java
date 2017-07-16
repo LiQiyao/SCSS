@@ -1,13 +1,11 @@
 import org.junit.runner.RunWith;
-import org.obsidian.scss.entity.JoinUp;
+import org.obsidian.scss.service.ClientService;
 import org.obsidian.scss.service.JoinUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
@@ -19,13 +17,25 @@ import java.util.List;
 public class Test {
 
     @Autowired
+    private ClientService clientService;
+
+    @Autowired
     private JoinUpService joinUpService;
 
     @org.junit.Test
     public void test(){
-        List<JoinUp> list = joinUpService.getByClientId(1);
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).toString());
-        }
+        int clientId = 1;
+        String clientName = "chen";
+        int sex = 0;
+        Long phoneNum = 699L;
+        String email = "108490462@qq.com";
+        String address = "zhejiag";
+        String qq = "1084962";
+        String wx = "wx122";
+        String weibo = "11331123";
+        String taobao = "weigobao";
+        String alipay = "1566666";
+        clientService.updateClient(clientId,clientName,address,email,phoneNum,sex);
+        joinUpService.updateJoinUp(clientId,qq,wx,weibo,taobao,alipay);
     }
 }

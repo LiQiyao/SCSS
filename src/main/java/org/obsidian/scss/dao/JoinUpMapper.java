@@ -1,11 +1,14 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.entity.JoinUpExample;
 
+import java.util.List;
+
 public interface JoinUpMapper {
+    int updateJoinUp(@Param("clientId")int clientId,@Param("qq") String wx,@Param("wx") String qq,@Param("weibo") String weibo,@Param("taobao") String taobao,@Param("alipay") String alipay);
+
     long countByExample(JoinUpExample example);
 
     int deleteByExample(JoinUpExample example);
