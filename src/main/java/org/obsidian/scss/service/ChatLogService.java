@@ -11,7 +11,11 @@ public interface ChatLogService {
 
     int add(int senderId, int receiverId, int contentType, String content, Long time, int fromClient);
 
+    int addWithConversationId(int conversationId, int senderId, int receiverId, int contentType, String content, Long time, int fromClient);
+
     List<ChatLog> getByClientId(int clientId);
 
     List<ChatLog> getByConversationId(int conversationId);
+
+    List<ChatLog> getClientSayByConversationId(int conversationId);
 }

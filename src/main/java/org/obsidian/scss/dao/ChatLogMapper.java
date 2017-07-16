@@ -23,4 +23,6 @@ public interface ChatLogMapper {
     List<ChatLog> selectByConversationId(int conversationId);
 
     List<ChatLog> selectByClientId(int clientId);
+
+    List<ChatLog> selectClientSayByConversationId(int conversationId);
 }
