@@ -36,6 +36,12 @@ public class ChatLogServiceImpl implements ChatLogService {
         return chatLogMapper.insertSelective(new ChatLog(conversationId,senderId,receiverId,contentType,content,time, fromClient));
     }
 
+    @Transactional
+    public int addWithConversationId(int conversationId, int senderId, int receiverId, int contentType, String content, Long time, int fromClient) {
+        return chatLogMapper.insertSelective(new ChatLog(conversationId,senderId,receiverId,contentType,content,time, fromClient));
+    }
+
+
     /**
      *根据客户编号获取聊天记录
      */
@@ -47,5 +53,9 @@ public class ChatLogServiceImpl implements ChatLogService {
     @Transactional
     public List<ChatLog> getByConversationId(int conversationId) {
         return chatLogMapper.selectByConversationId(conversationId);
+    }
+
+    public List<ChatLog> getClientSayByConversationId(int conversationId) {
+        return chatLogMapper.selectClientSayByConversationId(conversationId);
     }
 }

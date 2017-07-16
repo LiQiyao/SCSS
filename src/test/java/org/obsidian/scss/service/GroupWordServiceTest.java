@@ -21,12 +21,18 @@ public class GroupWordServiceTest {
 
     @Test
     public void getTrie() throws Exception {
-
+        String s = "abc";
+        String s1 = new String("abc");
+        String s2 = new String("cba");
+        String s3 = "cbd";
+        System.out.println(s == s1);
+        System.out.println(s2 == s3);
     }
 
     @Test
     public void getServiceGroupIdByContent() throws Exception {
-        System.out.println(groupWordService.getServiceGroupIdByContent("我想买房要买房，但是没钱"));
+        Integer integer = groupWordService.getServiceGroupIdByContent("sdsadsa");
+        System.out.println(integer );
     }
 
 }
