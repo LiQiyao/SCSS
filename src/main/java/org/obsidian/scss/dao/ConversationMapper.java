@@ -47,5 +47,8 @@ public interface ConversationMapper {
     List<DayAndTime> selectRecentWeekend(@Param("timestamp") Long timestamp);
     List<DayAndTime> selectRecentHour(@Param("timestamp") Long timestamp);
     List<DayAndTime> selectRecentMinute(@Param("timestamp") Long timestamp);
+    List<DayAndTime> selectRecentPeopleMonth(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
+    List<DayAndTime> selectRecentPeopleWeekend(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
+    List<DayAndTime> selectRecentPeopleHour(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
     
 }

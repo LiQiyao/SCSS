@@ -29,4 +29,6 @@ public interface CustomerServiceService {
      */
     int selectTotalServer();
     List<CustomerService> selectNotDimissionPerson();
+    List<CustomerService> selectBySearchName(String name);
+    int updateCustomDimission(int id);
 }

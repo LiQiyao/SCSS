@@ -202,4 +202,10 @@
   <select id="selectNotDimissionPerson" resultType="org.obsidian.scss.entity.CustomerService">
     SELECT * FROM customer_service WHERE is_dimission = 0;
   </select>
+  <select id="selectBySearchName" parameterType="String" resultType="org.obsidian.scss.entity.CustomerService">
+    SELECT * FROM customer_service WHERE name LIKE CONCAT('%',#{name},'%' ) OR nickname LIKE CONCAT('%',#{name},'%' );
+  </select>
+  <select id="updateDimission" parameterType="Integer">
+    UPDATE customer_service SET is_dimission = 1 WHERE service_id = #{service_id};
+  </select>
 </mapper>

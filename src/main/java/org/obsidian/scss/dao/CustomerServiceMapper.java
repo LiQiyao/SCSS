@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.CustomerServiceExample;
 
+import javax.swing.undo.CannotUndoException;
 import java.util.List;
 
 public interface CustomerServiceMapper {
@@ -22,7 +23,13 @@ public interface CustomerServiceMapper {
     int updateByExample(@Param("record") CustomerService record, @Param("example") CustomerServiceExample example);
 
     int deleteCustomerService(int serviceId);
-    
+
+    /**
+     * Create By cjn
+     * @return
+     */
     int selectAllServerNum();
     List<CustomerService> selectNotDimissionPerson();
+    List<CustomerService>selectBySearchName(@Param("name") String name);
+    int updateDimission(@Param("service_Id")int service_Id);
 }
