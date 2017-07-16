@@ -18,6 +18,11 @@
       <result column="time" property="time"/>
     </collection>
   </resultMap>
+  <select id="selectLastChatServiceId" resultType="org.obsidian.scss.entity.CustomerService">
+    select customer_service.* from conversation, customer_service
+    where client_id=1 AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
+    ORDER BY stop_time DESC limit 0,1;
+  </select>
   <select id="selectByClientId" resultMap="BaseResultMap">
     select conversation.*, chat_log.* from conversation, chat_log
     where conversation.conversation_id=chat_log.conversation_id
@@ -43,6 +48,10 @@
   </select>
   <update id="updateStopTime">
     update conversation set stop_time = #{stopTime}, score=#{score}
+    where conversation_id=#{conversationId};
+  </update>
+  <update id="updateStopTimeWithoutScore">
+    update conversation set stop_time = #{stopTime}
     where conversation_id=#{conversationId};
   </update>
   <select id="selectLastIdByClientId" resultType="java.lang.Integer">

@@ -1,2 +1,4 @@
 target/
 src/main/resources/jdbc.properties
+.idea
+src/main/java/org/obsidian/scss/conversation/ClientDetailWS.java

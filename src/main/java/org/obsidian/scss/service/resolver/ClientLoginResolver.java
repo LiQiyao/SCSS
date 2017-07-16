@@ -71,6 +71,7 @@ public class ClientLoginResolver implements ContentResolver {
         conversationService.startConversation(clientId, 0, new Date().getTime());
         conversationStart.setConversationId(conversationService.getLastIdByClientId(clientId));
         Message<ConversationStart> ret = new Message<ConversationStart>(conversationStart);
+        webSocket.setClientId(clientId);
         try {
             session.getBasicRemote().sendText(gson.toJson(ret));
         } catch (IOException e) {

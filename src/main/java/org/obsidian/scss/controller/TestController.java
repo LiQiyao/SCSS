@@ -1,6 +1,6 @@
 package org.obsidian.scss.controller;
 
-import org.obsidian.scss.service.InitBean;
+import org.obsidian.scss.service.GroupQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TestController {
 
     @Autowired
-    private InitBean initBean;
+    private GroupQueue groupQueue;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String ws(){
-        System.out.println(initBean);
-        initBean.setStartTime(9L);
+        System.out.println(groupQueue);
         return "ws";
     }
 
-    @RequestMapping(value = "/x", method = RequestMethod.GET)
+    @RequestMapping(value = "/serviceWS", method = RequestMethod.GET)
     public String xws(){
-        System.out.println(initBean);
-        return "ws";
+        System.out.println(groupQueue);
+        return "serviceWS";
     }
 }

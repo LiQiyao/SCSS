@@ -4,9 +4,7 @@ import org.obsidian.scss.bean.OverViewInfo;
 import org.obsidian.scss.bean.Show;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.service.ConversationService;
-import org.obsidian.scss.service.CustomerServiceService;
-import org.obsidian.scss.service.WorkTimeService;
+import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -25,6 +23,10 @@ public class OverViewController {
     private CustomerServiceService customerService;
     @Autowired
     private ConversationService conversationService;
+    @Autowired
+    private AdvertisementService advertisementService;
+    @Autowired
+    private KeywordHeatService keywordHeatService;
     
     @RequestMapping("/OverView")
     @ResponseBody
@@ -44,7 +46,8 @@ public class OverViewController {
         overViewInfo.setOnlineServer(workTimeService.OnlineServer());
         overViewInfo.setTotalServer(customerService.selectTotalServer());
         overViewInfo.setOnlineClient(conversationService.selectConversationNotFinish());
-        System.out.println(customerService.selectNotDimissionPerson().get(0).getIsDimission());
+        overViewInfo.setAdvCount(advertisementService.getTotalAdv());
+        overViewInfo.setKeywordAndHeats(keywordHeatService.getHeatWord());
         Show show = new Show();
         show.setData(overViewInfo);
         return show;

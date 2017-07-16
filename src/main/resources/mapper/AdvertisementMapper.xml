@@ -163,4 +163,8 @@
     set adv_content = #{advContent,jdbcType=VARCHAR}
     where adv_id = #{advId,jdbcType=INTEGER}
   </update>
+  <!--Create By cjn-->
+  <select id="countAdv" resultType="Integer">
+      SELECT  COUNT(*) FROM advertisement;
+  </select>
 </mapper>

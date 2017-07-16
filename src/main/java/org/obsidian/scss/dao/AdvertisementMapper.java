@@ -28,4 +28,8 @@ public interface AdvertisementMapper {
     int updateByPrimaryKeySelective(Advertisement record);
 
     int updateByPrimaryKey(Advertisement record);
+    /**
+     * Create By cjn
+     */
+    int countAdv();
 }

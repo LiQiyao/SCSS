@@ -60,4 +60,32 @@ public class Client {
     public void setSex(Integer sex) {
         this.sex = sex;
     }
+
+    public Client() {
+    }
+
+    public Client(Integer clientId) {
+        this.clientId = clientId;
+    }
+
+    public Client(Integer clientId, String name, String address, String email, Long telephone, Integer sex) {
+        this.clientId = clientId;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.telephone = telephone;
+        this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "clientId=" + clientId +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone=" + telephone +
+                ", sex=" + sex +
+                '}';
+    }
 }
