@@ -26,6 +26,8 @@ public interface ConversationService {
 
     CustomerService getLastChatServiceId(int clientId);
 
+    int resetServiceId(int serviceId, int conversationId);
+
     /**
      * Create By cjn
      * @return

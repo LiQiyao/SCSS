@@ -59,6 +59,10 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationMapper.selectLastChatServiceId(clientId);
     }
 
+    public int resetServiceId(int serviceId, int conversationId) {
+        return conversationMapper.updateServiceId(serviceId, conversationId);
+    }
+
     /**
      * create By cjn
      * @return

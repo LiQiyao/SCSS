@@ -36,6 +36,6 @@ public class KeywordServiceImpl implements KeywordService{
     public int insertKeyword(String tagName) {
         Keyword keyword = new Keyword();
         keyword.setValue(tagName);
-        return keywordMapper.insert();
+        return keywordMapper.insert(keyword);
     }
 }

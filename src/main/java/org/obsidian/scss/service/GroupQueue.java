@@ -35,7 +35,7 @@ public class GroupQueue implements Serializable {
     }
 
     //根据客服组id加入客户到队列
-    public int joinQueueBygroupId(int groupId, int clientId){
+    public int joinQueueByGroupId(int groupId, int clientId){
         PriorityBlockingQueue<Client> queue = groupQueueMap.get(groupId);
         queue.add(new Client(clientId));
         return queue.size();
@@ -45,7 +45,9 @@ public class GroupQueue implements Serializable {
     public int joinLeastClientQueue(int clientId){
         int leastClient = 999999999;
         int groupId = 0;
+        System.out.println(groupQueueMap);
         for (Integer i : groupQueueMap.keySet()){
+            System.out.println(groupQueueMap.get(i) + "!!");
             if (groupQueueMap.get(i).size() < leastClient){
                 leastClient = groupQueueMap.get(i).size();
                 groupId = i;

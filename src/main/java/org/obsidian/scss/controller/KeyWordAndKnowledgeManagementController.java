@@ -30,8 +30,6 @@ public class KeyWordAndKnowledgeManagementController {
     KnowledgeKeywordService knowledgeKeywordService;
     @Autowired
     KeywordService keywordService;
-    @Autowired
-    KeywordService keywordService;
     
     @RequestMapping("knowledgeSearch")
     @ResponseBody

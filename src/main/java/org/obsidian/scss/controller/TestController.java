@@ -16,10 +16,15 @@ public class TestController {
     @Autowired
     private GroupQueue groupQueue;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/clientWS", method = RequestMethod.GET)
     public String ws(){
         System.out.println(groupQueue);
         return "ws";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(){
+        return "index";
     }
 
     @RequestMapping(value = "/serviceWS", method = RequestMethod.GET)
