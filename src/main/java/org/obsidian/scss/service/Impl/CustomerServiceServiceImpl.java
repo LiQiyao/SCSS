@@ -153,9 +153,26 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
     public int selectTotalServer() {
         return customerServiceMapper.selectAllServerNum();
     }
-
+    @Transactional
     public List<CustomerService> selectNotDimissionPerson() {
         List<CustomerService> res =  customerServiceMapper.selectNotDimissionPerson();
         return res;
+    }
+
+
+    public CustomerService selectByEIdAndPwd(String employeeId, String password) {
+        return customerServiceMapper.selectByEIdAndPwd(employeeId, password);
+    }
+    @Transactional
+    public List<CustomerService> selectBySearchName(String name) {
+        return customerServiceMapper.selectBySearchName(name);
+    }
+    /**
+     * Create By Cjn 
+     * 离职对象人员变更
+     */
+    public int updateCustomDimission(int id) {
+        return customerServiceMapper.updateDimission(id);
+
     }
 }

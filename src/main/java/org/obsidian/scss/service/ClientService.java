@@ -26,4 +26,9 @@ public interface ClientService {
     List<Flag> selectAllFlag(int clientId);
 
     List<Flag> selectAllUnusedFlag(int clientId);
+
+    /**
+     * creaete By cjn
+     */
+    List<Client> selectAllClient();
 }

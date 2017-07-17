@@ -31,4 +31,6 @@ public interface KnowledgeMapper {
     int deleteById(int knowledgeId);
 
     Knowledge selectByKnowledgeId(int knowledgeId);
+    
+    List<Knowledge> selectKnowledgeBySearchName(@Param("keyword") String keyword);
 }

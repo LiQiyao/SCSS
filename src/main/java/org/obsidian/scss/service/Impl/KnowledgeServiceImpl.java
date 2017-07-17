@@ -151,4 +151,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         System.out.println("!!!" + ans);
         return new Message<RobotChat>(new RobotChat(ans, questionPush, new Date().getTime()));
     }
+    public List<Knowledge> selectKnowledgeBySearchName(String keyword) {
+        return knowledgeMapper.selectKnowledgeBySearchName(keyword);
+    }
 }

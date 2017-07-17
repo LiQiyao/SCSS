@@ -21,6 +21,9 @@
       <result column="time" property="time"/>
     </collection>
   </resultMap>
+  <update id="updateServiceId">
+    update conversation set service_id = #{serviceId} where conversation_id=#{conversationId};
+  </update>
   <select id="selectLastChatServiceId" resultType="org.obsidian.scss.entity.CustomerService">
     select customer_service.* from conversation, customer_service
     where client_id=1 AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
@@ -303,5 +306,52 @@
     ) &lt;10
     GROUP BY
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h%i');
+  </select>
+
+  <select id="selectRecentPeopleMonth" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    month,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt; 1 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+
+  <select id="selectRecentPeopleWeekend"  parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    day,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+    ) &lt; 7 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+
+  <select id="selectRecentPeopleHour" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    hour,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt;24 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h');
   </select>
 </mapper>

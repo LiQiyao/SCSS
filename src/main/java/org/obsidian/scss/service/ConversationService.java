@@ -27,6 +27,8 @@ public interface ConversationService {
 
     CustomerService getLastChatServiceId(int clientId);
 
+    int resetServiceId(int serviceId, int conversationId);
+
     /**
      * Create By cjn
      * @return
@@ -36,4 +38,7 @@ public interface ConversationService {
     List<DayAndTime> selectRecentWeekend();
     List<DayAndTime> selectRecentHour();
     List<DayAndTime> selectRecentMinute();
+    List<DayAndTime> selectRecentPeopleMonth(int serviceId);
+    List<DayAndTime> selectRecentPeopleWeekend(int serviceId);
+    List<DayAndTime> selectRecentPeopleHour(int serviceId);
 }

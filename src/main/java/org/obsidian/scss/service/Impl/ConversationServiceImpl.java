@@ -63,6 +63,10 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationMapper.selectLastChatServiceId(clientId);
     }
 
+    public int resetServiceId(int serviceId, int conversationId) {
+        return conversationMapper.updateServiceId(serviceId, conversationId);
+    }
+
     /**
      * create By cjn
      * @return
@@ -86,9 +90,21 @@ public class ConversationServiceImpl implements ConversationService {
     public List<DayAndTime> selectRecentHour() {
         return conversationMapper.selectRecentHour(System.currentTimeMillis());
     }
-
+    @Transactional
     public List<DayAndTime> selectRecentMinute() {
         System.out.println(System.currentTimeMillis());
         return conversationMapper.selectRecentMinute(System.currentTimeMillis());
+    }
+    @Transactional
+    public List<DayAndTime> selectRecentPeopleMonth(int serviceId) {
+        return conversationMapper.selectRecentPeopleMonth(System.currentTimeMillis(),serviceId);
+    }
+    @Transactional
+    public List<DayAndTime> selectRecentPeopleWeekend(int serviceId) {
+       return conversationMapper.selectRecentPeopleWeekend(System.currentTimeMillis(),serviceId);
+    }
+    @Transactional
+    public List<DayAndTime> selectRecentPeopleHour(int serviceId) {
+        return conversationMapper.selectRecentPeopleHour(System.currentTimeMillis(),serviceId);
     }
 }

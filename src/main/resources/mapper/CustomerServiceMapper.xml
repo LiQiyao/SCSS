@@ -9,9 +9,9 @@
     <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
     <result column="auto_message" jdbcType="VARCHAR" property="autoMessage" />
     <result column="is_dimission" javaType="INTEGER" property="isDimission"/>
-    <result column="password" property="password"/>
+    <result column="password" javaType="String" property="password"/>
   </resultMap>
-  <select id="verify" resultType="org.obsidian.scss.entity.CustomerService">
+  <select id="selectByEIdAndPwd" resultType="org.obsidian.scss.entity.CustomerService">
     select * from customer_service where employee_id=#{employeeId} and password=#{password};
   </select>
   <sql id="Example_Where_Clause">
@@ -205,5 +205,11 @@
   </select>
   <select id="selectNotDimissionPerson" resultType="org.obsidian.scss.entity.CustomerService">
     SELECT * FROM customer_service WHERE is_dimission = 0;
+  </select>
+  <select id="selectBySearchName" parameterType="String" resultType="org.obsidian.scss.entity.CustomerService">
+    SELECT * FROM customer_service WHERE name LIKE CONCAT('%',#{name},'%' ) OR nickname LIKE CONCAT('%',#{name},'%' );
+  </select>
+  <select id="updateDimission" parameterType="Integer">
+    UPDATE customer_service SET is_dimission = 1 WHERE service_id = #{service_id};
   </select>
 </mapper>

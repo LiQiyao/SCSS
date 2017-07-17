@@ -29,4 +29,11 @@ public interface CustomerServiceService {
      */
     int selectTotalServer();
     List<CustomerService> selectNotDimissionPerson();
+
+
+    CustomerService selectByEIdAndPwd(String employeeId, String password);
+
+    List<CustomerService> selectBySearchName(String name);
+    int updateCustomDimission(int id);
+
 }

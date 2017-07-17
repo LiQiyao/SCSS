@@ -42,6 +42,8 @@ public interface ConversationMapper {
     CustomerService selectLastChatServiceId(int clientId);
 
     int selectLastIdByClientId(int clientId);
+
+    int updateServiceId(@Param("serviceId") int serviceId,@Param("conversationId") int conversationId);
     /**
      * Create By Cjn
      */
@@ -50,5 +52,8 @@ public interface ConversationMapper {
     List<DayAndTime> selectRecentWeekend(@Param("timestamp") Long timestamp);
     List<DayAndTime> selectRecentHour(@Param("timestamp") Long timestamp);
     List<DayAndTime> selectRecentMinute(@Param("timestamp") Long timestamp);
+    List<DayAndTime> selectRecentPeopleMonth(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
+    List<DayAndTime> selectRecentPeopleWeekend(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
+    List<DayAndTime> selectRecentPeopleHour(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
     
 }

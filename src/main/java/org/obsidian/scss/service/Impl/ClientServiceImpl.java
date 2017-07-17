@@ -153,4 +153,9 @@ public class ClientServiceImpl implements ClientService {
         }
         return list;
     }
+    @Transactional
+    public List<Client> selectAllClient() {
+        ClientExample clientExample = new ClientExample();
+        return  clientMapper.selectByExample(clientExample);
+    }
 }

@@ -91,13 +91,13 @@ public class ClientChatResolver implements ContentResolver {
     }
     private void transfer(WebSocket webSocket, ClientChat clientChat){
         System.out.println("7");
-        conversationService.endConversation(clientChat.getConversationId(),new Date().getTime(), null);
         System.out.println("8");
         CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
         System.out.println("9");
         //找之前聊过天的客服
         WebSocket targetWS = null;
         for (int i = 0; i < ServiceWS.wsVector.size(); i++){
+            System.out.println("cnt1");
             if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
                 targetWS = ServiceWS.wsVector.get(i);
             }
@@ -109,6 +109,10 @@ public class ClientChatResolver implements ContentResolver {
                 System.out.println("11");
                 webSocket.setServiceId(target.getServiceId());
                 webSocket.getSession().getBasicRemote().sendText(gson.toJson(message));
+                conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
+                TransferSignal transferSignal = new TransferSignal(clientChat.getConversationId(),clientChat.getClientId(),chatLogService.getByClientId(clientChat.getClientId()));
+                Message<TransferSignal> res = new Message<TransferSignal>(transferSignal);
+                targetWS.getSession().getBasicRemote().sendText(gson.toJson(res));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,10 +122,12 @@ public class ClientChatResolver implements ContentResolver {
             for (ChatLog c : chatLogList){
                 content += c.getContent();
             }
+            System.out.println("!!!!!!!!!");
             int serviceGroupId = groupWordService.getServiceGroupIdByContent(content);
+            System.out.println(serviceGroupId);
             if (serviceGroupId != 0){
-                groupQueue.joinQueueBygroupId(serviceGroupId, clientChat.getClientId());
-            } else {
+                groupQueue.joinQueueByGroupId(serviceGroupId, clientChat.getClientId());
+            } else {System.out.println(clientChat);
                 groupQueue.joinLeastClientQueue(clientChat.getClientId());
             }
         }
