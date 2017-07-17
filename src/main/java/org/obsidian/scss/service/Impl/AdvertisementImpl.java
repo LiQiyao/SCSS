@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 public class AdvertisementImpl implements AdvertisementService {
     @Autowired
     AdvertisementMapper advertisementMapper;
+
+    /**
+     * 广告总数
+     * @return
+     */
     public int getTotalAdv() {
         return advertisementMapper.countAdv();
     }

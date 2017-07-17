@@ -209,4 +209,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectKnowledgeBySearchName" parameterType="String" resultType="org.obsidian.scss.entity.Knowledge">
+    SELECT * FROM knowledge WHERE  question LIKE CONCAT('%',#{keyword},'%') OR answer LIKE CONCAT('%',#{keyword},'%');
+  </select>
 </mapper>

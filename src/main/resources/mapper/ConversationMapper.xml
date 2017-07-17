@@ -301,4 +301,51 @@
     GROUP BY
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h%i');
   </select>
+
+  <select id="selectRecentPeopleMonth" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    month,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt; 1 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+
+  <select id="selectRecentPeopleWeekend"  parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    day,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+    ) &lt; 7 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+  </select>
+
+  <select id="selectRecentPeopleHour" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+    SELECT
+    stop_time as time,COUNT(*) as times
+    FROM
+    conversation
+    WHERE
+    TIMESTAMPDIFF(
+    hour,
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
+    FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
+    ) &lt;24 AND #{serviceId} = service_id
+    GROUP BY
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h');
+  </select>
 </mapper>

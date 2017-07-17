@@ -2,6 +2,7 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.GroupWordMapper;
 import org.obsidian.scss.entity.GroupWord;
+import org.obsidian.scss.entity.GroupWordExample;
 import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.service.GroupWordService;
 import org.obsidian.scss.util.Trie;
@@ -59,5 +60,27 @@ public class GroupWordServiceImpl implements GroupWordService {
             }
         }
         return maxId;
+    }
+
+    /**
+     * create By Cjn
+     * @param groupWord
+     * @return
+     */
+    public int insertGroupWord(GroupWord groupWord){
+        return groupWordMapper.insert(groupWord);
+    }
+
+    /**
+     * Create By cjn
+     * @param groupWord
+     * @return
+     */
+    public int deleteGroupWord(GroupWord groupWord) {
+        GroupWordExample example  = new GroupWordExample();
+        GroupWordExample.Criteria criteria = example.createCriteria();
+        criteria.andGroupIdEqualTo(groupWord.getGroupId());
+        criteria.andWordEqualTo(groupWord.getWord());
+        return groupWordMapper.deleteByExample(example);
     }
 }

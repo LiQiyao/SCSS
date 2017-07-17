@@ -24,4 +24,9 @@ public interface KnowledgeService {
     List<Knowledge> getKnowledgeByContent(String content);
 
     Message<RobotChat> getRobotChat(String content);
+
+    /***
+     * Create By Cjn
+     */
+    List<Knowledge> selectKnowledgeBySearchName(String keyword);
 }

@@ -14,7 +14,7 @@ public class CustomerService {
     private String autoMessage;
 
     private int isDimission;
-
+    
     private String password;
 
     public int getIsDimission() {
