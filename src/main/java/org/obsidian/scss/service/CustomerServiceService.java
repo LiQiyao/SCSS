@@ -29,4 +29,6 @@ public interface CustomerServiceService {
      */
     int selectTotalServer();
     List<CustomerService> selectNotDimissionPerson();
+
+    CustomerService selectByEIdAndPwd(String employeeId, String password);
 }

@@ -158,4 +158,8 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
         List<CustomerService> res =  customerServiceMapper.selectNotDimissionPerson();
         return res;
     }
+
+    public CustomerService selectByEIdAndPwd(String employeeId, String password) {
+        return customerServiceMapper.selectByEIdAndPwd(employeeId,password);
+    }
 }
