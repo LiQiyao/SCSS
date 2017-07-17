@@ -27,6 +27,4 @@ public interface KeywordMapper {
     List<Keyword> selectAll();
 
     int deleteById(int keywordId);
-
-    Keyword selectById(int keywordId);
 }

@@ -14,6 +14,8 @@ public class CustomerService {
     private String autoMessage;
     
     private int isDimission;
+    
+    private String password;
 
     public int getIsDimission() {
         return isDimission;
@@ -69,5 +71,13 @@ public class CustomerService {
 
     public void setAutoMessage(String autoMessage) {
         this.autoMessage = autoMessage == null ? null : autoMessage.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

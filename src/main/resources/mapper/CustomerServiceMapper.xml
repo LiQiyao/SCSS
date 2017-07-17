@@ -9,6 +9,7 @@
     <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
     <result column="auto_message" jdbcType="VARCHAR" property="autoMessage" />
     <result column="is_dimission" javaType="INTEGER" property="isDimission"/>
+    <result column="password" javaType="String" property="password"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
