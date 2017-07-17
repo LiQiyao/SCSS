@@ -36,6 +36,9 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private GroupWordService groupWordService;
 
+    @Autowired
+    private GroupQueue groupQueue;
+
     private Gson gson = new Gson();
 
     @Transactional
@@ -117,9 +120,9 @@ public class ClientChatResolver implements ContentResolver {
             }
             int serviceGroupId = groupWordService.getServiceGroupIdByContent(content);
             if (serviceGroupId != 0){
-
+                groupQueue.joinQueueBygroupId(serviceGroupId, clientChat.getClientId());
             } else {
-
+                groupQueue.joinLeastClientQueue(clientChat.getClientId());
             }
         }
     }

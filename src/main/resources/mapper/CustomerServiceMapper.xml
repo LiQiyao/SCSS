@@ -9,7 +9,11 @@
     <result column="employee_id" jdbcType="VARCHAR" property="employeeId" />
     <result column="auto_message" jdbcType="VARCHAR" property="autoMessage" />
     <result column="is_dimission" javaType="INTEGER" property="isDimission"/>
+    <result column="password" property="password"/>
   </resultMap>
+  <select id="verify" resultType="org.obsidian.scss.entity.CustomerService">
+    select * from customer_service where employee_id=#{employeeId} and password=#{password};
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

@@ -12,8 +12,10 @@ public class CustomerService {
     private String employeeId;
 
     private String autoMessage;
-    
+
     private int isDimission;
+
+    private String password;
 
     public int getIsDimission() {
         return isDimission;
@@ -69,5 +71,27 @@ public class CustomerService {
 
     public void setAutoMessage(String autoMessage) {
         this.autoMessage = autoMessage == null ? null : autoMessage.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public CustomerService(Integer serviceId, String name, Integer groupId, String nickname, String employeeId, String autoMessage, int isDimission, String password) {
+        this.serviceId = serviceId;
+        this.name = name;
+        this.groupId = groupId;
+        this.nickname = nickname;
+        this.employeeId = employeeId;
+        this.autoMessage = autoMessage;
+        this.isDimission = isDimission;
+        this.password = password;
+    }
+
+    public CustomerService() {
     }
 }

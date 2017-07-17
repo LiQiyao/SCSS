@@ -67,10 +67,11 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         Knowledge knowledge = knowledgeMapper.selectByKnowledgeId(knowledgeId);
         knowledgeMapper.deleteById(knowledgeId);
         knowledgeKeywordMapper.deleteByKnowledgeId(knowledgeId);
-        System.out.println(knowledge.getKeywordList());
-        for (Keyword keyword : knowledge.getKeywordList()){
-            if (knowledgeKeywordMapper.selectByKeywordId(keyword.getKeywordId()) == 0){
-                keywordMapper.deleteById(keyword.getKeywordId());
+        if(knowledge != null){
+            for (Keyword keyword : knowledge.getKeywordList()){
+                if (knowledgeKeywordMapper.selectByKeywordId(keyword.getKeywordId()) == 0){
+                    keywordMapper.deleteById(keyword.getKeywordId());
+                }
             }
         }
         return 0;

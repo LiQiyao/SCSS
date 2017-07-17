@@ -25,4 +25,6 @@ public interface CustomerServiceMapper {
     
     int selectAllServerNum();
     List<CustomerService> selectNotDimissionPerson();
+
+    CustomerService verify(@Param("employeeId") String employeeId,@Param("password") String password);
 }
