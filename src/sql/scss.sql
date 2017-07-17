@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-15 13:58:02
+Date: 2017-07-17 10:46:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,7 +82,7 @@ CREATE TABLE `chat_log` (
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chat_log
@@ -90,6 +90,15 @@ CREATE TABLE `chat_log` (
 INSERT INTO `chat_log` VALUES ('1', '1', '1', '1', '0', 'hhhh', '122222', '1');
 INSERT INTO `chat_log` VALUES ('2', '5', '1', '0', '0', '涨价了吗?', '1500097538209', '1');
 INSERT INTO `chat_log` VALUES ('4', '5', '1', '0', '0', '涨价了吗?', '1500097884460', '1');
+INSERT INTO `chat_log` VALUES ('5', '5', '1', '0', '0', '涨价了吗?', '1500098363680', '1');
+INSERT INTO `chat_log` VALUES ('6', '5', '0', '1', '0', '涨价了', '1500098363923', '0');
+INSERT INTO `chat_log` VALUES ('7', '5', '1', '0', '0', '房价涨价了吗?', '1500098403365', '1');
+INSERT INTO `chat_log` VALUES ('8', '5', '0', '1', '0', '涨价了', '1500098403699', '0');
+INSERT INTO `chat_log` VALUES ('9', '5', '1', '0', '0', '涨价了吗?', '1500167869468', '1');
+INSERT INTO `chat_log` VALUES ('10', '5', '1', '0', '0', '涨价了吗?', '1500168036494', '1');
+INSERT INTO `chat_log` VALUES ('11', '5', '0', '1', '0', '涨价了', '1500168036869', '0');
+INSERT INTO `chat_log` VALUES ('12', '5', '1', '0', '0', '转接到人工客服', '1500168145476', '1');
+INSERT INTO `chat_log` VALUES ('13', '5', '0', '1', '0', null, '1500168145664', '0');
 
 -- ----------------------------
 -- Table structure for client
@@ -169,11 +178,11 @@ CREATE TABLE `conversation` (
 -- ----------------------------
 -- Records of conversation
 -- ----------------------------
-INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '1499443470000', '3');
-INSERT INTO `conversation` VALUES ('2', '1', '1', '1499011200000', '1499013200000', '4');
+INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '199999', '3');
+INSERT INTO `conversation` VALUES ('2', '1', '0', '1499011200000', '1499013200000', '4');
 INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1499616999000', '5');
-INSERT INTO `conversation` VALUES ('4', '1', '1', '1499991300000', '1499991500000', null);
-INSERT INTO `conversation` VALUES ('5', '1', '1', '1499991000000', null, null);
+INSERT INTO `conversation` VALUES ('4', '1', '0', '1499991300000', '1499991500000', null);
+INSERT INTO `conversation` VALUES ('5', '1', '0', '1499991000000', '1500168287499', null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -187,6 +196,7 @@ CREATE TABLE `customer_service` (
   `employee_id` varchar(20) NOT NULL,
   `auto_message` varchar(255) DEFAULT NULL,
   `is_dimission` int(20) NOT NULL DEFAULT '0',
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`service_id`),
   UNIQUE KEY `service_id` (`service_id`) USING BTREE,
   UNIQUE KEY `employee_id` (`employee_id`),
@@ -197,7 +207,8 @@ CREATE TABLE `customer_service` (
 -- ----------------------------
 -- Records of customer_service
 -- ----------------------------
-INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0');
+INSERT INTO `customer_service` VALUES ('0', '机器人', '1', '小机器人', 'CCC', 'Hello，我是机器人客服', '0', '');
+INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0', '');
 
 -- ----------------------------
 -- Table structure for flag
@@ -213,6 +224,25 @@ CREATE TABLE `flag` (
 -- ----------------------------
 -- Records of flag
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for group_word
+-- ----------------------------
+DROP TABLE IF EXISTS `group_word`;
+CREATE TABLE `group_word` (
+  `group_id` int(11) NOT NULL,
+  `word` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of group_word
+-- ----------------------------
+INSERT INTO `group_word` VALUES ('1', '退款');
+INSERT INTO `group_word` VALUES ('2', '要买房');
+INSERT INTO `group_word` VALUES ('2', '想买房');
+INSERT INTO `group_word` VALUES ('3', '没钱');
+INSERT INTO `group_word` VALUES ('2', '买房');
+INSERT INTO `group_word` VALUES ('1', '买了房');
 
 -- ----------------------------
 -- Table structure for join_up
@@ -272,6 +302,11 @@ CREATE TABLE `keyword_heat` (
 -- Records of keyword_heat
 -- ----------------------------
 INSERT INTO `keyword_heat` VALUES ('7', '1500097538384');
+INSERT INTO `keyword_heat` VALUES ('7', '1500098363854');
+INSERT INTO `keyword_heat` VALUES ('7', '1500098403498');
+INSERT INTO `keyword_heat` VALUES ('3', '1500098403539');
+INSERT INTO `keyword_heat` VALUES ('7', '1500167869962');
+INSERT INTO `keyword_heat` VALUES ('7', '1500168036629');
 
 -- ----------------------------
 -- Table structure for knowledge
@@ -379,11 +414,12 @@ CREATE TABLE `operation_user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id` (`user_id`) USING BTREE,
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operation_user
 -- ----------------------------
+INSERT INTO `operation_user` VALUES ('1', 'xxx', 'xxx');
 
 -- ----------------------------
 -- Table structure for question_push
@@ -411,12 +447,14 @@ CREATE TABLE `service_group` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of service_group
 -- ----------------------------
 INSERT INTO `service_group` VALUES ('1', '售后组');
+INSERT INTO `service_group` VALUES ('2', '售前组');
+INSERT INTO `service_group` VALUES ('3', '贷款咨询组');
 
 -- ----------------------------
 -- Table structure for work_time

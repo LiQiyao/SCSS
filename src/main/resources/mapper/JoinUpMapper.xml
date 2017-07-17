@@ -12,6 +12,17 @@
       <result column="name" property="name"/>
     </association>
   </resultMap>
+  <update id="updateJoinUp" parameterType="map">
+    update join_up inner join access on join_up.access_id = access.access_id
+    set account = case access.name
+    when 'QQ' then #{qq}
+    when '微信' then #{wx}
+    when '微博' then #{weibo}
+    when '淘宝' then #{taobao}
+    when '支付宝' then #{alipay}
+    END
+    where access.name in('QQ','微信','微博','淘宝','支付宝') and join_up.client_id = #{clientId}
+  </update>
   <select id="selectByClientId" resultMap="BaseResultMap">
     select join_up.*, access.* from join_up,access WHERE client_id=#{clientId} AND join_up.access_id=access.access_id;
   </select>

@@ -8,6 +8,7 @@ import java.util.List;
  * Created by Lee on 2017/7/13.
  */
 public interface JoinUpService {
+    int updateJoinUp(int clientId,String qq,String wx,String weibo,String taobao,String alipay);
 
     JoinUp hasJoinedUp(int accessId, String account);
 

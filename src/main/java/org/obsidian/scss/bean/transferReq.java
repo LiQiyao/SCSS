@@ -3,23 +3,23 @@ package org.obsidian.scss.bean;
 /**
  * Created by Lee on 2017/7/15.
  */
-public class transferReq {
+public class TransferReq {
 
     private int transferType;
 
     private int targetId;
 
-    public transferReq(int transferType, int targetId) {
+    public TransferReq(int transferType, int targetId) {
         this.transferType = transferType;
         this.targetId = targetId;
     }
 
-    public transferReq() {
+    public TransferReq() {
     }
 
     @Override
     public String toString() {
-        return "transferReq{" +
+        return "TransferReq{" +
                 "transferType=" + transferType +
                 ", targetId=" + targetId +
                 '}';
