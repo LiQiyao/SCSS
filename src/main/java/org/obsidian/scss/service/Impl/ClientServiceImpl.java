@@ -28,6 +28,14 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private FlagService flagService;
 
+    @Transactional
+    public List<Client> selectAllByName(String name) {
+        String clientName = "%" + name + "%";
+        ClientExample example = new ClientExample();
+        example.or().andNameLike(clientName);
+        return clientMapper.selectByExample(example);
+    }
+
     /**
      * 新增客户
      * @param name

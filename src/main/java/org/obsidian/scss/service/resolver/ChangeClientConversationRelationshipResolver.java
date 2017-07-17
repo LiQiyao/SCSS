@@ -2,7 +2,7 @@ package org.obsidian.scss.service.resolver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.obsidian.scss.bean.ClientDetailReq;
+import org.obsidian.scss.bean.ChangeClientConversationRelationship;
 import org.obsidian.scss.bean.ClientDetailResp;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.conversation.WebSocket;
@@ -10,6 +10,7 @@ import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.entity.Flag;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.service.ClientService;
+import org.obsidian.scss.service.ConversationService;
 import org.obsidian.scss.service.JoinUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/15.
+ * Created by Administrator on 2017/7/17.
  */
 @Service
-public class ClientDetailReqResolver implements ContentResolver {
+public class ChangeClientConversationRelationshipResolver implements ContentResolver {
+
+    @Autowired
+    private ConversationService conversationService;
 
     @Autowired
     private ClientService clientService;
@@ -34,13 +38,15 @@ public class ClientDetailReqResolver implements ContentResolver {
     private JoinUpService joinUpService;
 
     @Transactional
-    public void resolve(String msgJson, WebSocket webSocket){
+    public void resolve(String msgJson, WebSocket webSocket) {
         Session session = webSocket.getSession();
         Gson gson = new Gson();
-        Type objectType = new TypeToken<Message<ClientDetailReq>>(){}.getType();
-        Message<ClientDetailReq> message = gson.fromJson(msgJson,objectType);
-        ClientDetailReq clientDetailReq = message.getContent();
-        int clientId = clientDetailReq.getClientId();
+        Type objectType = new TypeToken<Message<ChangeClientConversationRelationship>>(){}.getType();
+        Message<ChangeClientConversationRelationship> message = gson.fromJson(msgJson,objectType);
+        ChangeClientConversationRelationship changeClientConversationRelationship = message.getContent();
+        int conversationId = changeClientConversationRelationship.getConversationId();
+        int clientId = changeClientConversationRelationship.getClientId();
+        conversationService.updateClientId(conversationId,clientId);
         Client client = clientService.selectClientByClientId(clientId);
         String clientName = client.getName();
         int sex = client.getSex();
@@ -53,21 +59,21 @@ public class ClientDetailReqResolver implements ContentResolver {
         String taobao = "";
         String alipay = "";
         List<JoinUp> joinUpList = joinUpService.getByClientId(clientId);
-        for (JoinUp aJoinUpList : joinUpList) {
-            if (aJoinUpList.getAccess().getName().equals("微信")) {
-                wx = aJoinUpList.getAccount();
+        for(int i=0;i<joinUpList.size();i++){
+            if(joinUpList.get(i).getAccess().getName().equals("微信")){
+                wx = joinUpList.get(i).getAccount();
             }
-            if (aJoinUpList.getAccess().getName().equals("QQ")) {
-                qq = aJoinUpList.getAccount();
+            if(joinUpList.get(i).getAccess().getName().equals("QQ")){
+                qq = joinUpList.get(i).getAccount();
             }
-            if (aJoinUpList.getAccess().getName().equals("微博")) {
-                weibo = aJoinUpList.getAccount();
+            if(joinUpList.get(i).getAccess().getName().equals("微博")){
+                weibo = joinUpList.get(i).getAccount();
             }
-            if (aJoinUpList.getAccess().getName().equals("淘宝")) {
-                taobao = aJoinUpList.getAccount();
+            if(joinUpList.get(i).getAccess().getName().equals("淘宝")){
+                taobao = joinUpList.get(i).getAccount();
             }
-            if (aJoinUpList.getAccess().getName().equals("支付宝")) {
-                alipay = aJoinUpList.getAccount();
+            if(joinUpList.get(i).getAccess().getName().equals("支付宝")){
+                alipay = joinUpList.get(i).getAccount();
             }
         }
         List<Flag> flagList = clientService.selectAllFlag(clientId);

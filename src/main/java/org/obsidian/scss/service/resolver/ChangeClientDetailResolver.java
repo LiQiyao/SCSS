@@ -10,6 +10,8 @@ import org.obsidian.scss.entity.Flag;
 import org.obsidian.scss.service.ClientService;
 import org.obsidian.scss.service.JoinUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.websocket.Session;
 import java.io.IOException;
@@ -20,7 +22,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/16.
  */
-public class ChangeClientDetailResolver {
+@Service
+public class ChangeClientDetailResolver implements ContentResolver {
 
     @Autowired
     private ClientService clientService;
@@ -28,7 +31,8 @@ public class ChangeClientDetailResolver {
     @Autowired
     private JoinUpService joinUpService;
 
-    public void reslove(String msgJson, WebSocket webSocket){
+    @Transactional
+    public void resolve(String msgJson, WebSocket webSocket){
         Session session = webSocket.getSession();
         Gson gson = new Gson();
         Type objectType = new TypeToken<Message<ChangeClientDetail>>(){}.getType();

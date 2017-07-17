@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +19,11 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Autowired
     private ConversationMapper conversationMapper;
+
+    @Transactional
+    public int updateClientId(int conversationId, int clientId) {
+        return conversationMapper.updateClientId(conversationId,clientId);
+    }
 
     @Transactional
     public List<Conversation> getByClientId(int clientId) {
