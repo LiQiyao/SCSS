@@ -108,6 +108,8 @@ public class ClientChatResolver implements ContentResolver {
             try {
                 System.out.println("11");
                 webSocket.setServiceId(target.getServiceId());
+                //将自动发送的消息添加入聊天记录并且存入数据库
+                chatLogService.addWithConversationId(clientChat.getConversationId(),target.getServiceId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime(),0);
                 webSocket.getSession().getBasicRemote().sendText(gson.toJson(message));
                 conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
                 TransferSignal transferSignal = new TransferSignal(clientChat.getConversationId(),clientChat.getClientId(),chatLogService.getByClientId(clientChat.getClientId()));

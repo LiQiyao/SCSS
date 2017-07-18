@@ -3,17 +3,29 @@ package org.obsidian.scss.service.resolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.ServiceChat;
 import org.obsidian.scss.bean.TransferReq;
+import org.obsidian.scss.bean.TransferSignal;
+import org.obsidian.scss.conversation.ClientWS;
+import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
+import org.obsidian.scss.service.ChatLogService;
+import org.obsidian.scss.service.ConversationService;
+import org.obsidian.scss.service.CustomerServiceService;
 import org.obsidian.scss.service.GroupQueue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.websocket.Session;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Date;
 
 /**
  * Created by Lee on 2017/7/17.
  */
+@Service
 public class TransferReqResolver implements ContentResolver {
 
     private Gson gson = new Gson();
@@ -21,6 +33,16 @@ public class TransferReqResolver implements ContentResolver {
     @Autowired
     private GroupQueue groupQueue;
 
+    @Autowired
+    private CustomerServiceService customerServiceService;
+
+    @Autowired
+    private ChatLogService chatLogService;
+
+    @Autowired
+    private ConversationService conversationService;
+
+    @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
         Session session = webSocket.getSession();
         Type objectType = new TypeToken<Message<TransferReq>>(){}.getType();
@@ -28,8 +50,37 @@ public class TransferReqResolver implements ContentResolver {
         TransferReq transferReq = message.getContent();
         int transferType = transferReq.getTransferType();
         int targetId = transferReq.getTargetId();
-        if (transferType == 0){
-
+        int clientId = transferReq.getClientId();
+        int conversationId = transferReq.getConversationId();
+        if (transferType == 0){//转接给全公司任意一个较为空闲的客服
+            groupQueue.joinLeastClientQueue(clientId);
+        } else if (transferType == 1){
+            groupQueue.joinQueueByGroupId(targetId, clientId);
+        } else {
+            for (WebSocket ws : ServiceWS.wsVector){//找到目标客服并发送转接信号
+                if (ws.getServiceId() == targetId){
+                    TransferSignal transferSignal = new TransferSignal(conversationId,clientId, chatLogService.getByClientId(clientId));
+                    try {
+                        ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<TransferSignal>(transferSignal)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            for (WebSocket ws : ClientWS.wsVector){//找到客户并发送自动回话语句,并重置会话所指向的客服
+                if (ws.getClientId() == clientId){
+                    ws.setServiceId(targetId);
+                    Message<ServiceChat> message1 =
+                            new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime()));
+                    conversationService.resetServiceId(targetId, conversationId);
+                    chatLogService.addWithConversationId(conversationId,targetId,clientId,0,customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime(),0);
+                    try {
+                        ws.getSession().getBasicRemote().sendText(gson.toJson(message1));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }

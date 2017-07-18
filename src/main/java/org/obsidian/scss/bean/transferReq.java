@@ -9,10 +9,9 @@ public class TransferReq {
 
     private int targetId;
 
-    public TransferReq(int transferType, int targetId) {
-        this.transferType = transferType;
-        this.targetId = targetId;
-    }
+    private int clientId;
+
+    private int conversationId;
 
     public TransferReq() {
     }
@@ -22,7 +21,32 @@ public class TransferReq {
         return "TransferReq{" +
                 "transferType=" + transferType +
                 ", targetId=" + targetId +
+                ", clientId=" + clientId +
+                ", conversationId=" + conversationId +
                 '}';
+    }
+
+    public TransferReq(int transferType, int targetId, int clientId, int conversationId) {
+        this.transferType = transferType;
+        this.targetId = targetId;
+        this.clientId = clientId;
+        this.conversationId = conversationId;
+    }
+
+    public int getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public int getTransferType() {
