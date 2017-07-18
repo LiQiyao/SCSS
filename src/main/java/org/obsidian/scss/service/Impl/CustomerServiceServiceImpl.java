@@ -158,6 +158,11 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
         List<CustomerService> res =  customerServiceMapper.selectNotDimissionPerson();
         return res;
     }
+
+
+    public CustomerService selectByEIdAndPwd(String employeeId, String password) {
+        return customerServiceMapper.selectByEIdAndPwd(employeeId, password);
+    }
     @Transactional
     public List<CustomerService> selectBySearchName(String name) {
         return customerServiceMapper.selectBySearchName(name);
@@ -168,5 +173,6 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
      */
     public int updateCustomDimission(int id) {
         return customerServiceMapper.updateDimission(id);
+
     }
 }

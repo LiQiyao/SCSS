@@ -1,6 +1,8 @@
 package org.obsidian.scss.util;
 
+import org.obsidian.scss.entity.Flag;
 import org.obsidian.scss.entity.Keyword;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +31,26 @@ public class KeywordFinder {
             }
         }
         return keywordList;
+    }
+
+    public static List<Flag> findFlagInContent(String content,Trie trie){
+        List<Flag> flagList = new ArrayList<Flag>();
+        Set<String> stringSet = new HashSet<String>();
+        int len = content.length();
+        for(int i=0;i<len;i++){
+            for(int j=i;j<=len;j++){
+                stringSet.add(content.substring(i,j));
+            }
+        }
+        for(String s:stringSet){
+            if(trie.search(s) != null){
+                Flag flag = new Flag();
+                flag.setFlagId(trie.search(s));
+                flag.setName(s);
+                flagList.add(flag);
+            }
+        }
+        return flagList;
     }
 
     public static void main(String[] args) {

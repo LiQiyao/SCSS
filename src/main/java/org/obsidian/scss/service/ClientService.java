@@ -9,6 +9,8 @@ import java.util.List;
  * Created by Administrator on 2017/7/11.
  */
 public interface ClientService {
+    List<Client> selectAllByName(String name);
+
     int insertClient(String name,String address,String email,Long telephone,int sex);
 
     int deleteClient(int clientId);

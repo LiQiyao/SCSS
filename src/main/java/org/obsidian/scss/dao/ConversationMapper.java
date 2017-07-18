@@ -1,13 +1,16 @@
 package org.obsidian.scss.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.ConversationExample;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.DayAndTime;
 
+import java.util.List;
+
 public interface ConversationMapper {
+    int updateClientId(@Param("conversationId")int conversationId,@Param("clientId")int clientId);
+
     long countByExample(ConversationExample example);
 
     int deleteByExample(ConversationExample example);
@@ -39,6 +42,8 @@ public interface ConversationMapper {
     CustomerService selectLastChatServiceId(int clientId);
 
     int selectLastIdByClientId(int clientId);
+
+    int updateServiceId(@Param("serviceId") int serviceId,@Param("conversationId") int conversationId);
     /**
      * Create By Cjn
      */

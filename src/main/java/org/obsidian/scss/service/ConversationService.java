@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Lee on 2017/7/13.
  */
 public interface ConversationService {
+    int updateClientId(int conversationId,int clientId);
 
     List<Conversation> getByClientId(int clientId);
 
@@ -25,6 +26,8 @@ public interface ConversationService {
     int getLastIdByClientId(int clientId);
 
     CustomerService getLastChatServiceId(int clientId);
+
+    int resetServiceId(int serviceId, int conversationId);
 
     /**
      * Create By cjn

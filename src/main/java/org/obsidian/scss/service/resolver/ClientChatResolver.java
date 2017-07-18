@@ -5,8 +5,10 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.*;
 import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
-import org.obsidian.scss.dao.ChatLogMapper;
-import org.obsidian.scss.entity.*;
+import org.obsidian.scss.entity.ChatLog;
+import org.obsidian.scss.entity.CustomerService;
+import org.obsidian.scss.entity.Flag;
+import org.obsidian.scss.entity.Knowledge;
 import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,12 @@ import java.util.List;
  */
 @Service
 public class ClientChatResolver implements ContentResolver {
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private FlagService flagService;
 
     @Autowired
     private ChatLogService chatLogService;
@@ -58,9 +67,13 @@ public class ClientChatResolver implements ContentResolver {
         }
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
-
             chatLogService.addWithConversationId(clientChat.getConversationId(),clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
-            if (webSocket.getServiceId() == 0){//如果该消息是发送给机器人的
+            if (webSocket.getServiceId() == 0){
+                //如果该消息是发送给机器人的
+
+                //机器人直接给客户打标签
+                this.takeFlags(webSocket,clientChat.getContent());
+
                 System.out.println("!!4");
                 Message<RobotChat> res = knowledgeService.getRobotChat(clientChat.getContent());
                 chatLogService.addWithConversationId(clientChat.getConversationId(),webSocket.getServiceId(), clientChat.getClientId(),0,res.getContent().getAnswer(),new Date().getTime(),0);
@@ -73,6 +86,10 @@ public class ClientChatResolver implements ContentResolver {
                 }
             } else {
                 //如果该消息是发送给客服人员的
+
+                //给客服人员推荐标签
+                this.recommandTags(webSocket,clientChat.getConversationId(),clientChat.getContent());
+
                 List<Knowledge> knowledgeList = knowledgeService.getKnowledgeByContent(clientChat.getContent());
                 Message<RecommandKnowledges> res = new Message<RecommandKnowledges>(new RecommandKnowledges(clientChat.getConversationId(),knowledgeList));
                 try {
@@ -89,15 +106,16 @@ public class ClientChatResolver implements ContentResolver {
             }
         }
     }
+
     private void transfer(WebSocket webSocket, ClientChat clientChat){
         System.out.println("7");
-        conversationService.endConversation(clientChat.getConversationId(),new Date().getTime(), null);
         System.out.println("8");
         CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
         System.out.println("9");
         //找之前聊过天的客服
         WebSocket targetWS = null;
         for (int i = 0; i < ServiceWS.wsVector.size(); i++){
+            System.out.println("cnt1");
             if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
                 targetWS = ServiceWS.wsVector.get(i);
             }
@@ -108,7 +126,13 @@ public class ClientChatResolver implements ContentResolver {
             try {
                 System.out.println("11");
                 webSocket.setServiceId(target.getServiceId());
+                //将自动发送的消息添加入聊天记录并且存入数据库
+                chatLogService.addWithConversationId(clientChat.getConversationId(),target.getServiceId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime(),0);
                 webSocket.getSession().getBasicRemote().sendText(gson.toJson(message));
+                conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
+                TransferSignal transferSignal = new TransferSignal(clientChat.getConversationId(),clientChat.getClientId(),chatLogService.getByClientId(clientChat.getClientId()));
+                Message<TransferSignal> res = new Message<TransferSignal>(transferSignal);
+                targetWS.getSession().getBasicRemote().sendText(gson.toJson(res));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,12 +142,40 @@ public class ClientChatResolver implements ContentResolver {
             for (ChatLog c : chatLogList){
                 content += c.getContent();
             }
+            System.out.println("!!!!!!!!!");
             int serviceGroupId = groupWordService.getServiceGroupIdByContent(content);
+            System.out.println(serviceGroupId);
             if (serviceGroupId != 0){
-                groupQueue.joinQueueBygroupId(serviceGroupId, clientChat.getClientId());
-            } else {
+                groupQueue.joinQueueByGroupId(serviceGroupId, clientChat.getClientId());
+            } else {System.out.println(clientChat);
                 groupQueue.joinLeastClientQueue(clientChat.getClientId());
             }
+        }
+    }
+
+    private void takeFlags(WebSocket webSocket,String content){
+        List<Flag> list = flagService.getFlagByContent(content);
+        for(int i=0;i<list.size();i++){
+            clientService.addFlag(webSocket.getClientId(),list.get(i).getName());
+        }
+    }
+
+    private void recommandTags(WebSocket webSocket,int conversationId,String content){
+        List<Flag> list = flagService.getFlagByContent(content);
+        List<String> tagList = new ArrayList<String>();
+        for(int i=0;i<list.size();i++){
+            tagList.add(list.get(i).getName());
+        }
+        RecommandTags recommandTags = new RecommandTags(conversationId,tagList);
+        Message<RecommandTags> res = new Message<RecommandTags>(recommandTags);
+        try {
+            for (WebSocket sws : ServiceWS.wsVector){
+                if (sws.getServiceId() == webSocket.getServiceId()){
+                    sws.getSession().getBasicRemote().sendText(gson.toJson(res));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -20,4 +20,12 @@ public class Flag {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Flag{" +
+                "flagId=" + flagId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
