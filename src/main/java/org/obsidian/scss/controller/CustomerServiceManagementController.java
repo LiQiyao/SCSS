@@ -61,7 +61,7 @@ public class CustomerServiceManagementController {
 
     /**
      * Create By Cjn
-     * 用于批量离职客服人员  尚未完成
+     * 用于批量离职客服人员 
      * @param customId
      * @return
      */

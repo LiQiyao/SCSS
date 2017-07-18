@@ -30,11 +30,7 @@ public interface CustomerServiceMapper {
      */
     int selectAllServerNum();
     List<CustomerService> selectNotDimissionPerson();
-<<<<<<< HEAD
     List<CustomerService>selectBySearchName(@Param("name") String name);
     int updateDimission(@Param("service_Id")int service_Id);
-=======
-
     CustomerService verify(@Param("employeeId") String employeeId,@Param("password") String password);
->>>>>>> 93bd37076f16836c4de02dbd4cc21b8400a20fd6
 }

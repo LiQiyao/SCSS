@@ -21,4 +21,8 @@ public interface FlagService {
     List<Flag> selectAllFlag(int clientId);
 
     List<Flag> selectAllUnusedFlag(int clientId);
+    /**
+     * Create By cjn
+     */
+    Flag selectAdv(int flagId);
 }

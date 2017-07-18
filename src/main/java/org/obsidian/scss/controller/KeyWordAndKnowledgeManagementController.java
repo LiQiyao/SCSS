@@ -25,13 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class KeyWordAndKnowledgeManagementController {
     @Autowired
-    KnowledgeService knowledgeService;
+    private KnowledgeService knowledgeService;
     @Autowired
-    KnowledgeKeywordService knowledgeKeywordService;
+    private KnowledgeKeywordService knowledgeKeywordService;
     @Autowired
-    KeywordService keywordService;
-    @Autowired
-    KeywordService keywordService;
+    private  KeywordService keywordService;
     
     @RequestMapping("knowledgeSearch")
     @ResponseBody

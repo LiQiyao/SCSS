@@ -3,7 +3,7 @@ package org.obsidian.scss.bean;
 /**
  * Created by hp on 2017/7/16.
  */
-public class nameList {
+public class NameList {
     String name;
 
     public String getName() {

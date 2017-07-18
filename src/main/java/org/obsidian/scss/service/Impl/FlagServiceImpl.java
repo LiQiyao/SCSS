@@ -2,6 +2,7 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.FlagMapper;
 import org.obsidian.scss.entity.Flag;
+import org.obsidian.scss.entity.FlagExample;
 import org.obsidian.scss.service.FlagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,5 +104,12 @@ public class FlagServiceImpl implements FlagService {
             return null;
         }
         return list;
+    }
+
+    public Flag selectAdv(int flagId) {
+        FlagExample example = new FlagExample();
+        FlagExample.Criteria criteria = example.createCriteria();
+        criteria.andFlagIdEqualTo(flagId);
+        return flagMapper.selectByExample(example).get(0);
     }
 }

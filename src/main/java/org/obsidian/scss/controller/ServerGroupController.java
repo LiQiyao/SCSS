@@ -5,14 +5,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.Show;
-import org.obsidian.scss.bean.nameList;
+import org.obsidian.scss.bean.NameList;
 import org.obsidian.scss.entity.GroupWord;
-import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.service.GroupWordService;
 import org.obsidian.scss.service.ServiceGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,7 +32,7 @@ public class ServerGroupController {
     @RequestMapping("addGroup")
     public Show addGroup(@RequestParam("groups") String getJson){
         Gson gson = new Gson();
-        List<nameList> groups = gson.fromJson(getJson,new TypeToken<List<nameList>>(){}.getType());
+        List<NameList> groups = gson.fromJson(getJson,new TypeToken<List<NameList>>(){}.getType());
         int res = 0 ;
         for (int i=0 ; i < groups.size(); i++){
            int re = serviceGroupService.insertGroup(groups.get(i).getName());
