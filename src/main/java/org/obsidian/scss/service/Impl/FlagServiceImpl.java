@@ -2,7 +2,10 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.FlagMapper;
 import org.obsidian.scss.entity.Flag;
+import org.obsidian.scss.entity.FlagExample;
 import org.obsidian.scss.service.FlagService;
+import org.obsidian.scss.util.KeywordFinder;
+import org.obsidian.scss.util.Trie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,5 +106,22 @@ public class FlagServiceImpl implements FlagService {
             return null;
         }
         return list;
+    }
+
+    @Transactional
+    public List<Flag> selectFlags(){
+        FlagExample example = new FlagExample();
+        return flagMapper.selectByExample(example);
+    }
+
+    @Transactional
+    public List<Flag> getFlagByContent(String content){
+        Trie trie = new Trie();
+        List<Flag> list = this.selectFlags();
+        for(int i=0;i<list.size();i++){
+            trie.insert(list.get(i).getName(),list.get(i).getFlagId());
+        }
+        List<Flag> found = KeywordFinder.findFlagInContent(content,trie);
+        return found;
     }
 }

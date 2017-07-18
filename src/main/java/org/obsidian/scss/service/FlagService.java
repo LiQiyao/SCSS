@@ -8,6 +8,10 @@ import java.util.List;
  * Created by Administrator on 2017/7/11.
  */
 public interface FlagService {
+    List<Flag> getFlagByContent(String content);
+
+    List<Flag> selectFlags();
+
     int insertFlag(String name);
 
     int deleteFlag(int flagId);
