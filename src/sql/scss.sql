@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-17 10:46:59
+Date: 2017-07-19 14:57:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -196,7 +196,7 @@ CREATE TABLE `customer_service` (
   `employee_id` varchar(20) NOT NULL,
   `auto_message` varchar(255) DEFAULT NULL,
   `is_dimission` int(20) NOT NULL DEFAULT '0',
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL DEFAULT '888888',
   PRIMARY KEY (`service_id`),
   UNIQUE KEY `service_id` (`service_id`) USING BTREE,
   UNIQUE KEY `employee_id` (`employee_id`),
@@ -208,7 +208,7 @@ CREATE TABLE `customer_service` (
 -- Records of customer_service
 -- ----------------------------
 INSERT INTO `customer_service` VALUES ('0', '机器人', '1', '小机器人', 'CCC', 'Hello，我是机器人客服', '0', '');
-INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0', '');
+INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0', 'ABC');
 
 -- ----------------------------
 -- Table structure for flag
@@ -218,7 +218,8 @@ CREATE TABLE `flag` (
   `flag_id` int(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`flag_id`),
-  UNIQUE KEY `tag_id` (`flag_id`) USING BTREE
+  UNIQUE KEY `tag_id` (`flag_id`) USING BTREE,
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -382,11 +383,14 @@ CREATE TABLE `notification_object_type` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`not_id`),
   UNIQUE KEY `not_id` (`not_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notification_object_type
 -- ----------------------------
+INSERT INTO `notification_object_type` VALUES ('1', '全体客服');
+INSERT INTO `notification_object_type` VALUES ('2', '客服组');
+INSERT INTO `notification_object_type` VALUES ('3', '客服个人');
 
 -- ----------------------------
 -- Table structure for notification_type
@@ -397,11 +401,14 @@ CREATE TABLE `notification_type` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`nt_id`),
   UNIQUE KEY `nt_id` (`nt_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notification_type
 -- ----------------------------
+INSERT INTO `notification_type` VALUES ('1', '聊天转接通知');
+INSERT INTO `notification_type` VALUES ('2', '系统通知');
+INSERT INTO `notification_type` VALUES ('3', '普通通知');
 
 -- ----------------------------
 -- Table structure for operation_user
