@@ -9,10 +9,7 @@ import org.obsidian.scss.bean.TransferSignal;
 import org.obsidian.scss.conversation.ClientWS;
 import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
-import org.obsidian.scss.service.ChatLogService;
-import org.obsidian.scss.service.ConversationService;
-import org.obsidian.scss.service.CustomerServiceService;
-import org.obsidian.scss.service.GroupQueue;
+import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +38,9 @@ public class TransferReqResolver implements ContentResolver {
 
     @Autowired
     private ConversationService conversationService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
@@ -81,6 +81,8 @@ public class TransferReqResolver implements ContentResolver {
                     }
                 }
             }
+            //将转接通知消息存入数据库
+            notificationService.insertNotificationService(1,3,targetId,"编号为" +clientId +"的客户接入到会话中");
         }
     }
 }

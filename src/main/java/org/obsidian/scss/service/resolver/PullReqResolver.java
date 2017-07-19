@@ -37,6 +37,9 @@ public class PullReqResolver implements ContentResolver{
     @Autowired
     private ConversationService conversationService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
         Session session = webSocket.getSession();
@@ -64,5 +67,7 @@ public class PullReqResolver implements ContentResolver{
                 e.printStackTrace();
             }
         }
+        //将转接通知消息存入数据库
+        notificationService.insertNotificationService(1,3,serviceId,"编号为" +clientId +"的客户接入到会话中");
     }
 }

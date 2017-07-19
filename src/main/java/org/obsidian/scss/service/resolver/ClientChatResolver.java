@@ -48,6 +48,9 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private GroupQueue groupQueue;
 
+    @Autowired
+    private NotificationService notificationService;
+
     private Gson gson = new Gson();
 
     @Transactional
@@ -133,6 +136,8 @@ public class ClientChatResolver implements ContentResolver {
                 TransferSignal transferSignal = new TransferSignal(clientChat.getConversationId(),clientChat.getClientId(),chatLogService.getByClientId(clientChat.getClientId()));
                 Message<TransferSignal> res = new Message<TransferSignal>(transferSignal);
                 targetWS.getSession().getBasicRemote().sendText(gson.toJson(res));
+                //将转接通知消息存入数据库
+                notificationService.insertNotificationService(1,3,target.getServiceId(),"编号为" +clientChat.getClientId() +"的客户接入到会话中");
             } catch (IOException e) {
                 e.printStackTrace();
             }
