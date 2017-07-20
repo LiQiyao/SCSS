@@ -40,8 +40,11 @@ public class ConversationEndReqResolver implements ContentResolver {
         int clientId = conversationEndReq.getClientId();
         conversationMapper.updateStopTimeWithoutScore(conversationId,new Date().getTime());
         ScoreReq scoreReq = new ScoreReq(conversationId);
+        ServiceStatus serviceStatus = new ServiceStatus();
+        serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(webSocket.getServiceId()));
         try {
             session.getBasicRemote().sendText(gson.toJson(new Message<ConversationEndSignal>(new ConversationEndSignal(conversationId))));
+            session.getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
         } catch (IOException e) {
             e.printStackTrace();
         }

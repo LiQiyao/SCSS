@@ -2,6 +2,7 @@ package org.obsidian.scss.conversation;
 
 import com.google.gson.Gson;
 import org.obsidian.scss.service.KnowledgeService;
+import org.obsidian.scss.service.WorkTimeService;
 import org.obsidian.scss.service.resolver.ResolverFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
@@ -18,6 +19,9 @@ import java.util.Vector;
  */
 @ServerEndpoint(value="/ServiceWS", configurator = SpringConfigurator.class)
 public class ServiceWS implements WebSocket {
+
+    @Autowired
+    private WorkTimeService workTimeService;
 
     @Autowired
     private ResolverFactory resolverFactory;
@@ -39,18 +43,19 @@ public class ServiceWS implements WebSocket {
     @OnMessage
     public void onMessage(String msgString){
         System.out.println("收到消息" + msgString);
-
         Gson gson = new Gson();
         resolverFactory.doAction(msgString, this);
     }
 
     @OnError
     public void onError(Throwable t){
+        workTimeService.offline(serviceId);
         wsVector.remove(this);
     }
 
     @OnClose
     public void onClose(){
+        workTimeService.offline(serviceId);
         wsVector.remove(this);
     }
 

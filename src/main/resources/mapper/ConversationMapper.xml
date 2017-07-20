@@ -4,6 +4,9 @@
   <update id="updateClientId" parameterType="map">
     update conversation set client_id = #{clientId} where conversation_id = #{conversationId}
   </update>
+  <select id="selectNotFinishByServiceId" resultType="java.lang.Integer">
+    select COUNT(*) from conversation where stop_time IS NULL  and service_id=#{serviceId};
+  </select>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.Conversation">
     <result column="conversation_id" jdbcType="INTEGER" property="conversationId" />
     <result column="client_id" jdbcType="INTEGER" property="clientId" />

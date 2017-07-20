@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.*;
 import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
+import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.ChatLog;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.Flag;
@@ -50,6 +51,9 @@ public class ClientChatResolver implements ContentResolver {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private ConversationMapper conversationMapper;
 
     private Gson gson = new Gson();
 
@@ -138,6 +142,10 @@ public class ClientChatResolver implements ContentResolver {
                 targetWS.getSession().getBasicRemote().sendText(gson.toJson(res));
                 //将转接通知消息存入数据库
                 notificationService.insertNotificationService(1,3,target.getServiceId(),"编号为" +clientChat.getClientId() +"的客户接入到会话中");
+                //更新客服状态
+                ServiceStatus serviceStatus = new ServiceStatus();
+                serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(target.getServiceId()));
+                targetWS.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
             } catch (IOException e) {
                 e.printStackTrace();
             }

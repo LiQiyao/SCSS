@@ -46,6 +46,8 @@ public interface ConversationMapper {
     int selectLastIdByClientId(int clientId);
 
     int updateServiceId(@Param("serviceId") int serviceId,@Param("conversationId") int conversationId);
+
+    int selectNotFinishByServiceId(int serviceId);
     /**
      * Create By Cjn
      */

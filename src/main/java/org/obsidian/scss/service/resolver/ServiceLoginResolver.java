@@ -6,11 +6,11 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.ServiceInfo;
 import org.obsidian.scss.bean.ServiceLogin;
+import org.obsidian.scss.bean.ServiceStatus;
 import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.service.CustomerServiceService;
-import org.obsidian.scss.service.OnlineService;
-import org.obsidian.scss.service.ServiceGroupService;
+import org.obsidian.scss.entity.WorkTimeExample;
+import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +34,12 @@ public class ServiceLoginResolver implements ContentResolver {
     @Autowired
     private ServiceGroupService serviceGroupService;
 
+    @Autowired
+    private GroupQueue groupQueue;
+
+    @Autowired
+    private WorkTimeService workTimeService;
+
     public void resolve(String msgJson, WebSocket webSocket) {
         Gson gson = new Gson();
         Session session = webSocket.getSession();
@@ -43,7 +49,8 @@ public class ServiceLoginResolver implements ContentResolver {
         String token = serviceLogin.getToken();
         if (token.startsWith("\"")){
             token = token.substring(1,token.length() - 1);
-        }System.out.println("1!!!" +token);
+        }
+        System.out.println("1!!!" +token);
         String employeeId = onlineService.getEmployeeId(token);
         System.out.println("2!!!" + employeeId);
         CustomerService customerService = customerServiceService.selectCustomerServiceByEmployeeId(employeeId);
@@ -53,10 +60,17 @@ public class ServiceLoginResolver implements ContentResolver {
         System.out.println("4!!!" + groupName);
         ServiceInfo serviceInfo = new ServiceInfo(customerService.getServiceId(),customerService.getName(),customerService.getNickname(), groupName ,customerService.getEmployeeId(),customerService.getAutoMessage());
         Message<ServiceInfo> res = new Message<ServiceInfo>(serviceInfo);
+        int queuePeopleCount = groupQueue.getGroupQueueMap().get(customerService.getGroupId()).size();
+        ServiceStatus serviceStatus = new ServiceStatus();
+        serviceStatus.setQueuePeopleCount(queuePeopleCount);
         try {
             session.getBasicRemote().sendText(gson.toJson(res));
+            session.getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //记录上线时间
+        workTimeService.online(customerService.getServiceId());
     }
 }

@@ -2,13 +2,11 @@ package org.obsidian.scss.service.resolver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.obsidian.scss.bean.Message;
-import org.obsidian.scss.bean.ServiceChat;
-import org.obsidian.scss.bean.TransferReq;
-import org.obsidian.scss.bean.TransferSignal;
+import org.obsidian.scss.bean.*;
 import org.obsidian.scss.conversation.ClientWS;
 import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
+import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +40,9 @@ public class TransferReqResolver implements ContentResolver {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private ConversationMapper conversationMapper;
+
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
         Session session = webSocket.getSession();
@@ -62,6 +63,11 @@ public class TransferReqResolver implements ContentResolver {
                     TransferSignal transferSignal = new TransferSignal(conversationId,clientId, chatLogService.getByClientId(clientId));
                     try {
                         ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<TransferSignal>(transferSignal)));
+                        //更新客服状态
+                        int conversationCount = conversationMapper.selectNotFinishByServiceId(targetId);
+                        ServiceStatus serviceStatus = new ServiceStatus();
+                        serviceStatus.setConversationCount(conversationCount + 1);
+                        ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -83,6 +89,8 @@ public class TransferReqResolver implements ContentResolver {
             }
             //将转接通知消息存入数据库
             notificationService.insertNotificationService(1,3,targetId,"编号为" +clientId +"的客户接入到会话中");
+
+
         }
     }
 }
