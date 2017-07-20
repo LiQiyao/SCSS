@@ -137,7 +137,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         }
         boolean first = true;
         List<String> questionPush = new ArrayList<String>();
-        String ans = null;
+        String ans = "不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！";
         System.out.println(maxHit);
         for (Knowledge knowledge : map.keySet()){
             if (map.get(knowledge) == maxHit && first){

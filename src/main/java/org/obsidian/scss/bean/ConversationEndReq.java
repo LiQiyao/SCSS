@@ -7,6 +7,8 @@ public class ConversationEndReq {
 
     private int conversationId;
 
+    private int clientId;
+
     public ConversationEndReq(int conversationId) {
         this.conversationId = conversationId;
     }
@@ -26,6 +28,20 @@ public class ConversationEndReq {
     public String toString() {
         return "ConversationEndReq{" +
                 "conversationId=" + conversationId +
+                ", clientId=" + clientId +
                 '}';
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public ConversationEndReq(int conversationId, int clientId) {
+        this.conversationId = conversationId;
+        this.clientId = clientId;
     }
 }

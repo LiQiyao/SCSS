@@ -2,6 +2,7 @@ package org.obsidian.scss.service.resolver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.ServiceInfo;
 import org.obsidian.scss.bean.ServiceLogin;
@@ -40,10 +41,16 @@ public class ServiceLoginResolver implements ContentResolver {
         Message<ServiceLogin> message = gson.fromJson(msgJson, objectType);
         ServiceLogin serviceLogin = message.getContent();
         String token = serviceLogin.getToken();
+        if (token.startsWith("\"")){
+            token = token.substring(1,token.length() - 1);
+        }System.out.println("1!!!" +token);
         String employeeId = onlineService.getEmployeeId(token);
+        System.out.println("2!!!" + employeeId);
         CustomerService customerService = customerServiceService.selectCustomerServiceByEmployeeId(employeeId);
+        System.out.println("3!!!" + customerService);
         webSocket.setServiceId(customerService.getServiceId());
         String groupName = serviceGroupService.selectGroupByGroupId(customerService.getGroupId()).getName();
+        System.out.println("4!!!" + groupName);
         ServiceInfo serviceInfo = new ServiceInfo(customerService.getServiceId(),customerService.getName(),customerService.getNickname(), groupName ,customerService.getEmployeeId(),customerService.getAutoMessage());
         Message<ServiceInfo> res = new Message<ServiceInfo>(serviceInfo);
         try {

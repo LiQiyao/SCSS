@@ -64,16 +64,16 @@ public class ClientChatResolver implements ContentResolver {
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
         System.out.println("!!2");
-        if ("转接到人工客服".equals(clientChat.getContent())){
-            this.transfer(webSocket, clientChat);
-            return;
-        }
+
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
             chatLogService.addWithConversationId(clientChat.getConversationId(),clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
             if (webSocket.getServiceId() == 0){
                 //如果该消息是发送给机器人的
-
+                if ("转接到人工客服".equals(clientChat.getContent())){
+                    this.transfer(webSocket, clientChat);
+                    return;
+                }
                 //机器人直接给客户打标签
                 this.takeFlags(webSocket,clientChat.getContent());
 

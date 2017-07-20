@@ -25,7 +25,7 @@ public interface JoinUpMapper {
 
     List<JoinUp> selectByClientId(int clientId);
 
-    JoinUp selectByRecord(@Param("accessId") int accessId,@Param("account") String account);
+    List<JoinUp> selectByRecord(@Param("accessId") int accessId,@Param("account") String account);
 
     JoinUp selectLastJoinByClientId(int clientId);
 }

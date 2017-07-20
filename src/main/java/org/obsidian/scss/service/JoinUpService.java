@@ -10,7 +10,7 @@ import java.util.List;
 public interface JoinUpService {
     int updateJoinUp(int clientId,String qq,String wx,String weibo,String taobao,String alipay);
 
-    JoinUp hasJoinedUp(int accessId, String account);
+    List<JoinUp> hasJoinedUp(int accessId, String account);
 
     int addJoinUp(int accessId, int clientId, long time, String account);
 
