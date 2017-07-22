@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.*;
 import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
+import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.ChatLog;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.Flag;
@@ -48,6 +49,12 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private GroupQueue groupQueue;
 
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private ConversationMapper conversationMapper;
+
     private Gson gson = new Gson();
 
     @Transactional
@@ -61,16 +68,16 @@ public class ClientChatResolver implements ContentResolver {
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
         System.out.println("!!2");
-        if ("转接到人工客服".equals(clientChat.getContent())){
-            this.transfer(webSocket, clientChat);
-            return;
-        }
+
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
             chatLogService.addWithConversationId(clientChat.getConversationId(),clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
             if (webSocket.getServiceId() == 0){
                 //如果该消息是发送给机器人的
-
+                if ("转接到人工客服".equals(clientChat.getContent())){
+                    this.transfer(webSocket, clientChat);
+                    return;
+                }
                 //机器人直接给客户打标签
                 this.takeFlags(webSocket,clientChat.getContent());
 
@@ -133,6 +140,12 @@ public class ClientChatResolver implements ContentResolver {
                 TransferSignal transferSignal = new TransferSignal(clientChat.getConversationId(),clientChat.getClientId(),chatLogService.getByClientId(clientChat.getClientId()));
                 Message<TransferSignal> res = new Message<TransferSignal>(transferSignal);
                 targetWS.getSession().getBasicRemote().sendText(gson.toJson(res));
+                //将转接通知消息存入数据库
+                notificationService.insertNotificationService(1,3,target.getServiceId(),"编号为" +clientChat.getClientId() +"的客户接入到会话中");
+                //更新客服状态
+                ServiceStatus serviceStatus = new ServiceStatus();
+                serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(target.getServiceId()));
+                targetWS.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
             } catch (IOException e) {
                 e.printStackTrace();
             }

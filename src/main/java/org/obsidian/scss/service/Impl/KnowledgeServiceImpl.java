@@ -56,7 +56,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             }
             knowledgeKeywordMapper.insert(new KnowledgeKeyword(keywordId, knowledgeId));
         }
-        return 1;//陈伟写错了全都是返回0了修正为1
+        return 1;//全都是返回0了修正为1
     }
 
     /**
@@ -137,7 +137,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         }
         boolean first = true;
         List<String> questionPush = new ArrayList<String>();
-        String ans = null;
+        String ans = "不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！";
         System.out.println(maxHit);
         for (Knowledge knowledge : map.keySet()){
             if (map.get(knowledge) == maxHit && first){

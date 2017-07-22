@@ -1,5 +1,6 @@
 package org.obsidian.scss.controller;
 
+import com.sun.deploy.net.HttpResponse;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.service.CustomerServiceService;
@@ -12,6 +13,7 @@ import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -29,14 +31,14 @@ public class ServiceLoginController {
     private OnlineService onlineService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest req){
+    public String login(HttpServletRequest req, HttpServletResponse resp){
         String employeeId = req.getParameter("employeeId");
         String password = req.getParameter("password");
         if (employeeId != null && password != null){
             CustomerService customerService = customerServiceService.selectByEIdAndPwd(employeeId,password);
             if (customerService != null){
-                onlineService.online(employeeId);
-                return "serviceWS";
+                onlineService.online(employeeId, resp);
+                return "redirect:/SCSS/customerService.html";
             }
         }
         return null;

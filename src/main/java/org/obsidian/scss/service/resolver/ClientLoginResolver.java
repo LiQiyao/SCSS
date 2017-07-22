@@ -19,6 +19,7 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -49,15 +50,15 @@ public class ClientLoginResolver implements ContentResolver {
         Message<ClientLogin> message = gson.fromJson(msgJson, type);
         ClientLogin clientLogin = message.getContent();
         System.out.println(clientLogin.getClass());
-        JoinUp joinUp = null;
+        List<JoinUp> joinUpList = null;
         String account = null;
         int clientId = 0;
         int accessId = clientLogin.getAccessId();
         if (clientLogin.getAccount() != null){
-            joinUp = joinUpService.hasJoinedUp(clientLogin.getAccessId(), clientLogin.getAccount());
-            if (joinUp != null){
-                account = joinUp.getAccount();
-                clientId = joinUp.getClientId();
+            joinUpList = joinUpService.hasJoinedUp(clientLogin.getAccessId(), clientLogin.getAccount());
+            if (joinUpList != null){
+                account = joinUpList.get(0).getAccount();
+                clientId = joinUpList.get(0).getClientId();
                 joinUpService.addJoinUp(accessId, clientId, new Date().getTime(),account);
                 conversationStart.setChatLogList(chatLogService.getByClientId(clientId));
             }

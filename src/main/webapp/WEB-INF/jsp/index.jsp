@@ -6,5 +6,9 @@
     <input type="text" name="password">
     <input type="submit">
 </form>
+<form method="post" action="/noti">
+    <input type="text" name="title">
+    <input type="submit">
+</form>
 </body>
 </html>

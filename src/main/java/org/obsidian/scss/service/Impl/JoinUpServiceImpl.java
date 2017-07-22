@@ -26,7 +26,7 @@ public class JoinUpServiceImpl implements JoinUpService {
     /**
      *根据接入方式和接入账号判断该用户之前是否接入过
      */
-    public JoinUp hasJoinedUp(int accessId, String account) {
+    public List<JoinUp> hasJoinedUp(int accessId, String account) {
         return joinUpMapper.selectByRecord(accessId, account);
     }
 

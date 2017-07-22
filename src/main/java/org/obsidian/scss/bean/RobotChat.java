@@ -9,13 +9,30 @@ public class RobotChat {
 
     private String answer;
 
-    private List<String> questionPsuh;
+    private List<String> questionPush;
 
     private long time;
 
-    public RobotChat(String answer, List<String> questionPsuh, long time) {
+    @Override
+    public String toString() {
+        return "RobotChat{" +
+                "answer='" + answer + '\'' +
+                ", questionPush=" + questionPush +
+                ", time=" + time +
+                '}';
+    }
+
+    public List<String> getQuestionPush() {
+        return questionPush;
+    }
+
+    public void setQuestionPush(List<String> questionPush) {
+        this.questionPush = questionPush;
+    }
+
+    public RobotChat(String answer, List<String> questionPush, long time) {
         this.answer = answer;
-        this.questionPsuh = questionPsuh;
+        this.questionPush = questionPush;
         this.time = time;
     }
 
@@ -30,13 +47,6 @@ public class RobotChat {
         this.answer = answer;
     }
 
-    public List<String> getQuestionPsuh() {
-        return questionPsuh;
-    }
-
-    public void setQuestionPsuh(List<String> questionPsuh) {
-        this.questionPsuh = questionPsuh;
-    }
 
     public long getTime() {
         return time;
