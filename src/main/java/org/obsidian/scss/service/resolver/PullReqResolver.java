@@ -62,6 +62,7 @@ public class PullReqResolver implements ContentResolver{
         ServiceChat serviceChat = new ServiceChat(conversationId,clientId,0,customerService.getAutoMessage(),new Date().getTime());
         for (WebSocket ws : ClientWS.wsVector){
             try {
+                ws.setServiceId(serviceId);
                 ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
             } catch (IOException e) {
                 e.printStackTrace();
