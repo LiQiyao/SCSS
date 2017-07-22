@@ -27,6 +27,7 @@ public class KnowledgeKeywordServiceImpl implements KnowledgeKeywordService {
     }
 
     public int selectKeywordIdNum(int keywordId) {
+        System.out.println(keywordId);
         KnowledgeKeywordExample example = new KnowledgeKeywordExample();
         KnowledgeKeywordExample.Criteria criteria = example.createCriteria();
         criteria.andKeywordIdEqualTo(keywordId);

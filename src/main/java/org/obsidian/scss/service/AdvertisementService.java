@@ -12,4 +12,5 @@ public interface AdvertisementService {
     int insertAdv(String content ,List<String> flagList);
     int selectByContent(String content);
     int selectId(String content);
+    int delete(int id);
 }

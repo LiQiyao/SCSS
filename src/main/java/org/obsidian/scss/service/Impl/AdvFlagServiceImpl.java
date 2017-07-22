@@ -35,6 +35,7 @@ public class AdvFlagServiceImpl implements AdvFlagService {
             AdvFlag advFlag = new AdvFlag();
             advFlag.setAdvId(advId);
             advFlag.setFlagId(flagId);
+            System.out.println("!"+advId+"!"+flagId);
             advFlagMapper.insert(advFlag);
         }
         return 1;
@@ -47,5 +48,22 @@ public class AdvFlagServiceImpl implements AdvFlagService {
        criteria.andAdvIdEqualTo(advId);
        criteria.andFlagIdEqualTo(flagId);
         return advFlagMapper.selectByExample(example).size();
+    }
+
+    @Transactional
+    public int deleteAdvFlag(int advId) {
+        AdvFlagExample example = new AdvFlagExample();
+        AdvFlagExample.Criteria criteria = example.createCriteria();
+        criteria.andAdvIdEqualTo(advId);
+        return advFlagMapper.deleteByExample(example);
+    }
+
+    @Transactional
+    public int deleteAdvOneFlag(int advId, int flagId) {
+        AdvFlagExample example = new AdvFlagExample();
+        AdvFlagExample.Criteria criteria = example.createCriteria();
+        criteria.andAdvIdEqualTo(advId);
+        criteria.andFlagIdEqualTo(flagId);
+        return advFlagMapper.deleteByExample(example);
     }
 }

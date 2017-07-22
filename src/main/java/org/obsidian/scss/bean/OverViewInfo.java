@@ -13,8 +13,7 @@ public class OverViewInfo {
     public int totalServer;
     public int onlineClient;
     public int advCount;
-    public List<Keyword> keywords;
-    public List<DayAndTime> monthInfo;
+    public List<GroupAndPersonNum> groupAndPersonNums;
     public List<DayAndTime> weekInfo;
     public List<DayAndTime> dayInfo;
     public List<DayAndTime> minuteInfo;
@@ -27,29 +26,21 @@ public class OverViewInfo {
     public void setAdvCount(int advCount) {
         this.advCount = advCount;
     }
-
-    public List<Keyword> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(List<Keyword> keywords) {
-        this.keywords = keywords;
-    }
-
-    public List<DayAndTime> getMonthInfo() {
-        return monthInfo;
-    }
-
-    public void setMonthInfo(List<DayAndTime> monthInfo) {
-        this.monthInfo = monthInfo;
-    }
-
+    
     public List<DayAndTime> getWeekInfo() {
         return weekInfo;
     }
 
     public void setWeekInfo(List<DayAndTime> weekInfo) {
         this.weekInfo = weekInfo;
+    }
+
+    public List<GroupAndPersonNum> getGroupAndPersonNums() {
+        return groupAndPersonNums;
+    }
+
+    public void setGroupAndPersonNums(List<GroupAndPersonNum> groupAndPersonNums) {
+        this.groupAndPersonNums = groupAndPersonNums;
     }
 
     public List<DayAndTime> getDayInfo() {

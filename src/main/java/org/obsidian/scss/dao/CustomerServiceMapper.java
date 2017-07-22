@@ -33,7 +33,7 @@ public interface CustomerServiceMapper {
 
     List<CustomerService>selectBySearchName(@Param("name") String name);
     
-    int updateDimission(@Param("service_Id")int service_Id);
+    int updateDimission(@Param("service_id") int service_id);
     
     CustomerService verify(@Param("employeeId") String employeeId,@Param("password") String password);
 

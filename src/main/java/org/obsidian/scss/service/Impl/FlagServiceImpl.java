@@ -78,11 +78,14 @@ public class FlagServiceImpl implements FlagService {
      */
     @Transactional
     public int selectFlagId(String name) {
-        Object object = flagMapper.selectFlagId(name);
-        if(object == null){
-            return 0;
-        }
-        return (Integer)object;
+       FlagExample example = new FlagExample();
+       FlagExample.Criteria criteria =example.createCriteria();
+       criteria.andNameEqualTo(name);
+       List<Flag> list = flagMapper.selectByExample(example);
+       if (list.size()!=0){
+           return list.get(0).getFlagId();
+       }
+        return 0;
     }
 
     /**
@@ -108,6 +111,7 @@ public class FlagServiceImpl implements FlagService {
         return list;
     }
     
+    @Transactional
     public Flag selectAdv(int flagId) {
         FlagExample example = new FlagExample();
         FlagExample.Criteria criteria = example.createCriteria();

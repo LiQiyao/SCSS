@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by hp on 2017/7/17.
@@ -29,6 +30,7 @@ public class CommonLanguageController {
         return "commonLanguage";
     }
     @RequestMapping("deleteCommonLanguage")
+    @ResponseBody
     public Show deleteLanguage(@RequestParam("deleteId") String idList){
         Gson gson = new Gson();
         List<IdList> commonId = gson.fromJson(idList,new TypeToken<List<IdList>>(){}.getType());
@@ -36,6 +38,7 @@ public class CommonLanguageController {
         int fail  = 0 ;
         for (int i = 0 ; i < commonId.size() ; i++){
             int res = commonLanguageService.deleteCommonLanguage(commonId.get(i).getId());
+            System.out.println(commonId.get(i).getId());
             if (res ==0){
                 fail++;
             }
@@ -47,6 +50,7 @@ public class CommonLanguageController {
         return show;
     }
     @RequestMapping("addCommonLanguage")
+    @ResponseBody
     public Show addCommonLanguage(@RequestParam("content")String content){
         Show show = new Show();
         int res = commonLanguageService.insertCommonLanguage(content);

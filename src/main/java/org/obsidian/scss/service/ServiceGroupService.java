@@ -1,5 +1,6 @@
 package org.obsidian.scss.service;
 
+import org.obsidian.scss.bean.GroupAndPersonNum;
 import org.obsidian.scss.entity.ServiceGroup;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface ServiceGroupService {
     ServiceGroup selectGroupByName(String name);
 
     List<ServiceGroup> selectAllGroup();
+    
+    List<GroupAndPersonNum> selectGroupPersonNum(); 
 }

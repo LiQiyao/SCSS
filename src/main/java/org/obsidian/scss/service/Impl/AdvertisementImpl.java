@@ -43,7 +43,7 @@ public class AdvertisementImpl implements AdvertisementService {
     public int selectByContent(String content) {
         AdvertisementExample example = new AdvertisementExample();
         AdvertisementExample.Criteria criteria = example.createCriteria();
-        criteria.andAdvContentEqualTo("content");
+        criteria.andAdvContentEqualTo(content);
         return advertisementMapper.selectByExample(example).size();
     }
 
@@ -57,20 +57,23 @@ public class AdvertisementImpl implements AdvertisementService {
 
     @Transactional
     public int insertAdv(String content, List<String> flagList) {
+        System.out.println("!!!!+++"+selectByContent(content));
         if (selectByContent(content) != 0){
             return 0;
         }else{
             Advertisement advertisement = new Advertisement();
             advertisement.setAdvContent(content);
-            advertisementMapper.insert(advertisement);
+            advertisementMapper.insertAdv(content);
             int advId = selectId(content);
             List<IdList> flagId = new ArrayList<IdList>();
             for (int i = 0; i< flagList.size() ; i++){
-                flagService.insertFlag(flagList.get(i));
+                if (flagService.selectFlagId(flagList.get(i)) == 0)
+                    System.out.println("!!!!!!!!!"+flagService.insertFlag(flagList.get(i)));
                 IdList id = new IdList();
-                id.setId(Integer.parseInt(String.valueOf(flagService.selectFlagId(content))));
+                id.setId(flagService.selectFlagId(flagList.get(i)));
                 flagId.add(id);
             }
+            System.out.println(advId);
             for (int i = 0;i<flagId.size();i++){
                 advFlagService.insertAdvFlag(advId,flagId.get(i).getId());
             }
@@ -79,4 +82,7 @@ public class AdvertisementImpl implements AdvertisementService {
         return 1;
     }
 
+    public int delete(int id) {
+        return advertisementMapper.deleteByPrimaryKey(id);
+    }
 }

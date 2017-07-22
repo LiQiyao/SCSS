@@ -32,4 +32,6 @@ public interface AdvertisementMapper {
      * Create By cjn
      */
     int countAdv();
+    int insertAdv(@Param("content") String  content);
+    List<Advertisement> selectId(@Param("content") String  content);
 }

@@ -11,6 +11,5 @@
     <title>Title</title>
 </head>
 <body>
-HelloManagement
 </body>
 </html>

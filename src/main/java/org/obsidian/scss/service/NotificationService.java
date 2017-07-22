@@ -12,4 +12,6 @@ public interface NotificationService {
     int insertNotificationService(int ntId,int notId,int objectId,String content);
 
     List<Notification> selectAllNotification();
+    
+    int deleteById(int id);
 }

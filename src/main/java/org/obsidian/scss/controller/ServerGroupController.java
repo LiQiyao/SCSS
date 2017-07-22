@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by hp on 2017/7/15.
@@ -26,16 +27,21 @@ public class ServerGroupController {
     
     /**
      * 添加组
-     * @param groups
+     * @param 
      * @return
      */
-    @RequestMapping("addGroup")
+    @RequestMapping("addGroups")
+    @ResponseBody
     public Show addGroup(@RequestParam("groups") String getJson){
         Gson gson = new Gson();
         List<NameList> groups = gson.fromJson(getJson,new TypeToken<List<NameList>>(){}.getType());
         int res = 0 ;
         for (int i=0 ; i < groups.size(); i++){
-           int re = serviceGroupService.insertGroup(groups.get(i).getName());
+            int re = 0;
+            if(serviceGroupService.selectGroupByName(groups.get(i).getName()) == null)
+            {
+                re = serviceGroupService.insertGroup(groups.get(i).getName());
+            }
             if (re ==1){
                 res++;
             }
@@ -53,6 +59,7 @@ public class ServerGroupController {
      * 添加组标签
      */
     @RequestMapping("addGroupTag")
+    @ResponseBody
     public Show addGroupTag(@RequestParam("groupwords") String getJson){
         Gson gson = new Gson();
         List<GroupWord> groupwords = gson.fromJson(getJson,new TypeToken<List<GroupWord>>(){}.getType());
@@ -76,6 +83,7 @@ public class ServerGroupController {
      * 删除标签组
      */
     @RequestMapping("deleteGroupTag")
+    @ResponseBody
     public Show deleteGroupTag(@RequestParam("groupwords") String getJson){
         Gson gson = new Gson();
         GroupWord groupword = gson.fromJson(getJson,new TypeToken<GroupWord>(){}.getType());

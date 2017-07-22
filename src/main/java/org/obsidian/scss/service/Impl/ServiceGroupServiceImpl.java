@@ -1,13 +1,16 @@
 package org.obsidian.scss.service.Impl;
 
+import org.obsidian.scss.bean.GroupAndPersonNum;
 import org.obsidian.scss.dao.ServiceGroupMapper;
 import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.entity.ServiceGroupExample;
+import org.obsidian.scss.service.CustomerServiceService;
 import org.obsidian.scss.service.ServiceGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +21,9 @@ public class ServiceGroupServiceImpl implements ServiceGroupService {
 
     @Autowired
     private ServiceGroupMapper serviceGroupMapper;
-
+    @Autowired
+    private CustomerServiceService customerServiceService;
+    
     /**
      * 新增客服组
      * @param name
@@ -93,5 +98,24 @@ public class ServiceGroupServiceImpl implements ServiceGroupService {
             return null;
         }
         return list;
+    }
+    /**
+     * 查询所有客服组及客服组中成员总数
+     */
+    @Transactional
+    public List<GroupAndPersonNum> selectGroupPersonNum() {
+        List<ServiceGroup> list = selectAllGroup();
+        List<GroupAndPersonNum> groupAndPersonNums = new ArrayList<GroupAndPersonNum>();
+        for (int i = 0 ; i < list.size(); i++){
+            GroupAndPersonNum groupAndPersonNum = new GroupAndPersonNum();
+            groupAndPersonNum.setServiceGroup(list.get(i));
+            System.out.println(list.get(i).getGroupId());
+            if (customerServiceService.selectCustomerServiceByGroup(list.get(i).getGroupId())==null)
+                groupAndPersonNum.setTotal(0);
+            else
+                groupAndPersonNum.setTotal(customerServiceService.selectCustomerServiceByGroup(list.get(i).getGroupId()).size());
+            groupAndPersonNums.add(groupAndPersonNum);
+        }
+        return groupAndPersonNums;
     }
 }

@@ -4,6 +4,7 @@ import org.obsidian.scss.bean.OverViewInfo;
 import org.obsidian.scss.bean.Show;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.CustomerService;
+import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class OverViewController {
     private AdvertisementService advertisementService;
     @Autowired
     private KeywordHeatService keywordHeatService;
+    @Autowired
+    private ServiceGroupService serviceGroupService;
     
     @RequestMapping("/OverView")
     @ResponseBody
@@ -39,7 +42,7 @@ public class OverViewController {
         System.out.println("最近24小时会话：" + conversationService.selectRecentHour().size());
         System.out.println("最近10分钟会话:"+conversationService.selectRecentMinute().size());
         OverViewInfo overViewInfo = new OverViewInfo();
-        overViewInfo.setMonthInfo(conversationService.selectRecentMonth());
+        overViewInfo.setGroupAndPersonNums(serviceGroupService.selectGroupPersonNum());
         overViewInfo.setWeekInfo(conversationService.selectRecentWeekend());
         overViewInfo.setDayInfo(conversationService.selectRecentHour());
         overViewInfo.setMinuteInfo(conversationService.selectRecentMinute());

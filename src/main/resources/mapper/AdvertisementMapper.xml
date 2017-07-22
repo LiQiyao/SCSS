@@ -167,4 +167,10 @@
   <select id="countAdv" resultType="Integer">
       SELECT  COUNT(*) FROM advertisement;
   </select>
+  <insert id="insertAdv">
+    INSERT  INTO  advertisement(`adv_content`) VALUES (#{content});
+  </insert>
+  <select id="selectId" resultType="org.obsidian.scss.entity.Advertisement">
+    SELECT  * FROM advertisement WHERE adv_content = #{content}
+  </select>
 </mapper>

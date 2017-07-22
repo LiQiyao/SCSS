@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by hp on 2017/7/18.
@@ -58,6 +59,7 @@ public class AdvertisementController {
      * @return
      */
     @RequestMapping("advertisementSearchName")
+    @ResponseBody
     public Show advertisementSearchName( @RequestParam("searchName") String searchName){
         List<AdvertisementAndFlag> advertisementAndFlags = new ArrayList<AdvertisementAndFlag>();
         List<Advertisement> advertisements = advertisementService.getTotalAdvInfo();
@@ -96,6 +98,7 @@ public class AdvertisementController {
      * 添加广告信息
      */
     @RequestMapping("addAdvertisement")
+    @ResponseBody
     public Show addAdvertisement(@RequestParam("flag") String flagString ,@RequestParam("content")String content){
         List<String> flagList = new ArrayList<String>();
         String [] arr = flagString.split("\\s+");
@@ -118,10 +121,33 @@ public class AdvertisementController {
      * 删除广告
      */
     @RequestMapping("deleteAdv")
+    @ResponseBody
     public Show deleteAdv(@RequestParam("advList") String advIdList){
         Gson gson = new Gson();
         List<IdList> advList = gson.fromJson(advIdList,new TypeToken<List<IdList>>(){}.getType());
-        
-        return null;
+        for (int i =  0; i < advList.size();i++){
+            advFlagService.deleteAdvFlag(advList.get(i).getId());
+            advertisementService.delete(advList.get(i).getId());
+        }
+        Show show = new Show();
+        show.setMessage("删除成功");
+        return show;
     }
+    /**
+     * 删除广告标签
+     */
+    @RequestMapping("deleteAdvFlag")
+    @ResponseBody
+    public Show deleteAdvFlag(@RequestParam("flagId") int flagId,@RequestParam("advId") int advId){
+        int res =advFlagService.deleteAdvOneFlag(advId,flagId);
+        Show show = new Show();
+        if (res == 1){
+            show.setMessage("删除成功");
+        }else{
+            show.setMessage("删除失败");
+            show.setStatus(0);
+        }
+        return show;
+    }
+    
 }

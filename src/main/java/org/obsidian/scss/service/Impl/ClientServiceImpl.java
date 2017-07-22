@@ -139,7 +139,7 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public List<Flag> selectAllFlag(int clientId) {
         List<Flag> list = flagService.selectAllFlag(clientId);
-        if(list.size() == 0 || list == null){
+        if( list == null || list.size() == 0){ //修改了一波顺序原先的如果为空就会出错
             return null;
         }
         return list;

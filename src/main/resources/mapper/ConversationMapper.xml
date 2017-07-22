@@ -324,7 +324,7 @@
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
   </select>
 
-  <select id="selectRecentPeopleWeekend"  parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+  <select id="selectRecentPeopleWeekend" resultType="org.obsidian.scss.entity.DayAndTime">
     SELECT
     stop_time as time,COUNT(*) as times
     FROM
@@ -339,7 +339,7 @@
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
   </select>
 
-  <select id="selectRecentPeopleHour" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">
+  <select id="selectRecentPeopleHour"  resultType="org.obsidian.scss.entity.DayAndTime">
     SELECT
     stop_time as time,COUNT(*) as times
     FROM

@@ -56,7 +56,7 @@ public class KnowledgeServiceImpl implements KnowledgeService{
             }
             knowledgeKeywordMapper.insert(new KnowledgeKeyword(keywordId, knowledgeId));
         }
-        return 0;
+        return 1;//陈伟写错了全都是返回0了修正为1
     }
 
     /**

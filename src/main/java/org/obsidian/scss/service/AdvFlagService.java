@@ -10,4 +10,6 @@ public interface AdvFlagService {
     List<AdvFlag> getFlagId(int advId);
     int insertAdvFlag(int advId,int flagId);
     int selectIsExit(int advId,int flagId);
+    int deleteAdvFlag(int advId);
+    int deleteAdvOneFlag(int advId,int flagId);
 }

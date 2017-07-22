@@ -64,14 +64,22 @@ public class KeyWordAndKnowledgeManagementController {
     @ResponseBody
     public Show deleteKnowledgeTag(@RequestParam("tagName") String tagName,@RequestParam("knowledgeId") int knowledgeId){
         org.obsidian.scss.entity.Keyword keyword = keywordService.selectByValue(tagName);
-        int res = knowledgeKeywordService.selectKeywordIdNum(keyword.getKeywordId());
-        if (res == 0){
-          keywordService.deleteByKeywordId(keyword.getKeywordId());
-          knowledgeKeywordService.delete(keyword.getKeywordId(),knowledgeId);
-        }else{
-            knowledgeKeywordService.delete(keyword.getKeywordId(),knowledgeId);
-        }
         Show show = new Show();
+        if (keyword!=null){
+            int res = knowledgeKeywordService.selectKeywordIdNum(keyword.getKeywordId());
+            System.out.println(res);
+            if (res == 1){
+                knowledgeKeywordService.delete(keyword.getKeywordId(),knowledgeId);
+                keywordService.deleteByKeywordId(keyword.getKeywordId());
+            }else{
+                knowledgeKeywordService.delete(keyword.getKeywordId(),knowledgeId);
+            }
+        }else{
+            show.setStatus(0);
+            show.setMessage("删除失败");
+        }
+           
+       
         show.setMessage("删除成功");
         return show;
     }

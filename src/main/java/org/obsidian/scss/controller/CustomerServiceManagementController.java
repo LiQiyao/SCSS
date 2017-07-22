@@ -68,17 +68,19 @@ public class CustomerServiceManagementController {
     @RequestMapping(value = "deleteServerPerson")
     @ResponseBody
     public Show deletePerson(@RequestParam("deleteGroup") String  getJson){
+        System.out.println(getJson);
         Gson gson = new Gson();
         List<IdList> customId = gson.fromJson(getJson,new TypeToken<List<IdList>>(){}.getType());
         Show show = new Show();
         int fail  = 0 ;
         for (int i = 0 ; i < customId.size() ; i++){
+            System.out.println("!!!"+customId.get(i).getId());
           int res = customerServiceService.updateCustomDimission(customId.get(i).getId());
             if (res ==0){
                 fail++;
             }
         }
-        if (fail !=0){
+        if (fail !=0 ){
          show.setStatus(0);
          show.setMessage("删除失败:"+(customId.size()-fail)+"条");
         }
@@ -98,6 +100,7 @@ public class CustomerServiceManagementController {
         List<CustomerService> customerServices = gson.fromJson(getJson,new TypeToken<List<CustomerService>>(){}.getType());
         int res = 0 ;
         for (int i=0 ; i < customerServices.size(); i++){
+            System.out.println(customerServices.get(i));
             int re= customerServiceService.insertCustomerService(customerServices.get(i).getName(),customerServices.get(i).getGroupId(),customerServices.get(i).getNickname(), 
                     customerServices.get(i).getEmployeeId(),customerServices.get(i).getAutoMessage());
             if (re ==1){

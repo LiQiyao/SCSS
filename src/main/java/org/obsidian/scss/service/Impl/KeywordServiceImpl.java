@@ -26,7 +26,11 @@ public class KeywordServiceImpl implements KeywordService{
         KeywordExample example = new KeywordExample();
         KeywordExample.Criteria criteria = example.createCriteria();
         criteria.andValueEqualTo(tagName);
-        return keywordMapper.selectByExample(example).get(0);
+        if (keywordMapper.selectByExample(example).get(0)!=null)
+            return keywordMapper.selectByExample(example).get(0);
+        else{
+            return null;
+        }
     }
 
     public int deleteByKeywordId(int keywordId) {

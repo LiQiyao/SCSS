@@ -39,4 +39,11 @@ public class NotificationServiceImpl implements NotificationService {
         }
         return list;
     }
+
+    public int deleteById(int id) {
+        NotificationExample example = new NotificationExample();
+        NotificationExample.Criteria criteria = example.createCriteria();
+        criteria.andNotificationIdEqualTo(id);
+        return notificationMapper.deleteByExample(example);
+    }
 }
