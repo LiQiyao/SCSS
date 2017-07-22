@@ -29,7 +29,7 @@
   </update>
   <select id="selectLastChatServiceId" resultType="org.obsidian.scss.entity.CustomerService">
     select customer_service.* from conversation, customer_service
-    where client_id=1 AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
+    where client_id=#{clientId} AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
     ORDER BY stop_time DESC limit 0,1;
   </select>
   <select id="selectByClientId" resultMap="BaseResultMap">

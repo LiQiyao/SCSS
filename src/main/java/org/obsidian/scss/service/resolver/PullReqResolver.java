@@ -23,7 +23,7 @@ import java.util.Date;
 @Service
 public class PullReqResolver implements ContentResolver{
 
-    private Gson gson;
+    private Gson gson = new Gson();
 
     @Autowired
     private ChatLogService chatLogService;

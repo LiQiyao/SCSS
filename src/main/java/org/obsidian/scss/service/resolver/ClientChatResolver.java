@@ -118,13 +118,16 @@ public class ClientChatResolver implements ContentResolver {
         System.out.println("7");
         System.out.println("8");
         CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
+        System.out.println("找到客服：" + target);
         System.out.println("9");
         //找之前聊过天的客服
         WebSocket targetWS = null;
-        for (int i = 0; i < ServiceWS.wsVector.size(); i++){
-            System.out.println("cnt1");
-            if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
-                targetWS = ServiceWS.wsVector.get(i);
+        if (target != null){
+            for (int i = 0; i < ServiceWS.wsVector.size(); i++){
+                System.out.println("cnt1");
+                if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
+                    targetWS = ServiceWS.wsVector.get(i);
+                }
             }
         }
         if (targetWS != null){//如果存在之前聊过天的客服，则接入到该客服

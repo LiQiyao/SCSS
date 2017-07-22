@@ -17,11 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-import java.util.Map;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -37,21 +34,21 @@ public class GroupQueue implements Serializable {
     @Autowired
     private CustomerServiceService customerServiceService;
 
-    private Map<Integer, PriorityBlockingQueue<Client>> groupQueueMap = new HashMap<Integer, PriorityBlockingQueue<Client>>();
+    private Map<Integer, Queue<Client>> groupQueueMap = new HashMap<Integer, Queue<Client>>();
 
     @Autowired
     public GroupQueue(ServiceGroupService serviceGroupService){
         this.serviceGroupService = serviceGroupService;
         List<ServiceGroup> list = serviceGroupService.selectAllGroup();
         for (ServiceGroup serviceGroup : list){
-            groupQueueMap.put(serviceGroup.getGroupId(), new PriorityBlockingQueue<Client>());
+            groupQueueMap.put(serviceGroup.getGroupId(), new LinkedList<Client>());
         }
     }
 
     //根据客服组id加入客户到队列
     @Transactional
     public int joinQueueByGroupId(int groupId, int clientId){
-        PriorityBlockingQueue<Client> queue = groupQueueMap.get(groupId);
+        Queue<Client> queue = groupQueueMap.get(groupId);
         queue.add(new Client(clientId));
         this.updateServiceStatus(groupId,queue.size());
         return queue.size();
@@ -70,8 +67,13 @@ public class GroupQueue implements Serializable {
                 groupId = i;
             }
         }
-        groupQueueMap.get(groupId).add(new Client(clientId));
+        System.out.println("加入客服组队列" + groupId + groupQueueMap.get(groupId));
+        Queue<Client> queue =  groupQueueMap.get(groupId);
+        System.out.println("队列" + queue.poll());
+        queue.offer(new Client(clientId));
+        System.out.println("客服队列人数" + groupQueueMap.get(groupId).size());
         this.updateServiceStatus(groupId, groupQueueMap.get(groupId).size());
+        System.out.println("更新客服状态完毕");
         return groupId;
     }
 
@@ -86,9 +88,11 @@ public class GroupQueue implements Serializable {
         //更新客服状态
         ServiceStatus serviceStatus = new ServiceStatus();
         serviceStatus.setQueuePeopleCount(queuePeopleCount);
+        System.out.println(groupId + " " + queuePeopleCount);
         for (WebSocket ws : ServiceWS.wsVector){
             int wsGroupId = customerServiceService.selectCustomerServiceByServiceId(ws.getServiceId()).getGroupId();
             if (wsGroupId == groupId){
+                System.out.println("wsGroupId" + wsGroupId);
                 try {
                     ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
                 } catch (IOException e) {
@@ -98,7 +102,7 @@ public class GroupQueue implements Serializable {
         }
     }
 
-    public Map<Integer, PriorityBlockingQueue<Client>> getGroupQueueMap() {
+    public Map<Integer, Queue<Client>> getGroupQueueMap() {
         return groupQueueMap;
     }
 }
