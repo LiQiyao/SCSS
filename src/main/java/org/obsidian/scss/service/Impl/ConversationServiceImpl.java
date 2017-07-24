@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,6 +66,10 @@ public class ConversationServiceImpl implements ConversationService {
 
     public int resetServiceId(int serviceId, int conversationId) {
         return conversationMapper.updateServiceId(serviceId, conversationId);
+    }
+
+    public int finishAllByServiceId(int serviceId) {
+        return conversationMapper.updateAllStopTimeByServiceId(serviceId, new Date().getTime());
     }
 
     /**

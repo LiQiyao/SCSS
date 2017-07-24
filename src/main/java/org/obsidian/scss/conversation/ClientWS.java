@@ -36,7 +36,7 @@ public class ClientWS implements WebSocket{
     }
 
     @OnMessage
-    public void onMessage(String msgString){
+    public void onMessage(String msgString) throws Exception {
         System.out.println("收到消息：" + msgString);
         System.out.println(session);
         System.out.println(resolverFactory + "!!");
