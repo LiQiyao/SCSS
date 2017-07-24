@@ -40,4 +40,14 @@ public class CommonLanguage {
     public void setFrequency(Integer frequency) {
         this.frequency = frequency;
     }
+
+    @Override
+    public String toString() {
+        return "CommonLanguage{" +
+                "commonLanguageId=" + commonLanguageId +
+                ", serviceId=" + serviceId +
+                ", content='" + content + '\'' +
+                ", frequency=" + frequency +
+                '}';
+    }
 }

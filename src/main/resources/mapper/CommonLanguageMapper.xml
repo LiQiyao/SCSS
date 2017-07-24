@@ -7,6 +7,9 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="frequency" jdbcType="INTEGER" property="frequency" />
   </resultMap>
+  <select id="selectAllServiceAndCommonLanguage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from common_language where service_id = #{serviceId} or service_id is null ORDER BY frequency desc
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

@@ -118,4 +118,9 @@ public class CommonLanguageServiceImpl implements CommonLanguageService {
         }
         return list;
     }
+
+    @Transactional
+    public List<CommonLanguage> selectAllServiceAndCommonLanguage(int serviceId){
+        return commonLanguageMapper.selectAllServiceAndCommonLanguage(serviceId);
+    }
 }

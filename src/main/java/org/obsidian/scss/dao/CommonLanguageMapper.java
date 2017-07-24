@@ -7,6 +7,8 @@ import org.obsidian.scss.entity.CommonLanguageExample;
 import java.util.List;
 
 public interface CommonLanguageMapper {
+    List<CommonLanguage> selectAllServiceAndCommonLanguage(int serviceId);
+
     long countByExample(CommonLanguageExample example);
 
     int deleteByExample(CommonLanguageExample example);
