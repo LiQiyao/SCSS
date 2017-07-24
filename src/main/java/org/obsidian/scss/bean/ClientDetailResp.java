@@ -23,17 +23,13 @@ public class ClientDetailResp {
 
     private String weibo;
 
-    private String taobao;
-
-    private String alipay;
-
     private String address;
 
     private List<String> tagList;
 
     private List<String> unusedTagList;
 
-    public ClientDetailResp(int clientId, String clientName, int sex, Long phoneNum, String email, String wx, String qq, String weibo, String taobao, String alipay, String address, List<String> tagList, List<String> unusedTagList) {
+    public ClientDetailResp(int clientId, String clientName, int sex, Long phoneNum, String email, String wx, String qq, String weibo, String address, List<String> tagList, List<String> unusedTagList) {
         this.clientId = clientId;
         this.clientName = clientName;
         this.sex = sex;
@@ -42,8 +38,6 @@ public class ClientDetailResp {
         this.wx = wx;
         this.qq = qq;
         this.weibo = weibo;
-        this.taobao = taobao;
-        this.alipay = alipay;
         this.address = address;
         this.tagList = tagList;
         this.unusedTagList = unusedTagList;
@@ -116,22 +110,6 @@ public class ClientDetailResp {
         this.weibo = weibo;
     }
 
-    public String getTaobao() {
-        return taobao;
-    }
-
-    public void setTaobao(String taobao) {
-        this.taobao = taobao;
-    }
-
-    public String getAlipay() {
-        return alipay;
-    }
-
-    public void setAlipay(String alipay) {
-        this.alipay = alipay;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -167,8 +145,6 @@ public class ClientDetailResp {
                 ", wx='" + wx + '\'' +
                 ", qq='" + qq + '\'' +
                 ", weibo='" + weibo + '\'' +
-                ", taobao='" + taobao + '\'' +
-                ", alipay='" + alipay + '\'' +
                 ", address='" + address + '\'' +
                 ", tagList=" + tagList +
                 ", unusedTagList=" + unusedTagList +

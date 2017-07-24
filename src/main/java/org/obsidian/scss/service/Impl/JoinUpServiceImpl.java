@@ -19,8 +19,8 @@ public class JoinUpServiceImpl implements JoinUpService {
     private JoinUpMapper joinUpMapper;
 
     @Transactional
-    public int updateJoinUp(int clientId,String qq, String wx, String weibo, String taobao, String alipay) {
-        return joinUpMapper.updateJoinUp(clientId,qq,wx,weibo,taobao,alipay);
+    public int updateJoinUp(int clientId,String qq, String wx, String weibo) {
+        return joinUpMapper.updateJoinUp(clientId,qq,wx,weibo);
     }
 
     /**

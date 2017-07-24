@@ -35,7 +35,10 @@ public class SearchClientByNameReqResolver implements ContentResolver {
         SearchClientByNameReq searchClientByNameReq = message.getContent();
         String searchWord = searchClientByNameReq.getSearchWord();
         List<Client> list = clientService.selectAllByName(searchWord);
-        SearchClientByNameResp searchClientByNameResp = new SearchClientByNameResp(list);
+        SearchClientByNameResp searchClientByNameResp = new SearchClientByNameResp();
+        if(list != null && list.size() > 0){
+            searchClientByNameResp.setClientList(list);
+        }
         Message<SearchClientByNameResp> res = new Message<SearchClientByNameResp>(searchClientByNameResp);
         try {
             session.getBasicRemote().sendText(gson.toJson(res));

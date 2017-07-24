@@ -7,7 +7,7 @@ import org.obsidian.scss.entity.JoinUpExample;
 import java.util.List;
 
 public interface JoinUpMapper {
-    int updateJoinUp(@Param("clientId")int clientId,@Param("qq") String wx,@Param("wx") String qq,@Param("weibo") String weibo,@Param("taobao") String taobao,@Param("alipay") String alipay);
+    int updateJoinUp(@Param("clientId")int clientId,@Param("qq") String wx,@Param("wx") String qq,@Param("weibo") String weibo);
 
     long countByExample(JoinUpExample example);
 

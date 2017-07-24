@@ -171,16 +171,20 @@ public class ClientChatResolver implements ContentResolver {
 
     private void takeFlags(WebSocket webSocket,String content){
         List<Flag> list = flagService.getFlagByContent(content);
-        for(int i=0;i<list.size();i++){
-            clientService.addFlag(webSocket.getClientId(),list.get(i).getName());
+        if(list != null && list.size() > 0){
+            for(int i=0;i<list.size();i++){
+                clientService.addFlag(webSocket.getClientId(),list.get(i).getName());
+            }
         }
     }
 
     private void recommandTags(WebSocket webSocket,int conversationId,String content){
         List<Flag> list = flagService.getFlagByContent(content);
         List<String> tagList = new ArrayList<String>();
-        for(int i=0;i<list.size();i++){
-            tagList.add(list.get(i).getName());
+        if(list != null && list.size() > 0){
+            for(int i=0;i<list.size();i++){
+                tagList.add(list.get(i).getName());
+            }
         }
         RecommandTags recommandTags = new RecommandTags(conversationId,tagList);
         Message<RecommandTags> res = new Message<RecommandTags>(recommandTags);

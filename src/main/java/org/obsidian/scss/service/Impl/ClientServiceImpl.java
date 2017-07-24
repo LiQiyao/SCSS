@@ -148,7 +148,7 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public List<Flag> selectAllUnusedFlag(int clientId){
         List<Flag> list = flagService.selectAllUnusedFlag(clientId);
-        if(list.size() == 0 || list == null){
+        if(list == null || list.size() == 0){
             return null;
         }
         return list;
