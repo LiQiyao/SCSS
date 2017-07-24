@@ -24,6 +24,9 @@
       <result column="time" property="time"/>
     </collection>
   </resultMap>
+  <update id="updateAllStopTimeByServiceId">
+    update conversation set stop_time = #{stopTime} where service_id=#{serviceId};
+  </update>
   <update id="updateServiceId">
     update conversation set service_id = #{serviceId} where conversation_id=#{conversationId};
   </update>

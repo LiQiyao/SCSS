@@ -1,6 +1,7 @@
 package org.obsidian.scss.conversation;
 
 import com.google.gson.Gson;
+import org.obsidian.scss.service.ConversationService;
 import org.obsidian.scss.service.KnowledgeService;
 import org.obsidian.scss.service.WorkTimeService;
 import org.obsidian.scss.service.resolver.ResolverFactory;
@@ -22,6 +23,9 @@ public class ServiceWS implements WebSocket {
 
     @Autowired
     private WorkTimeService workTimeService;
+
+    @Autowired
+    private ConversationService conversationService;
 
     @Autowired
     private ResolverFactory resolverFactory;
@@ -50,12 +54,14 @@ public class ServiceWS implements WebSocket {
     @OnError
     public void onError(Throwable t){
         workTimeService.offline(serviceId);
+        conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);
     }
 
     @OnClose
     public void onClose(){
         workTimeService.offline(serviceId);
+        conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);
     }
 

@@ -48,6 +48,8 @@ public interface ConversationMapper {
     int updateServiceId(@Param("serviceId") int serviceId,@Param("conversationId") int conversationId);
 
     int selectNotFinishByServiceId(int serviceId);
+
+    int updateAllStopTimeByServiceId(@Param("serviceId") int serviceId, @Param("stopTime") long stopTime);
     /**
      * Create By Cjn
      */

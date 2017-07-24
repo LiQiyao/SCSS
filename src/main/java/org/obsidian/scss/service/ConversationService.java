@@ -29,6 +29,8 @@ public interface ConversationService {
 
     int resetServiceId(int serviceId, int conversationId);
 
+    int finishAllByServiceId(int serviceId);
+
     /**
      * Create By cjn
      * @return
