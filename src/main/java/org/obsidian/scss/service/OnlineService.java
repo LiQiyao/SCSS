@@ -25,7 +25,7 @@ public class OnlineService {
             String token = base64Encoder.encode(md5.digest(employeeId.getBytes()));
             Cookie cookie = new Cookie("token", token);
             resp.addCookie(cookie);
-            System.out.println("token:" + token);
+            System.out.println("登录者token:" + token + " employeeId：" + employeeId);
             map.put(token, employeeId);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -34,5 +34,9 @@ public class OnlineService {
 
     public String getEmployeeId(String md5Str){
         return map.get(md5Str);
+    }
+
+    public Map<String, String> getMap() {
+        return map;
     }
 }
