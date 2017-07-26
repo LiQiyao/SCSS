@@ -53,6 +53,8 @@ public interface ConversationMapper {
     int selectNotFinishByServiceId(int serviceId);
 
     int updateAllStopTimeByServiceId(@Param("serviceId") int serviceId, @Param("stopTime") long stopTime);
+
+    int selectTodayConversationCount(@Param("serviceId") int serviceId,@Param("dayStart") long dayStart , @Param("dayEnd") long dayEnd);
     /**
      * Create By Cjn
      */

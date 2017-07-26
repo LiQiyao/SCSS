@@ -24,6 +24,8 @@ public interface CustomerServiceMapper {
 
     int deleteCustomerService(int serviceId);
 
+    List<CustomerService> selectAll();
+
     /**
      * Create By cjn
      * @return

@@ -33,6 +33,9 @@ public interface ConversationService {
 
     int finishAllByServiceId(int serviceId);
 
+    int getTodayConversationCount(int serviceId);
+
+    int getTodayConversationCountRank(int serviceId);
     /**
      * Create By cjn
      * @return

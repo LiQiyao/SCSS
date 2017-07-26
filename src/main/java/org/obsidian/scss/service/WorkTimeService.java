@@ -20,7 +20,9 @@ public interface WorkTimeService {
 
     Long selectAllWorkTimeSum(int serviceId);
 
+    long getTodayWorkTime(int serviceId);
 
+    int getTodayWorkTimeRank(int serviceId);
 
     /***
      * Create By CJN
