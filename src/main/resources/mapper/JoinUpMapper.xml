@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.JoinUpMapper">
+  <select id="getTodayClientCount" parameterType="map" resultType="java.lang.Long">
+    select count(DISTINCT client_id) clientCount from join_up where time between #{dayStartTime} and #{nowTime}
+  </select>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.JoinUp">
     <result column="join_up_id" jdbcType="INTEGER" property="joinUpId" />
     <result column="access_id" jdbcType="INTEGER" property="accessId" />

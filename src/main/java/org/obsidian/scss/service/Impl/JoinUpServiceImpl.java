@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -17,6 +19,20 @@ public class JoinUpServiceImpl implements JoinUpService {
 
     @Autowired
     private JoinUpMapper joinUpMapper;
+
+    @Transactional
+    public Long getTodayClientCount() {
+        Date date = new Date();
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(date);
+        Date date2 = new Date(date.getTime() - gc.get(gc.HOUR_OF_DAY) * 60 * 60
+                * 1000 - gc.get(gc.MINUTE) * 60 * 1000 - gc.get(gc.SECOND)
+                * 1000);
+        Long dayStartTime = date2.getTime();
+        Long nowTime = date.getTime();
+
+        return joinUpMapper.getTodayClientCount(dayStartTime,nowTime);
+    }
 
     @Transactional
     public int updateJoinUp(int clientId,String qq, String wx, String weibo) {

@@ -7,6 +7,8 @@ import org.obsidian.scss.entity.JoinUpExample;
 import java.util.List;
 
 public interface JoinUpMapper {
+    Long getTodayClientCount(@Param("dayStartTime") Long dayStartTime,@Param("nowTime") Long nowTime);
+
     int updateJoinUp(@Param("clientId")int clientId,@Param("qq") String wx,@Param("wx") String qq,@Param("weibo") String weibo);
 
     long countByExample(JoinUpExample example);

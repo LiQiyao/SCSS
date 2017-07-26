@@ -1,5 +1,6 @@
 package org.obsidian.scss.service.Impl;
 
+import org.obsidian.scss.bean.AvgScoreList;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.CustomerService;
@@ -37,7 +38,7 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Transactional
-    public int getAvgScoreByServiceId(int serviceId) {
+    public double getAvgScoreByServiceId(int serviceId) {
         return conversationMapper.selectAvgScoreByServiceId(serviceId);
     }
 
@@ -70,6 +71,23 @@ public class ConversationServiceImpl implements ConversationService {
 
     public int finishAllByServiceId(int serviceId) {
         return conversationMapper.updateAllStopTimeByServiceId(serviceId, new Date().getTime());
+    }
+
+
+    public int getAvgScoreRankByServiceId(int serviceId){
+        List<AvgScoreList> list = conversationMapper.selectAllAvgScore();
+        int rank = 0;
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getServiceId() == serviceId){
+                rank = i + 1;
+                for(int j=i;j>0;j--){
+                    if(list.get(j).getAvgScore() == list.get(i).getAvgScore()){
+                        rank = j + 1;
+                    }
+                }
+            }
+        }
+        return rank;
     }
 
     /**
