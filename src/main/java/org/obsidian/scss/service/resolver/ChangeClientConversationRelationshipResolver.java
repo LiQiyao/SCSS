@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.ChangeClientConversationRelationship;
 import org.obsidian.scss.bean.ClientDetailResp;
+import org.obsidian.scss.bean.ClientDetailResp2;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.entity.Client;
@@ -82,8 +83,8 @@ public class ChangeClientConversationRelationshipResolver implements ContentReso
                 unusedTagList.add(unusedFlagList.get(i).getName());
             }
         }
-        ClientDetailResp clientDetailResp = new ClientDetailResp(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList);
-        Message<ClientDetailResp> res = new Message<ClientDetailResp>(clientDetailResp);
+        ClientDetailResp2 clientDetailResp2 = new ClientDetailResp2(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList,conversationId);
+        Message<ClientDetailResp> res = new Message<ClientDetailResp>(clientDetailResp2);
         try{
             session.getBasicRemote().sendText(gson.toJson(res));
         }
