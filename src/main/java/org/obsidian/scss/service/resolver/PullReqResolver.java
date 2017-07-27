@@ -50,6 +50,9 @@ public class PullReqResolver implements ContentResolver{
         CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(serviceId);
         int groupId = customerService.getGroupId();
         Client client = groupQueue.getClientFromQueue(groupId);
+        if (client == null){
+            return;
+        }
         int clientId = client.getClientId();
         int conversationId = conversationService.getLastIdByClientId(clientId);
         TransferSignal transferSignal = new TransferSignal(conversationId,client.getClientId(),chatLogService.getByClientId(clientId));
@@ -58,7 +61,7 @@ public class PullReqResolver implements ContentResolver{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        conversationService.resetServiceId(serviceId, conversationId);
         chatLogService.addWithConversationId(conversationId,serviceId,clientId,0, customerService.getAutoMessage(),new Date().getTime(),0);
         ServiceChat serviceChat = new ServiceChat(conversationId,clientId,0,customerService.getAutoMessage(),new Date().getTime());
         for (WebSocket ws : ClientWS.wsVector){

@@ -1,5 +1,6 @@
 package org.obsidian.scss.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knowledge {
@@ -16,6 +17,8 @@ public class Knowledge {
     private Long time;
 
     private List<Keyword> keywordList;
+
+    private List<String> keyWord = new ArrayList<String>();
 
     public Integer getKnowledgeId() {
         return knowledgeId;
@@ -91,6 +94,9 @@ public class Knowledge {
 
     public void setKeywordList(List<Keyword> keywordList) {
         this.keywordList = keywordList;
+        for (Keyword k : keywordList){
+            keyWord.add(k.getValue());
+        }
     }
 
     @Override
@@ -132,4 +138,5 @@ public class Knowledge {
                 ", keywordList=" + keywordList +
                 '}';
     }
+
 }
