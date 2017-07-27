@@ -8,9 +8,19 @@ import java.util.List;
  * Created by Lee on 2017/7/13.
  */
 public interface JoinUpService {
+    String selectAccountByAccessIdAndClientId(int accessId, int clientId);
+
+    int selectByAccessIdAndClientId(int accessId,int clientId);
+
+    int insertJoinUp(int accessId,int clientId,String account);
+
+    int updateJoinUp(int accessId,int clientId,String account);
+
+    int deleteJoinUp(int accessId,int clientId);
+
     Long getTodayClientCount();
 
-    int updateJoinUp(int clientId,String qq,String wx,String weibo);
+    int updateAllJoinUp(int clientId,String qq,String wx,String weibo);
 
     List<JoinUp> hasJoinedUp(int accessId, String account);
 
