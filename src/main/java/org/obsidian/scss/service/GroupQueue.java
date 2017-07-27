@@ -105,6 +105,16 @@ public class GroupQueue implements Serializable {
         }
     }
 
+    @Transactional
+    public void removeByClient(int clientId){
+        for (Integer i : groupQueueMap.keySet()){
+            Queue<Client> queue = groupQueueMap.get(i);
+            for (Client c : queue){
+
+            }
+        }
+    }
+
     public Map<Integer, Queue<Client>> getGroupQueueMap() {
         return groupQueueMap;
     }
