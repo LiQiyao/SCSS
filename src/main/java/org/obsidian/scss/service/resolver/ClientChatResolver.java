@@ -131,6 +131,7 @@ public class ClientChatResolver implements ContentResolver {
             }
         }
         if (targetWS != null){//如果存在之前聊过天的客服，则接入到该客服
+            conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
             Message<ServiceChat> message =
                     new Message<ServiceChat>(new ServiceChat(clientChat.getConversationId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime()));
             try {

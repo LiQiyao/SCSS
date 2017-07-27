@@ -80,6 +80,9 @@ public class GroupQueue implements Serializable {
     //从某个客服组队列中取出一个客户
     @Transactional
     public Client getClientFromQueue(int groupId){
+        if (groupQueueMap.get(groupId).size() == 0){
+            return null;
+        }
         updateServiceStatus(groupId,groupQueueMap.get(groupId).size() - 1);
         return groupQueueMap.get(groupId).poll();
     }
