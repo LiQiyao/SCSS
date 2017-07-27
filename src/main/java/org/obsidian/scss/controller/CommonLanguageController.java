@@ -29,6 +29,8 @@ public class CommonLanguageController {
         model.addAttribute("commonLanguageList",list);
         return "commonLanguage";
     }
+    
+    
     @RequestMapping("deleteCommonLanguage")
     @ResponseBody
     public Show deleteLanguage(@RequestParam("deleteId") String idList){
@@ -49,11 +51,13 @@ public class CommonLanguageController {
         }
         return show;
     }
+    
+    
     @RequestMapping("addCommonLanguage")
     @ResponseBody
-    public Show addCommonLanguage(@RequestParam("content")String content){
+    public Show addCommonLanguage(@RequestParam("content")String content,@RequestParam("uid") int uid){
         Show show = new Show();
-        int res = commonLanguageService.insertCommonLanguage(content);
+        int res = commonLanguageService.insertServiceLanguage(uid,content);
         if (res == 0){
             show.setStatus(0);
             show.setMessage("插入失败");

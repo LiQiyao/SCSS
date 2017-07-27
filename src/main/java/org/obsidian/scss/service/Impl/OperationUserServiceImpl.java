@@ -101,4 +101,16 @@ public class OperationUserServiceImpl implements OperationUserService {
         }
         return list;
     }
+
+    public OperationUser selectUser(int userId, String password) {
+        OperationUserExample example = new OperationUserExample();
+        OperationUserExample.Criteria criteria = example.createCriteria();
+        criteria.andPasswordEqualTo(password);
+        List<OperationUser> list = operationUserMapper.selectByExample(example);
+        criteria.andUserIdEqualTo(userId);
+        if(list.size() == 0 || list == null) {
+            return null;
+        }
+        return list.get(0);
+    }
 }

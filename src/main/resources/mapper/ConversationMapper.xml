@@ -258,11 +258,11 @@
     conversation
     WHERE
     TIMESTAMPDIFF(
-    month,
+    DAY,
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
     FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
 
-    ) &lt; 1
+    ) &lt; 15
     GROUP BY
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
   </select>
@@ -274,12 +274,13 @@
     conversation
     WHERE
     TIMESTAMPDIFF(
-    day,
+    DAY,
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed)),
     FROM_UNIXTIME(CAST((#{timestamp}/1000) AS signed))
+
     ) &lt; 7
     GROUP BY
-    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d');
+    FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h');
   </select>
   
   <select id="selectRecentHour" parameterType="long" resultType="org.obsidian.scss.entity.DayAndTime">

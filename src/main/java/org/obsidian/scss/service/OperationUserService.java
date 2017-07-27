@@ -20,4 +20,6 @@ public interface OperationUserService {
     String selectUsernameByUserId(int userId);
 
     List<OperationUser> selectAllUser();
+
+    OperationUser selectUser(int userId,String password);
 }

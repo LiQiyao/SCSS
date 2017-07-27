@@ -14,8 +14,9 @@ public class OverViewInfo {
     public int onlineClient;
     public int advCount;
     public List<GroupAndPersonNum> groupAndPersonNums;
+    public List<DayAndTime> halfMonth;
     public List<DayAndTime> weekInfo;
-    public List<DayAndTime> dayInfo;
+//    public List<DayAndTime> dayInfo;
     public List<DayAndTime> minuteInfo;
     public List<KeywordAndHeat> keywordAndHeats;
 
@@ -43,13 +44,13 @@ public class OverViewInfo {
         this.groupAndPersonNums = groupAndPersonNums;
     }
 
-    public List<DayAndTime> getDayInfo() {
-        return dayInfo;
-    }
+//    public List<DayAndTime> getDayInfo() {
+//        return dayInfo;
+//    }
 
-    public void setDayInfo(List<DayAndTime> dayInfo) {
-        this.dayInfo = dayInfo;
-    }
+//    public void setDayInfo(List<DayAndTime> dayInfo) {
+//        this.dayInfo = dayInfo;
+//    }
 
     public List<DayAndTime> getMinuteInfo() {
         return minuteInfo;
@@ -89,5 +90,13 @@ public class OverViewInfo {
 
     public void setKeywordAndHeats(List<KeywordAndHeat> keywordAndHeats) {
         this.keywordAndHeats = keywordAndHeats;
+    }
+
+    public List<DayAndTime> getHalfMonth() {
+        return halfMonth;
+    }
+
+    public void setHalfMonth(List<DayAndTime> halfMonth) {
+        this.halfMonth = halfMonth;
     }
 }

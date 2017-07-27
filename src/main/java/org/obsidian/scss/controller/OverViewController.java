@@ -44,7 +44,7 @@ public class OverViewController {
         OverViewInfo overViewInfo = new OverViewInfo();
         overViewInfo.setGroupAndPersonNums(serviceGroupService.selectGroupPersonNum());
         overViewInfo.setWeekInfo(conversationService.selectRecentWeekend());
-        overViewInfo.setDayInfo(conversationService.selectRecentHour());
+        overViewInfo.setHalfMonth(conversationService.selectRecentMonth());
         overViewInfo.setMinuteInfo(conversationService.selectRecentMinute());
         overViewInfo.setOnlineServer(workTimeService.OnlineServer());
         overViewInfo.setTotalServer(customerService.selectTotalServer());
