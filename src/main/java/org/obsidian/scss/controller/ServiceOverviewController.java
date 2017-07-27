@@ -2,6 +2,7 @@ package org.obsidian.scss.controller;
 
 import org.obsidian.scss.bean.ServiceOverview;
 import org.obsidian.scss.service.ConversationService;
+import org.obsidian.scss.service.JoinUpService;
 import org.obsidian.scss.service.WorkTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,18 @@ public class ServiceOverviewController {
     @Autowired
     private ConversationService conversationService;
 
+    @Autowired
+    private JoinUpService joinUpService;
+
     @RequestMapping(value = "/overview", method = RequestMethod.GET)
     @ResponseBody
     public ServiceOverview overView(){
+        int serviceId = 0;
         ServiceOverview serviceOverView = new ServiceOverview();
+        serviceOverView.setAvgScore(conversationService.getAvgScoreByServiceId(serviceId));
+        serviceOverView.setAvgScoreRank(conversationService.getAvgScoreRankByServiceId(serviceId));
+        serviceOverView.setClientCount(joinUpService.getTodayClientCount());
+
         return serviceOverView;
     }
 }
