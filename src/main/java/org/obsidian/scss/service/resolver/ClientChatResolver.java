@@ -118,13 +118,16 @@ public class ClientChatResolver implements ContentResolver {
         System.out.println("7");
         System.out.println("8");
         CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
+        System.out.println("找到客服：" + target);
         System.out.println("9");
         //找之前聊过天的客服
         WebSocket targetWS = null;
-        for (int i = 0; i < ServiceWS.wsVector.size(); i++){
-            System.out.println("cnt1");
-            if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
-                targetWS = ServiceWS.wsVector.get(i);
+        if (target != null){
+            for (int i = 0; i < ServiceWS.wsVector.size(); i++){
+                System.out.println("cnt1");
+                if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
+                    targetWS = ServiceWS.wsVector.get(i);
+                }
             }
         }
         if (targetWS != null){//如果存在之前聊过天的客服，则接入到该客服
@@ -168,16 +171,20 @@ public class ClientChatResolver implements ContentResolver {
 
     private void takeFlags(WebSocket webSocket,String content){
         List<Flag> list = flagService.getFlagByContent(content);
-        for(int i=0;i<list.size();i++){
-            clientService.addFlag(webSocket.getClientId(),list.get(i).getName());
+        if(list != null && list.size() > 0){
+            for(int i=0;i<list.size();i++){
+                clientService.addFlag(webSocket.getClientId(),list.get(i).getName());
+            }
         }
     }
 
     private void recommandTags(WebSocket webSocket,int conversationId,String content){
         List<Flag> list = flagService.getFlagByContent(content);
         List<String> tagList = new ArrayList<String>();
-        for(int i=0;i<list.size();i++){
-            tagList.add(list.get(i).getName());
+        if(list != null && list.size() > 0){
+            for(int i=0;i<list.size();i++){
+                tagList.add(list.get(i).getName());
+            }
         }
         RecommandTags recommandTags = new RecommandTags(conversationId,tagList);
         Message<RecommandTags> res = new Message<RecommandTags>(recommandTags);

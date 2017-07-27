@@ -1,6 +1,8 @@
 package org.obsidian.scss.service.Impl;
 
+import org.obsidian.scss.bean.AvgScoreList;
 import org.obsidian.scss.dao.ConversationMapper;
+import org.obsidian.scss.dao.CustomerServiceMapper;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.DayAndTime;
@@ -9,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by Lee on 2017/7/13.
@@ -19,6 +22,9 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Autowired
     private ConversationMapper conversationMapper;
+
+    @Autowired
+    private CustomerServiceMapper customerServiceMapper;
 
     @Transactional
     public int updateClientId(int conversationId, int clientId) {
@@ -36,7 +42,7 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Transactional
-    public int getAvgScoreByServiceId(int serviceId) {
+    public double getAvgScoreByServiceId(int serviceId) {
         return conversationMapper.selectAvgScoreByServiceId(serviceId);
     }
 
@@ -65,6 +71,58 @@ public class ConversationServiceImpl implements ConversationService {
 
     public int resetServiceId(int serviceId, int conversationId) {
         return conversationMapper.updateServiceId(serviceId, conversationId);
+    }
+
+    public int finishAllByServiceId(int serviceId) {
+        return conversationMapper.updateAllStopTimeByServiceId(serviceId, new Date().getTime());
+    }
+//获取今日会话数
+    public int getTodayConversationCount(int serviceId) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long dayStart = calendar.getTime().getTime();
+        Calendar calendar1 = new GregorianCalendar();
+        calendar1.set(Calendar.HOUR_OF_DAY, 23);
+        calendar1.set(Calendar.MINUTE, 59);
+        calendar1.set(Calendar.SECOND, 59);
+        long dayEnd = calendar1.getTime().getTime();
+        return conversationMapper.selectTodayConversationCount(serviceId, dayStart,dayEnd);
+    }
+//获取今日会话数排名
+    public int getTodayConversationCountRank(int serviceId) {
+        List<CustomerService> list = customerServiceMapper.selectAll();
+        ConversationCount[] conversationCounts = new ConversationCount[list.size()];
+        int tmp;
+        for (int i = 0, size = list.size(); i < size; i++){
+            conversationCounts[i].setServiceId((tmp = list.get(i).getServiceId()));
+            conversationCounts[i].setCount(getTodayConversationCount(tmp));
+        }
+        Arrays.sort(conversationCounts);
+        for (int i = 0; i < conversationCounts.length; i++){
+            if (conversationCounts[i].getServiceId() == serviceId){
+                return i + 1;
+            }
+        }
+        return 0;
+    }
+
+
+    public int getAvgScoreRankByServiceId(int serviceId){
+        List<AvgScoreList> list = conversationMapper.selectAllAvgScore();
+        int rank = 0;
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getServiceId() == serviceId){
+                rank = i + 1;
+                for(int j=i;j>0;j--){
+                    if(list.get(j).getAvgScore() == list.get(i).getAvgScore()){
+                        rank = j + 1;
+                    }
+                }
+            }
+        }
+        return rank;
     }
 
     /**
@@ -106,5 +164,31 @@ public class ConversationServiceImpl implements ConversationService {
     @Transactional
     public List<DayAndTime> selectRecentPeopleHour(int serviceId) {
         return conversationMapper.selectRecentPeopleHour(System.currentTimeMillis(),serviceId);
+    }
+}
+class ConversationCount implements Comparable<ConversationCount>{
+
+    private int serviceId;
+
+    private int count;
+
+    public int compareTo(ConversationCount o) {
+        return o.count - this.count;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

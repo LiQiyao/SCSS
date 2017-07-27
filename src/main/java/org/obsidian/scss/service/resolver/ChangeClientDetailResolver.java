@@ -47,21 +47,24 @@ public class ChangeClientDetailResolver implements ContentResolver {
         String wx = changeClientDetail.getWx();
         String qq = changeClientDetail.getQq();
         String weibo = changeClientDetail.getWeibo();
-        String taobao = changeClientDetail.getTaobao();
-        String alipay = changeClientDetail.getAlipay();
         clientService.updateClient(clientId,clientName,address,email,phoneNum,sex);
-        joinUpService.updateJoinUp(clientId,qq,wx,weibo,taobao,alipay);
+        joinUpService.updateJoinUp(clientId,qq,wx,weibo);
         List<Flag> flagList = clientService.selectAllFlag(clientId);
         List<String> tagList = new ArrayList<String>();
-        for(int i=0;i<flagList.size();i++){
-            tagList.add(flagList.get(i).getName());
+        if(flagList != null && flagList.size() > 0){
+            for(int i=0;i<flagList.size();i++){
+                tagList.add(flagList.get(i).getName());
+            }
         }
         List<Flag> unusedFlagList = clientService.selectAllUnusedFlag(clientId);
         List<String> unusedTagList = new ArrayList<String>();
-        for(int i=0;i<unusedFlagList.size();i++){
-            unusedTagList.add(unusedFlagList.get(i).getName());
+
+        if(unusedFlagList != null && unusedFlagList.size() > 0){
+            for(int i=0;i<unusedFlagList.size();i++){
+                unusedTagList.add(unusedFlagList.get(i).getName());
+            }
         }
-        ClientDetailResp clientDetailResp = new ClientDetailResp(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,taobao,alipay,address,tagList,unusedTagList);
+        ClientDetailResp clientDetailResp = new ClientDetailResp(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList);
         Message<ClientDetailResp> res = new Message<ClientDetailResp>(clientDetailResp);
         try {
             session.getBasicRemote().sendText(gson.toJson(res));

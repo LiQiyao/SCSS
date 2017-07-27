@@ -1,6 +1,5 @@
 package org.obsidian.scss.controller;
 
-import com.sun.deploy.net.HttpResponse;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.service.CustomerServiceService;
@@ -38,7 +37,7 @@ public class ServiceLoginController {
             CustomerService customerService = customerServiceService.selectByEIdAndPwd(employeeId,password);
             if (customerService != null){
                 onlineService.online(employeeId, resp);
-                return "redirect:/SCSS/customerService.html";
+                return "redirect:/api/onlineGroup";
             }
         }
         return null;

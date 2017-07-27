@@ -56,8 +56,6 @@ public class ChangeClientConversationRelationshipResolver implements ContentReso
         String wx = "";
         String qq = "";
         String weibo = "";
-        String taobao = "";
-        String alipay = "";
         List<JoinUp> joinUpList = joinUpService.getByClientId(clientId);
         for(int i=0;i<joinUpList.size();i++){
             if(joinUpList.get(i).getAccess().getName().equals("微信")){
@@ -69,24 +67,22 @@ public class ChangeClientConversationRelationshipResolver implements ContentReso
             if(joinUpList.get(i).getAccess().getName().equals("微博")){
                 weibo = joinUpList.get(i).getAccount();
             }
-            if(joinUpList.get(i).getAccess().getName().equals("淘宝")){
-                taobao = joinUpList.get(i).getAccount();
-            }
-            if(joinUpList.get(i).getAccess().getName().equals("支付宝")){
-                alipay = joinUpList.get(i).getAccount();
-            }
         }
         List<Flag> flagList = clientService.selectAllFlag(clientId);
         List<String> tagList = new ArrayList<String>();
-        for(int i=0;i<flagList.size();i++){
-            tagList.add(flagList.get(i).getName());
+        if(flagList != null && flagList.size() > 0){
+            for(int i=0;i<flagList.size();i++){
+                tagList.add(flagList.get(i).getName());
+            }
         }
         List<Flag> unusedFlagList = clientService.selectAllUnusedFlag(clientId);
         List<String> unusedTagList = new ArrayList<String>();
-        for(int i=0;i<unusedFlagList.size();i++){
-            unusedTagList.add(unusedFlagList.get(i).getName());
+        if(unusedFlagList != null && unusedFlagList.size() > 0){
+            for(int i=0;i<unusedFlagList.size();i++){
+                unusedTagList.add(unusedFlagList.get(i).getName());
+            }
         }
-        ClientDetailResp clientDetailResp = new ClientDetailResp(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,taobao,alipay,address,tagList,unusedTagList);
+        ClientDetailResp clientDetailResp = new ClientDetailResp(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList);
         Message<ClientDetailResp> res = new Message<ClientDetailResp>(clientDetailResp);
         try{
             session.getBasicRemote().sendText(gson.toJson(res));

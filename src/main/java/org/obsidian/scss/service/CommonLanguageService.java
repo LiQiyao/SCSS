@@ -22,4 +22,6 @@ public interface CommonLanguageService {
     List<CommonLanguage> selectAllCommonLanguage();
 
     List<CommonLanguage> selectAllServiceLanguage(int serviceId);
+
+    List<CommonLanguage> selectAllServiceAndCommonLanguage(int serviceId);
 }

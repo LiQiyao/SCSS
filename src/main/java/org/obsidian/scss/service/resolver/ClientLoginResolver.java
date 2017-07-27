@@ -87,7 +87,8 @@ public class ClientLoginResolver implements ContentResolver {
             for (int i = 0; i < 10; i++){
                 account += random.nextInt(10);
             }
-        } while (joinUpService.hasJoinedUp(accessId, account) != null);
+            System.out.println("aaa" + (joinUpService.hasJoinedUp(accessId, account).size() == 0));
+        } while (joinUpService.hasJoinedUp(accessId, account).size() != 0);
         return account;
     }
 }

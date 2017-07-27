@@ -11,13 +11,15 @@ import java.util.List;
  * Created by Lee on 2017/7/13.
  */
 public interface ConversationService {
+    int getAvgScoreRankByServiceId(int serviceId);
+
     int updateClientId(int conversationId,int clientId);
 
     List<Conversation> getByClientId(int clientId);
 
     List<Conversation> getByServiceId(int serviceId);
 
-    int getAvgScoreByServiceId(int serviceId);
+    double getAvgScoreByServiceId(int serviceId);
 
     int startConversation(int clientId, int serviceId, long startTime);
 
@@ -29,6 +31,11 @@ public interface ConversationService {
 
     int resetServiceId(int serviceId, int conversationId);
 
+    int finishAllByServiceId(int serviceId);
+
+    int getTodayConversationCount(int serviceId);
+
+    int getTodayConversationCountRank(int serviceId);
     /**
      * Create By cjn
      * @return

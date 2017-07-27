@@ -23,7 +23,7 @@ import java.util.Date;
 @Service
 public class PullReqResolver implements ContentResolver{
 
-    private Gson gson;
+    private Gson gson = new Gson();
 
     @Autowired
     private ChatLogService chatLogService;
@@ -58,14 +58,21 @@ public class PullReqResolver implements ContentResolver{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         chatLogService.addWithConversationId(conversationId,serviceId,clientId,0, customerService.getAutoMessage(),new Date().getTime(),0);
         ServiceChat serviceChat = new ServiceChat(conversationId,clientId,0,customerService.getAutoMessage(),new Date().getTime());
         for (WebSocket ws : ClientWS.wsVector){
             try {
+                ws.setServiceId(serviceId);
                 ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            webSocket.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         //将转接通知消息存入数据库
         notificationService.insertNotificationService(1,3,serviceId,"编号为" +clientId +"的客户接入到会话中");

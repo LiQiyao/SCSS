@@ -1,6 +1,7 @@
 package org.obsidian.scss.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.obsidian.scss.bean.AvgScoreList;
 import org.obsidian.scss.entity.Conversation;
 import org.obsidian.scss.entity.ConversationExample;
 import org.obsidian.scss.entity.CustomerService;
@@ -9,6 +10,8 @@ import org.obsidian.scss.entity.DayAndTime;
 import java.util.List;
 
 public interface ConversationMapper {
+    List<AvgScoreList> selectAllAvgScore();
+
     int updateClientId(@Param("conversationId")int conversationId,@Param("clientId")int clientId);
 
     long countByExample(ConversationExample example);
@@ -33,7 +36,7 @@ public interface ConversationMapper {
 
     int selectCountByServiceId(int serviceId);
 
-    int selectAvgScoreByServiceId(int serviceId);
+    double selectAvgScoreByServiceId(int serviceId);
 
     int updateStopTime(@Param("conversationId") int conversationId,@Param("stopTime") long stopTime,@Param("score") int score);
 
@@ -43,11 +46,15 @@ public interface ConversationMapper {
 
     CustomerService selectLastChatServiceId(int clientId);
 
-    int selectLastIdByClientId(int clientId);
+    Integer selectLastIdByClientId(int clientId);
 
     int updateServiceId(@Param("serviceId") int serviceId,@Param("conversationId") int conversationId);
 
     int selectNotFinishByServiceId(int serviceId);
+
+    int updateAllStopTimeByServiceId(@Param("serviceId") int serviceId, @Param("stopTime") long stopTime);
+
+    int selectTodayConversationCount(@Param("serviceId") int serviceId,@Param("dayStart") long dayStart , @Param("dayEnd") long dayEnd);
     /**
      * Create By Cjn
      */

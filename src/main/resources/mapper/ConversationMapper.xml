@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.ConversationMapper">
+  <select id="selectTodayConversationCount" resultType="java.lang.Integer">
+    select count(*) from conversation where service_id=#{serviceId} and (end_time BETWEEN #{dayStart} and #{dayEnd});
+  </select>
+  <select id="selectAllAvgScore" resultMap="AvgScoreListMap">
+    select service_id,score from
+    (select service_id,AVG(ifnull(score,0)) score from conversation
+    group by service_id order by score desc) avg_score_table where service_id != 0
+  </select>
   <update id="updateClientId" parameterType="map">
     update conversation set client_id = #{clientId} where conversation_id = #{conversationId}
   </update>
   <select id="selectNotFinishByServiceId" resultType="java.lang.Integer">
     select COUNT(*) from conversation where stop_time IS NULL  and service_id=#{serviceId};
   </select>
+  <resultMap id="AvgScoreListMap" type="org.obsidian.scss.bean.AvgScoreList">
+    <result column="service_id" jdbcType="INTEGER" property="serviceId" />
+    <result column="score" jdbcType="DOUBLE" property="avgScore" />
+  </resultMap>
   <resultMap id="BaseResultMap" type="org.obsidian.scss.entity.Conversation">
     <result column="conversation_id" jdbcType="INTEGER" property="conversationId" />
     <result column="client_id" jdbcType="INTEGER" property="clientId" />
@@ -24,12 +36,15 @@
       <result column="time" property="time"/>
     </collection>
   </resultMap>
+  <update id="updateAllStopTimeByServiceId">
+    update conversation set stop_time = #{stopTime} where service_id=#{serviceId};
+  </update>
   <update id="updateServiceId">
     update conversation set service_id = #{serviceId} where conversation_id=#{conversationId};
   </update>
   <select id="selectLastChatServiceId" resultType="org.obsidian.scss.entity.CustomerService">
     select customer_service.* from conversation, customer_service
-    where client_id=1 AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
+    where client_id=#{clientId} AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
     ORDER BY stop_time DESC limit 0,1;
   </select>
   <select id="selectByClientId" resultMap="BaseResultMap">
@@ -51,9 +66,8 @@
     select count(*) from conversation
     where conversation.service_id=#{serviceId};
   </select>
-  <select id="selectAvgScoreByServiceId" resultType="java.lang.Integer">
-    select AVG(score) from conversation where service_id=#{serviceId}
-    and score IS NOT NULL ;
+  <select id="selectAvgScoreByServiceId" resultType="java.lang.Double">
+    select AVG(ifnull(score,0)) from conversation where service_id=#{serviceId}
   </select>
   <update id="updateStopTime">
     update conversation set stop_time = #{stopTime}, score=#{score}

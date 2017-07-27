@@ -28,6 +28,8 @@ public interface WorkTimeMapper {
     int updateByExampleSelective(@Param("record") WorkTime record, @Param("example") WorkTimeExample example);
 
     int updateByExample(@Param("record") WorkTime record, @Param("example") WorkTimeExample example);
+
+    List<WorkTime> selectTodayWorkTime(@Param("serviceId") int serviceId,@Param("dayStart") long dayStart,@Param("dayEnd") long dayEnd);
     /**
      * Create By CJN
      */

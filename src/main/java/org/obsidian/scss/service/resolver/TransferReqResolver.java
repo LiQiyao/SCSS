@@ -58,11 +58,14 @@ public class TransferReqResolver implements ContentResolver {
         } else if (transferType == 1){
             groupQueue.joinQueueByGroupId(targetId, clientId);
         } else {
+            Message<ServiceChat> message1 =
+                    new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime()));
             for (WebSocket ws : ServiceWS.wsVector){//找到目标客服并发送转接信号
                 if (ws.getServiceId() == targetId){
                     TransferSignal transferSignal = new TransferSignal(conversationId,clientId, chatLogService.getByClientId(clientId));
                     try {
                         ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<TransferSignal>(transferSignal)));
+                        ws.getSession().getBasicRemote().sendText(gson.toJson(message1));//给客服发送自动回话
                         //更新客服状态
                         int conversationCount = conversationMapper.selectNotFinishByServiceId(targetId);
                         ServiceStatus serviceStatus = new ServiceStatus();
@@ -76,12 +79,11 @@ public class TransferReqResolver implements ContentResolver {
             for (WebSocket ws : ClientWS.wsVector){//找到客户并发送自动回话语句,并重置会话所指向的客服
                 if (ws.getClientId() == clientId){
                     ws.setServiceId(targetId);
-                    Message<ServiceChat> message1 =
-                            new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime()));
+
                     conversationService.resetServiceId(targetId, conversationId);
                     chatLogService.addWithConversationId(conversationId,targetId,clientId,0,customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime(),0);
                     try {
-                        ws.getSession().getBasicRemote().sendText(gson.toJson(message1));
+                        ws.getSession().getBasicRemote().sendText(gson.toJson(message1));//给客户发送自动回话语句
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

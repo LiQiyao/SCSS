@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.obsidian.scss.dao.WorkTimeMapper">
+  <select id="selectTodayWorkTime" resultMap="BaseResultMap">
+    select * from work_time where service_id=#{serviceId}
+    and ((start_time BETWEEN #{dayStart} and #{dayEnd}) OR (end_time BETWEEN #{dayStart} and #{dayEnd}));
+  </select>
   <delete id="deleteWorkTime" parameterType="java.lang.Integer">
     delete from work_time where work_time_id = #{workTimeId}
   </delete>

@@ -11,6 +11,9 @@
     <result column="is_dimission" javaType="INTEGER" property="isDimission"/>
     <result column="password" javaType="String" property="password"/>
   </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from customer_service;
+  </select>
   <select id="selectByEIdAndPwd" resultType="org.obsidian.scss.entity.CustomerService">
     select * from customer_service where employee_id=#{employeeId} and password=#{password};
   </select>
