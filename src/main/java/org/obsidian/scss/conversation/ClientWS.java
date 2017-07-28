@@ -4,9 +4,14 @@ package org.obsidian.scss.conversation;
  * Created by Lee on 2017/7/8.
  */
 
+import com.google.gson.Gson;
 import org.apache.catalina.websocket.WebSocketServlet;
+import org.obsidian.scss.bean.ConversationEndSignal;
+import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.ServiceStatus;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.service.ConversationService;
+import org.obsidian.scss.service.GroupQueue;
 import org.obsidian.scss.service.resolver.ResolverFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
@@ -25,6 +30,14 @@ public class ClientWS implements WebSocket{
 
     @Autowired
     private ConversationService conversationService;
+
+    @Autowired
+    private ConversationMapper conversationMapper;
+
+    @Autowired
+    private GroupQueue groupQueue;
+
+    private Gson gson = new Gson();
 
     private Session session;
 
@@ -54,6 +67,20 @@ public class ClientWS implements WebSocket{
         System.out.println("!!!close");
         int conversationId = conversationService.getLastIdByClientId(clientId);
         conversationService.endConversation(conversationId, new Date().getTime(), null);
+        //给客服发会话结束信号
+        for (WebSocket sws : ServiceWS.wsVector){
+            if (sws.getServiceId() == serviceId){
+                try {
+                    sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ConversationEndSignal>(new ConversationEndSignal(conversationId))));
+                    ServiceStatus serviceStatus = new ServiceStatus();
+                    serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(serviceId));
+                    sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        groupQueue.removeByClient(clientId);
         wsVector.remove(this);
     }
 
@@ -62,6 +89,20 @@ public class ClientWS implements WebSocket{
         System.out.println(t.getCause() + "!!!error");
         int conversationId = conversationService.getLastIdByClientId(clientId);
         conversationService.endConversation(conversationId, new Date().getTime(), null);
+        //给客服发会话结束信号
+        for (WebSocket sws : ServiceWS.wsVector){
+            if (sws.getServiceId() == serviceId){
+                try {
+                    sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ConversationEndSignal>(new ConversationEndSignal(conversationId))));
+                    ServiceStatus serviceStatus = new ServiceStatus();
+                    serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(serviceId));
+                    sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        groupQueue.removeByClient(clientId);
         wsVector.remove(this);
     }
 

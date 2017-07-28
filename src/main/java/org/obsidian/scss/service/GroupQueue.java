@@ -107,10 +107,26 @@ public class GroupQueue implements Serializable {
 
     @Transactional
     public void removeByClient(int clientId){
-        for (Integer i : groupQueueMap.keySet()){
-            Queue<Client> queue = groupQueueMap.get(i);
-            for (Client c : queue){
 
+        for (Integer i : groupQueueMap.keySet()){
+            LinkedList<Client> linkedList = (LinkedList<Client>) groupQueueMap.get(i);
+            for (Client c : linkedList){
+                if (c.getClientId() == clientId){
+                    linkedList.remove(c);
+                    for (WebSocket ws : ServiceWS.wsVector){
+                        int wsGroupId = customerServiceService.selectCustomerServiceByServiceId(ws.getServiceId()).getGroupId();
+                        if (wsGroupId == i){
+                            System.out.println("wsGroupId" + wsGroupId);
+                            try {
+                                ServiceStatus serviceStatus = new ServiceStatus();
+                                serviceStatus.setQueuePeopleCount(linkedList.size());
+                                ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
             }
         }
     }
