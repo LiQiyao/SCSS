@@ -70,7 +70,7 @@ public class TransferReqResolver implements ContentResolver {
             }
 
             Message<ServiceChat> message1 =
-                    new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime()));
+                    new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime(), targetId));
             for (WebSocket ws : ServiceWS.wsVector){//找到目标客服并发送转接信号
                 if (ws.getServiceId() == targetId){
                     TransferSignal transferSignal = new TransferSignal(conversationId,clientId, chatLogService.getByClientId(clientId));

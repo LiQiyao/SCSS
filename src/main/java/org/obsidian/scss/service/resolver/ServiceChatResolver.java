@@ -30,20 +30,28 @@ public class ServiceChatResolver implements ContentResolver{
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("serviceChatResolver 1");
         Session session = webSocket.getSession();
+        System.out.println("serviceChatResolver 1");
         Type objectType = new TypeToken<Message<ServiceChat>>(){}.getType();
         Message<ServiceChat> message = gson.fromJson(msgJson, objectType);
         message.getContent().setTime(new Date().getTime());
+        message.getContent().setServiceId(webSocket.getServiceId());
         ServiceChat serviceChat = message.getContent();
+        System.out.println(message.getContent());
+        System.out.println("serviceChatResolver 3");
         int contentType = serviceChat.getContentType();
         if (contentType == 0){
             chatLogService.addWithConversationId
                     (serviceChat.getConversationId(),webSocket.getServiceId(),serviceChat.getClientId(),contentType,serviceChat.getContent(),new Date().getTime(),0);
             try {
+                System.out.println("serviceChatResolver 4");
                 session.getBasicRemote().sendText(gson.toJson(message));
                 for(WebSocket ws : ClientWS.wsVector){
                     if (ws.getClientId() == serviceChat.getClientId()){
+                        System.out.println("serviceChatResolver 5" + ws.getClientId());
                         ws.getSession().getBasicRemote().sendText(gson.toJson(message));
+                        System.out.println("serviceChatResolver 6");
                     }
                 }
             } catch (IOException e) {
