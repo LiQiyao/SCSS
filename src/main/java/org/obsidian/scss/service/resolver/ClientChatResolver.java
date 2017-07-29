@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -180,13 +179,7 @@ public class ClientChatResolver implements ContentResolver {
     }
 
     private void recommandTags(WebSocket webSocket,int conversationId,String content){
-        List<Flag> list = flagService.getFlagByContent(content);
-        List<String> tagList = new ArrayList<String>();
-        if(list != null && list.size() > 0){
-            for(int i=0;i<list.size();i++){
-                tagList.add(list.get(i).getName());
-            }
-        }
+        List<String> tagList = flagService.recommendFlags(webSocket.getClientId(),content);
         RecommandTags recommandTags = new RecommandTags(conversationId,tagList);
         Message<RecommandTags> res = new Message<RecommandTags>(recommandTags);
         try {
