@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lee on 2017/7/12.
@@ -55,6 +55,12 @@ public class ClientChatResolver implements ContentResolver {
     @Autowired
     private ConversationMapper conversationMapper;
 
+    @Autowired
+    private CustomerServiceService customerServiceService;
+
+    @Autowired
+    private OnlineService onlineService;
+
     private Gson gson = new Gson();
 
     @Transactional
@@ -67,8 +73,20 @@ public class ClientChatResolver implements ContentResolver {
         message.getContent().setTime(new Date().getTime());
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
+        CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(webSocket.getServiceId());
         System.out.println("!!2");
-
+        //判断目标客服是否在线
+        Map<String, String> onlineServiceMap = onlineService.getMap();
+        boolean targetIsOnline = false;
+        for (String s : onlineServiceMap.keySet()){
+            if (customerService.getEmployeeId().equals(onlineServiceMap.get(s))){
+                targetIsOnline = true;
+            }
+        }
+        if (!targetIsOnline){
+            System.out.println("目标客服已经不在线");
+            webSocket.setServiceId(0);
+        }
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
             chatLogService.addWithConversationId(clientChat.getConversationId(),clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
@@ -131,8 +149,9 @@ public class ClientChatResolver implements ContentResolver {
             }
         }
         if (targetWS != null){//如果存在之前聊过天的客服，则接入到该客服
+            conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
             Message<ServiceChat> message =
-                    new Message<ServiceChat>(new ServiceChat(clientChat.getConversationId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime()));
+                    new Message<ServiceChat>(new ServiceChat(clientChat.getConversationId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime(), target.getServiceId()));
             try {
                 System.out.println("11");
                 webSocket.setServiceId(target.getServiceId());
@@ -179,13 +198,7 @@ public class ClientChatResolver implements ContentResolver {
     }
 
     private void recommandTags(WebSocket webSocket,int conversationId,String content){
-        List<Flag> list = flagService.getFlagByContent(content);
-        List<String> tagList = new ArrayList<String>();
-        if(list != null && list.size() > 0){
-            for(int i=0;i<list.size();i++){
-                tagList.add(list.get(i).getName());
-            }
-        }
+        List<String> tagList = flagService.recommendFlags(webSocket.getClientId(),content);
         RecommandTags recommandTags = new RecommandTags(conversationId,tagList);
         Message<RecommandTags> res = new Message<RecommandTags>(recommandTags);
         try {

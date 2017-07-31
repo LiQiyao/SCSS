@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -133,5 +136,22 @@ public class FlagServiceImpl implements FlagService {
         }
         List<Flag> found = KeywordFinder.findFlagInContent(content,trie);
         return found;
+    }
+
+    @Transactional
+    public List<String> recommendFlags(int clientId, String content) {
+        List<Flag> found = this.getFlagByContent(content);
+        List<Flag> hasList = this.selectAllFlag(clientId);
+        Set<String> hasSet = new HashSet<String>();
+        for(int i=0;i<hasList.size();i++){
+            hasSet.add(hasList.get(i).getName());
+        }
+        List<String> recommendFlags = new ArrayList<String>();
+        for(int i=0;i<found.size();i++){
+            if(!hasSet.contains(found.get(i).getName())){
+                recommendFlags.add(found.get(i).getName());
+            }
+        }
+        return recommendFlags;
     }
 }

@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.*;
 import org.obsidian.scss.conversation.ClientWS;
+import org.obsidian.scss.conversation.ServiceWS;
 import org.obsidian.scss.conversation.WebSocket;
+import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.service.*;
@@ -40,6 +42,9 @@ public class PullReqResolver implements ContentResolver{
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private ConversationMapper conversationMapper;
+
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
         Session session = webSocket.getSession();
@@ -50,24 +55,53 @@ public class PullReqResolver implements ContentResolver{
         CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(serviceId);
         int groupId = customerService.getGroupId();
         Client client = groupQueue.getClientFromQueue(groupId);
+        if (client == null){
+            return;
+        }
         int clientId = client.getClientId();
         int conversationId = conversationService.getLastIdByClientId(clientId);
         TransferSignal transferSignal = new TransferSignal(conversationId,client.getClientId(),chatLogService.getByClientId(clientId));
         try {
             session.getBasicRemote().sendText(gson.toJson(new Message<TransferSignal>(transferSignal)));
+            //更新接入新会话的客服状态
+            ServiceStatus serviceStatus = new ServiceStatus();
+            serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(serviceId) + 1);
+            session.getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        conversationService.resetServiceId(serviceId, conversationId);
         chatLogService.addWithConversationId(conversationId,serviceId,clientId,0, customerService.getAutoMessage(),new Date().getTime(),0);
-        ServiceChat serviceChat = new ServiceChat(conversationId,clientId,0,customerService.getAutoMessage(),new Date().getTime());
+        ServiceChat serviceChat = new ServiceChat(conversationId,clientId,0,customerService.getAutoMessage(),new Date().getTime(), serviceId);
         for (WebSocket ws : ClientWS.wsVector){
-            try {
-                ws.setServiceId(serviceId);
-                ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (ws.getClientId() == clientId){
+                int preServiceId = ws.getServiceId();
+                System.out.println("转接前的客服ID" + preServiceId);
+                if (preServiceId != 0){
+                    for (WebSocket sws : ServiceWS.wsVector){
+                        if (sws.getServiceId() == preServiceId){
+
+                            try {
+                                sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<TransferEndSignal>(new TransferEndSignal(conversationId))));
+                                //更新转接前客服的客服状态---会话数
+                                ServiceStatus serviceStatus = new ServiceStatus();
+                                serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(preServiceId));
+                                sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    ws.setServiceId(serviceId);
+                    ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
         try {
             webSocket.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));

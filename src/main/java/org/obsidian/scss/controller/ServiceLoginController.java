@@ -37,7 +37,7 @@ public class ServiceLoginController {
             CustomerService customerService = customerServiceService.selectByEIdAndPwd(employeeId,password);
             if (customerService != null){
                 onlineService.online(employeeId, resp);
-                return "redirect:/api/onlineGroup";
+                return "redirect:/SCSS/customerService.html";
             }
         }
         return null;

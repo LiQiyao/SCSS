@@ -15,12 +15,23 @@ public class ServiceChat {
 
     private long time;
 
-    public ServiceChat(int conversationId, int clientId, int contentType, String content, long time) {
+    private int serviceId;
+
+/*    public ServiceChat(int conversationId, int clientId, int contentType, String content, long time) {
         this.conversationId = conversationId;
         this.clientId = clientId;
         this.contentType = contentType;
         this.content = content;
         this.time = time;
+    }*/
+
+    public ServiceChat(int conversationId, int clientId, int contentType, String content, long time, int serviceId) {
+        this.conversationId = conversationId;
+        this.clientId = clientId;
+        this.contentType = contentType;
+        this.content = content;
+        this.time = time;
+        this.serviceId = serviceId;
     }
 
     public ServiceChat() {
@@ -66,6 +77,14 @@ public class ServiceChat {
         this.time = time;
     }
 
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
     @Override
     public String toString() {
         return "ServiceChat{" +
@@ -74,6 +93,7 @@ public class ServiceChat {
                 ", contentType=" + contentType +
                 ", content='" + content + '\'' +
                 ", time=" + time +
+                ", serviceId=" + serviceId +
                 '}';
     }
 }

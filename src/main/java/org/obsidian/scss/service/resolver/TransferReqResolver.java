@@ -58,8 +58,19 @@ public class TransferReqResolver implements ContentResolver {
         } else if (transferType == 1){
             groupQueue.joinQueueByGroupId(targetId, clientId);
         } else {
+            //给转接前的客服发送转接结束信号
+            try {
+                System.out.println("转接前的客服Id" + webSocket.getServiceId());
+                session.getBasicRemote().sendText(gson.toJson(new Message<TransferEndSignal>(new TransferEndSignal(conversationId))));
+                ServiceStatus serviceStatus = new ServiceStatus();
+                serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(webSocket.getServiceId()) - 1);
+                session.getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Message<ServiceChat> message1 =
-                    new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime()));
+                    new Message<ServiceChat>(new ServiceChat(conversationId, clientId,0, customerServiceService.selectCustomerServiceByServiceId(targetId).getAutoMessage(),new Date().getTime(), targetId));
             for (WebSocket ws : ServiceWS.wsVector){//找到目标客服并发送转接信号
                 if (ws.getServiceId() == targetId){
                     TransferSignal transferSignal = new TransferSignal(conversationId,clientId, chatLogService.getByClientId(clientId));

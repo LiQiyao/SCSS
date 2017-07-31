@@ -80,6 +80,9 @@ public class GroupQueue implements Serializable {
     //从某个客服组队列中取出一个客户
     @Transactional
     public Client getClientFromQueue(int groupId){
+        if (groupQueueMap.get(groupId).size() == 0){
+            return null;
+        }
         updateServiceStatus(groupId,groupQueueMap.get(groupId).size() - 1);
         return groupQueueMap.get(groupId).poll();
     }
@@ -97,6 +100,32 @@ public class GroupQueue implements Serializable {
                     ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Transactional
+    public void removeByClient(int clientId){
+
+        for (Integer i : groupQueueMap.keySet()){
+            LinkedList<Client> linkedList = (LinkedList<Client>) groupQueueMap.get(i);
+            for (Client c : linkedList){
+                if (c.getClientId() == clientId){
+                    linkedList.remove(c);
+                    for (WebSocket ws : ServiceWS.wsVector){
+                        int wsGroupId = customerServiceService.selectCustomerServiceByServiceId(ws.getServiceId()).getGroupId();
+                        if (wsGroupId == i){
+                            System.out.println("wsGroupId" + wsGroupId);
+                            try {
+                                ServiceStatus serviceStatus = new ServiceStatus();
+                                serviceStatus.setQueuePeopleCount(linkedList.size());
+                                ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
             }
         }

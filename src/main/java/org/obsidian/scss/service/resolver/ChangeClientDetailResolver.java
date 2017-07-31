@@ -48,7 +48,7 @@ public class ChangeClientDetailResolver implements ContentResolver {
         String qq = changeClientDetail.getQq();
         String weibo = changeClientDetail.getWeibo();
         clientService.updateClient(clientId,clientName,address,email,phoneNum,sex);
-        joinUpService.updateJoinUp(clientId,qq,wx,weibo);
+        joinUpService.updateAllJoinUp(clientId,qq,wx,weibo);
         List<Flag> flagList = clientService.selectAllFlag(clientId);
         List<String> tagList = new ArrayList<String>();
         if(flagList != null && flagList.size() > 0){
