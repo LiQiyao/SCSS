@@ -48,4 +48,5 @@ public interface ConversationService {
     List<DayAndTime> selectRecentPeopleMonth(int serviceId);
     List<DayAndTime> selectRecentPeopleWeekend(int serviceId);
     List<DayAndTime> selectRecentPeopleHour(int serviceId);
+    long selectDuringConverSationNum(long startTime,long stopTime);
 }

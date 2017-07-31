@@ -6,10 +6,7 @@ import org.obsidian.scss.dao.KeywordHeatMapper;
 import org.obsidian.scss.dao.KeywordMapper;
 import org.obsidian.scss.dao.KnowledgeKeywordMapper;
 import org.obsidian.scss.dao.KnowledgeMapper;
-import org.obsidian.scss.entity.Keyword;
-import org.obsidian.scss.entity.KeywordHeat;
-import org.obsidian.scss.entity.Knowledge;
-import org.obsidian.scss.entity.KnowledgeKeyword;
+import org.obsidian.scss.entity.*;
 import org.obsidian.scss.service.KnowledgeService;
 import org.obsidian.scss.util.KeywordFinder;
 import org.obsidian.scss.util.Trie;
@@ -153,5 +150,19 @@ public class KnowledgeServiceImpl implements KnowledgeService{
     }
     public List<Knowledge> selectKnowledgeBySearchName(String keyword) {
         return knowledgeMapper.selectKnowledgeBySearchName(keyword);
+    }
+
+    public List<Knowledge> selectKnowledge() {
+        KnowledgeExample example = new KnowledgeExample();
+        KnowledgeExample.Criteria criteria = example.createCriteria();
+        return knowledgeMapper.selectByExample(example);
+    }
+
+    public int updateKnowledge(Knowledge knowledge) {
+        KnowledgeExample example = new KnowledgeExample();
+        KnowledgeExample.Criteria criteria = example.createCriteria();
+        criteria.andKnowledgeIdEqualTo(knowledge.getKnowledgeId());
+        int res = knowledgeMapper.updateByExample(knowledge,example);
+        return res;
     }
 }

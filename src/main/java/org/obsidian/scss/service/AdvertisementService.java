@@ -13,4 +13,5 @@ public interface AdvertisementService {
     int selectByContent(String content);
     int selectId(String content);
     int delete(int id);
+    int updateAdv(Advertisement advertisement);
 }

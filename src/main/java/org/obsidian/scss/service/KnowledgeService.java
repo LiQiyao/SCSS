@@ -29,4 +29,6 @@ public interface KnowledgeService {
      * Create By Cjn
      */
     List<Knowledge> selectKnowledgeBySearchName(String keyword);
+    List<Knowledge> selectKnowledge();
+    int updateKnowledge (Knowledge knowledge);
 }

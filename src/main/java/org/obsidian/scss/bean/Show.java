@@ -8,7 +8,7 @@ package org.obsidian.scss.bean;
 public class Show {
     public Object data;
     public int status = 1;
-    public String message = "OK";
+    public String message = "操作成功";
 
     public Object getData() {
         return data;

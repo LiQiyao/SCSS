@@ -35,7 +35,8 @@ public class AdvertisementController {
     private FlagService flagService;
     
     @RequestMapping("advertisement")
-    public String advertisement(Model model){
+    @ResponseBody
+    public Show advertisement(){
         List<AdvertisementAndFlag> advertisementAndFlags = new ArrayList<AdvertisementAndFlag>(); 
         List<Advertisement> advertisements = advertisementService.getTotalAdvInfo();
         for (int i=0 ; i < advertisements.size();i++){
@@ -49,8 +50,9 @@ public class AdvertisementController {
             advertisementAndFlag.setFlagList(flags);
             advertisementAndFlags.add(advertisementAndFlag);
         }
-        model.addAttribute("advInfo",advertisementAndFlags);
-        return "advertisement";
+        Show show = new Show();
+        show.setData(advertisementAndFlags);
+        return show;
     }
 
     /**
@@ -74,7 +76,7 @@ public class AdvertisementController {
             List<Flag> flags = new ArrayList<Flag>();
             for (int j = 0 ; j < advFlags.size();j++){
                 flags.add(flagService.selectAdv(advFlags.get(j).getFlagId()));
-                if (flagService.selectAdv(advFlags.get(i).getFlagId()).getName().contains(searchName)){
+                if (flagService.selectAdv(advFlags.get(j).getFlagId()).getName().contains(searchName)){
                     flag = true;
                 }
             }
@@ -149,5 +151,20 @@ public class AdvertisementController {
         }
         return show;
     }
-    
+    /**
+     * 更新广告
+     */
+    @RequestMapping("updateAdv")
+    @ResponseBody
+    public Show updateAdv(@RequestParam("advContent") String json){
+        Show show = new Show();
+        Gson gson = new Gson();
+        Advertisement advertisement = gson.fromJson(json,new TypeToken<Advertisement>(){}.getType());
+        int res = advertisementService.updateAdv(advertisement);
+        if (res == 0 ){
+            show.setStatus(0);
+            show.setMessage("更新失败");
+        }
+        return show;
+    }
 }

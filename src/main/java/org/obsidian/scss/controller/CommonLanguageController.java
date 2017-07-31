@@ -64,4 +64,19 @@ public class CommonLanguageController {
         }
         return show;
     }
+    
+    @RequestMapping("updateCommonLanguage")
+    @ResponseBody
+    public Show updateCommonLanguage(@RequestParam("commonLanguage") String commonLang){
+        Show show =  new Show();
+        Gson gson = new Gson();
+        CommonLanguage common = gson.fromJson(commonLang,new TypeToken<CommonLanguage>(){}.getType());
+        int res = commonLanguageService.updateCommonLanguage(common.getCommonLanguageId(),common.getContent());
+        if (res == 0) {
+            show.setStatus(0);
+            show.setMessage("更新失败!");
+        }        
+        return show;
+    }
+    
 }

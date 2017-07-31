@@ -14,4 +14,6 @@ public interface NotificationService {
     List<Notification> selectAllNotification();
     
     int deleteById(int id);
+    
+    List<Notification> searchByType(int ntId,int notId);
 }

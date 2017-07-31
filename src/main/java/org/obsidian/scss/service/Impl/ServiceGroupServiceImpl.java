@@ -118,4 +118,10 @@ public class ServiceGroupServiceImpl implements ServiceGroupService {
         }
         return groupAndPersonNums;
     }
+    
+    @Transactional
+    public int deleteGroupById(int id) {
+       int res = serviceGroupMapper.deleteServiceGroup(id);
+       return res;
+    }
 }

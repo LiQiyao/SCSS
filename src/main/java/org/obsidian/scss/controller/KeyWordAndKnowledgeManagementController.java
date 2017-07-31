@@ -3,6 +3,8 @@ package org.obsidian.scss.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.obsidian.scss.bean.KnowledgeAndKeyword;
 import org.obsidian.scss.bean.Show;
@@ -34,9 +36,15 @@ public class KeyWordAndKnowledgeManagementController {
     
     @RequestMapping("knowledgeSearch")
     @ResponseBody
-    public Show knowledgeManagement(@RequestParam("keyword") String searchKeyword){
-        List<Knowledge> knowledges = knowledgeService.getKnowledgeByContent(searchKeyword);
+    public Show knowledgeManagement(@RequestParam(value = "keyword",defaultValue = "") String searchKeyword){
+        List<Knowledge> knowledges;
+        if (searchKeyword.equals("")){
+            knowledges = knowledgeService.selectKnowledge();
+        }else{
+            knowledges = knowledgeService.selectKnowledgeBySearchName(searchKeyword);
+        }
         List<KnowledgeAndKeyword> res = new ArrayList<KnowledgeAndKeyword>();
+        System.out.println(knowledges.size()+"             cjncjncjcncjnc" + searchKeyword);
         Show show = new Show();
        if (knowledges.size() != 0){
            for (int i = 0 ; i < knowledges.size();i++){
@@ -45,7 +53,6 @@ public class KeyWordAndKnowledgeManagementController {
                knowledgeAndKeyword.setKnowledge(knowledge);
                knowledgeAndKeyword.setKeywords(new ArrayList<org.obsidian.scss.entity.Keyword>());
                List<KnowledgeKeyword> kList = knowledgeKeywordService.selectKeywordId(knowledge.getKnowledgeId());
-               System.out.println(kList.size()+"!!"+kList.get(0).getKeywordId());
                for (int j=0 ; j < kList.size();j++){
                    org.obsidian.scss.entity.Keyword key = keywordService.selectKeyword(kList.get(j).getKeywordId());
                    knowledgeAndKeyword.getKeywords().add(key);
@@ -104,5 +111,29 @@ public class KeyWordAndKnowledgeManagementController {
         }
         return show;
     }
+    @RequestMapping("updateKnowledge")
+    @ResponseBody
+    public Show updateKnowledge(@RequestParam("knowledge") String knowledgeStr){
+        Show show = new Show();
+        Gson gson = new Gson();
+        Knowledge knowledge = gson.fromJson(knowledgeStr,new TypeToken<Knowledge>(){}.getType());
+        int res = knowledgeService.updateKnowledge(knowledge);
+        if (res == 0){
+            show.setMessage("更新失败");
+            show.setStatus(0);
+        }
+        return show;
+    }
     
+    @RequestMapping("deleteKnowledge")
+    @ResponseBody
+    public Show deleteKnowledge(@RequestParam("groupId") int id){
+        Show show = new Show();
+        int res = knowledgeService.removeKnowledge(id);
+        if (res == 0){
+            show.setStatus(0);
+            show.setMessage("操作失败");
+        }
+        return show;
+    }
 }

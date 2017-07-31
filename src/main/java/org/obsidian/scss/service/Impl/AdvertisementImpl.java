@@ -85,4 +85,9 @@ public class AdvertisementImpl implements AdvertisementService {
     public int delete(int id) {
         return advertisementMapper.deleteByPrimaryKey(id);
     }
+
+    public int updateAdv(Advertisement advertisement) {
+        int res = advertisementMapper.updateByPrimaryKey(advertisement);
+        return res;
+    }
 }

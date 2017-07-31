@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.Show;
 import org.obsidian.scss.bean.NameList;
 import org.obsidian.scss.entity.GroupWord;
+import org.obsidian.scss.entity.ServiceGroup;
+import org.obsidian.scss.service.CustomerServiceService;
 import org.obsidian.scss.service.GroupWordService;
 import org.obsidian.scss.service.ServiceGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class ServerGroupController {
     ServiceGroupService serviceGroupService;
     @Autowired
     GroupWordService groupWordService;
+    @Autowired
+    CustomerServiceService customerServiceService;
     
     /**
      * 添加组
@@ -95,4 +99,39 @@ public class ServerGroupController {
         }
         return show;
     }
+    /**
+     * 删除组
+     */
+    @RequestMapping("deleteGroupById")
+    @ResponseBody
+    public Show deleteGroup(@RequestParam("groupId") int groupId){
+        Show show = new Show();
+        int size = customerServiceService.selectCustomerServiceByGroup(groupId).size();
+        int res = 0;
+        if (size == 0 ){
+            res = customerServiceService.deleteCustomerService(groupId);
+        }
+        if (res == 0){
+            show.setStatus(0);
+            show.setMessage("删除失败");
+        }
+        return show;
+    }
+    /**
+     * 更新组
+     */
+    @RequestMapping("updateGroup")
+    @ResponseBody
+    public Show updateGroup(@RequestParam("group") String json){
+        Show show = new Show();
+        Gson gson = new Gson();
+        ServiceGroup serviceGroup = gson.fromJson(json,new TypeToken<ServiceGroup>(){}.getType());
+        int res = serviceGroupService.updateGroup(serviceGroup.getGroupId(),serviceGroup.getName());
+        if (res == 0){
+            show.setMessage("更新失败");
+            show.setStatus(0);
+        }
+        return show;
+    }
+    
 }

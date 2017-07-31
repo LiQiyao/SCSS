@@ -46,4 +46,16 @@ public class NotificationServiceImpl implements NotificationService {
         criteria.andNotificationIdEqualTo(id);
         return notificationMapper.deleteByExample(example);
     }
+
+    @Transactional
+    public List<Notification> searchByType(int ntId, int notId) {
+        NotificationExample example = new NotificationExample();
+        NotificationExample.Criteria criteria = example.createCriteria();
+        if (ntId!=0){
+            criteria.andNtIdEqualTo(ntId);
+        }if (notId!=0){
+            criteria.andNotIdEqualTo(notId);
+        }
+        return notificationMapper.selectByExample(example);
+    }
 }

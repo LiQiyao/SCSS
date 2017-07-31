@@ -34,6 +34,7 @@ public class GroupWordServiceImpl implements GroupWordService {
         return trie;
     }
 
+    @Transactional
     public int getServiceGroupIdByContent(String content) {
         Trie trie = getTrie();
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -67,6 +68,7 @@ public class GroupWordServiceImpl implements GroupWordService {
      * @param groupWord
      * @return
      */
+    @Transactional
     public int insertGroupWord(GroupWord groupWord){
         return groupWordMapper.insert(groupWord);
     }
@@ -76,11 +78,20 @@ public class GroupWordServiceImpl implements GroupWordService {
      * @param groupWord
      * @return
      */
+    @Transactional
     public int deleteGroupWord(GroupWord groupWord) {
         GroupWordExample example  = new GroupWordExample();
         GroupWordExample.Criteria criteria = example.createCriteria();
         criteria.andGroupIdEqualTo(groupWord.getGroupId());
         criteria.andWordEqualTo(groupWord.getWord());
         return groupWordMapper.deleteByExample(example);
+    }
+    
+    @Transactional
+    public List<GroupWord> selectGroupTag(int id) {
+        GroupWordExample example = new GroupWordExample();
+        GroupWordExample.Criteria criteria = example.createCriteria();
+        criteria.andGroupIdEqualTo(id);
+        return groupWordMapper.selectByExample(example);
     }
 }

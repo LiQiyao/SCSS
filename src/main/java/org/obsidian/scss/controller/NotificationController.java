@@ -10,8 +10,8 @@ import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 import org.obsidian.scss.bean.Message;
 import org.obsidian.scss.bean.Notification;
@@ -26,7 +26,6 @@ import org.obsidian.scss.service.NotificationService;
 import org.obsidian.scss.service.NotificationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -51,34 +50,44 @@ public class NotificationController {
     
     
     @RequestMapping("notification")
-    public String notification(Model model){
+    @ResponseBody
+    public Show notification(){
+        Show show = new Show();
         List<NotificationAndTypeAndObjectType>  notificationAndTypeAndObjectTypes = new ArrayList<NotificationAndTypeAndObjectType>();
         List<org.obsidian.scss.entity.Notification> notifications = notificationService.selectAllNotification();
-        for (int i = 0 ; i < notifications.size(); i++){
-            NotificationAndTypeAndObjectType notificationAndTypeAndObjectType = new NotificationAndTypeAndObjectType();
-            org.obsidian.scss.entity.Notification notification = notifications.get(i);
-            notificationAndTypeAndObjectType.setNotification(notification);
-            NotificationType  notificationType = notificationTypeService.selectNotificationType(notification.getNotId());
-            notificationAndTypeAndObjectType.setNotificationType(notificationType);
-            NotificationObjectType notificationObjectType = notificationObjectTypeService.selectNotificationObjectType(notification.getNotId());
-            if (notificationObjectType.getName().equals("客服个人")){
-                notificationAndTypeAndObjectType.setType("客服个人");
-                CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(notification.getObjectId());
-                notificationAndTypeAndObjectType.setGetMessageObject(customerService);
-            }else if(notificationObjectType.getName().equals("客服组")){
-                notificationAndTypeAndObjectType.setType("客服组");
-                notificationAndTypeAndObjectType.setGetMessageObject(serviceGroupService.selectGroupByGroupId(notification.getObjectId()));
-            }else{
-                notificationAndTypeAndObjectType.setType("全体客服组");
-                notificationAndTypeAndObjectType.setGetMessageObject(new String("全体客服组"));
+        if (notifications!=null){
+            for (int i = 0 ; i < notifications.size(); i++){
+                NotificationAndTypeAndObjectType notificationAndTypeAndObjectType = new NotificationAndTypeAndObjectType();
+                org.obsidian.scss.entity.Notification notification = notifications.get(i);
+                notificationAndTypeAndObjectType.setNotification(notification);
+                NotificationType  notificationType = notificationTypeService.selectNotificationType(notification.getNotId());
+                notificationAndTypeAndObjectType.setNotificationType(notificationType);
+                NotificationObjectType notificationObjectType = notificationObjectTypeService.selectNotificationObjectType(notification.getNotId());
+                if (notificationObjectType.getName().equals("客服个人")){
+                    notificationAndTypeAndObjectType.setType("客服个人");
+                    CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(notification.getObjectId());
+                    notificationAndTypeAndObjectType.setGetMessageObject(customerService);
+                }else if(notificationObjectType.getName().equals("客服组")){
+                    notificationAndTypeAndObjectType.setType("客服组");
+                    notificationAndTypeAndObjectType.setGetMessageObject(serviceGroupService.selectGroupByGroupId(notification.getObjectId()));
+                }else{
+                    notificationAndTypeAndObjectType.setType("全体客服组");
+                    notificationAndTypeAndObjectType.setGetMessageObject(new String("全体客服组"));
+                }
+                notificationAndTypeAndObjectTypes.add(notificationAndTypeAndObjectType);
             }
-            notificationAndTypeAndObjectTypes.add(notificationAndTypeAndObjectType);
+        }else{
+            show.setStatus(0);
+            show.setMessage("没有历史通知");
         }
-        model.addAttribute("notification",notificationAndTypeAndObjectTypes);
-        return "notification";
+        
+        
+        show.setData(notificationAndTypeAndObjectTypes);
+        return show;
     }
     
     @RequestMapping("addNotification")
+    @ResponseBody
     public Show addNotification(@RequestParam("content") String content,@RequestParam("ntId") int ntId,@RequestParam("objectId")int objectId,
                                 @RequestParam("notId") int notId){
         Show show = new Show();
@@ -93,7 +102,8 @@ public class NotificationController {
     }
     
     @RequestMapping("deleteNotification")
-    public Show deleteNotification(@RequestParam("getJson") String getJson){
+    @ResponseBody
+    public Show deleteNotification(@RequestParam("deleteList") String getJson){
         Gson gson = new Gson();
         List<IdList> idLists = gson.fromJson(getJson,new TypeToken<List<IdList>>(){}.getType());
         Show show = new Show();
@@ -154,5 +164,42 @@ public class NotificationController {
         }
         //存储入数据库
         notificationService.insertNotificationService(ntId, notId, objectId, content);
+    }
+    
+    @RequestMapping("searchNot")
+    @ResponseBody
+    public Show searchGroup(@RequestParam(value = "ntId",defaultValue = "0") int ntId,@RequestParam(value = "notId",defaultValue = "0") int notId){
+        Show show = new Show();
+        List<NotificationAndTypeAndObjectType>  notificationAndTypeAndObjectTypes = new ArrayList<NotificationAndTypeAndObjectType>();
+        List<org.obsidian.scss.entity.Notification> notifications = notificationService.searchByType(ntId,notId);
+        if (notifications!=null){
+            for (int i = 0 ; i < notifications.size(); i++){
+                NotificationAndTypeAndObjectType notificationAndTypeAndObjectType = new NotificationAndTypeAndObjectType();
+                org.obsidian.scss.entity.Notification notification = notifications.get(i);
+                notificationAndTypeAndObjectType.setNotification(notification);
+                NotificationType  notificationType = notificationTypeService.selectNotificationType(notification.getNotId());
+                notificationAndTypeAndObjectType.setNotificationType(notificationType);
+                NotificationObjectType notificationObjectType = notificationObjectTypeService.selectNotificationObjectType(notification.getNotId());
+                if (notificationObjectType.getName().equals("客服个人")){
+                    notificationAndTypeAndObjectType.setType("客服个人");
+                    CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(notification.getObjectId());
+                    notificationAndTypeAndObjectType.setGetMessageObject(customerService);
+                }else if(notificationObjectType.getName().equals("客服组")){
+                    notificationAndTypeAndObjectType.setType("客服组");
+                    notificationAndTypeAndObjectType.setGetMessageObject(serviceGroupService.selectGroupByGroupId(notification.getObjectId()));
+                }else{
+                    notificationAndTypeAndObjectType.setType("全体客服组");
+                    notificationAndTypeAndObjectType.setGetMessageObject(new String("全体客服组"));
+                }
+                notificationAndTypeAndObjectTypes.add(notificationAndTypeAndObjectType);
+            }
+        }else{
+            show.setStatus(0);
+            show.setMessage("没有历史通知");
+        }
+
+
+        show.setData(notificationAndTypeAndObjectTypes);
+        return show;
     }
 }

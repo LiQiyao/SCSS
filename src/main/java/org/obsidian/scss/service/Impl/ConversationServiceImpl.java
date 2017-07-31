@@ -1,9 +1,11 @@
 package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.bean.AvgScoreList;
+import org.obsidian.scss.bean.ConversationEndReq;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.dao.CustomerServiceMapper;
 import org.obsidian.scss.entity.Conversation;
+import org.obsidian.scss.entity.ConversationExample;
 import org.obsidian.scss.entity.CustomerService;
 import org.obsidian.scss.entity.DayAndTime;
 import org.obsidian.scss.service.ConversationService;
@@ -164,6 +166,17 @@ public class ConversationServiceImpl implements ConversationService {
     @Transactional
     public List<DayAndTime> selectRecentPeopleHour(int serviceId) {
         return conversationMapper.selectRecentPeopleHour(System.currentTimeMillis(),serviceId);
+    }
+
+    @Transactional
+    public long selectDuringConverSationNum(long startTime,long stopTime) {
+        ConversationExample example =  new ConversationExample();
+        ConversationExample.Criteria criteria = example.createCriteria();
+        if (startTime!=0)
+            criteria.andStartTimeGreaterThanOrEqualTo(startTime);
+        if (stopTime!=0)
+            criteria.andStopTimeLessThanOrEqualTo(stopTime);
+        return conversationMapper.selectByExample(example).size();
     }
 }
 class ConversationCount implements Comparable<ConversationCount>{

@@ -5,12 +5,16 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.obsidian.scss.bean.GroupAndTag;
 import org.obsidian.scss.bean.IdList;
 import org.obsidian.scss.bean.PeopleDayAndTime;
 import org.obsidian.scss.bean.Show;
 import org.obsidian.scss.entity.CustomerService;
+import org.obsidian.scss.entity.GroupWord;
+import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.service.ConversationService;
 import org.obsidian.scss.service.CustomerServiceService;
+import org.obsidian.scss.service.GroupWordService;
 import org.obsidian.scss.service.ServiceGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,17 +33,45 @@ public class CustomerServiceManagementController {
     CustomerServiceService customerServiceService;
     @Autowired
     ConversationService conversationService;
-    
+    @Autowired
+    GroupWordService groupWordService;
     /**
      * Create By Cjn
      * 获取公司中所有的部门
-     * @param model
+     * @param
      * @return
      */
     @RequestMapping(value = "customerServiceManagement")
-    public String management(Model model){
-        model.addAttribute("allGroup",serviceGroupService.selectAllGroup());//调用cw
-        return "customerServiceManagement";
+    @ResponseBody
+    public Show management(){
+        Show show = new Show();
+        List<ServiceGroup> serviceGroups = serviceGroupService.selectAllGroup();
+        List<GroupAndTag> list = new ArrayList<GroupAndTag>();
+        for (int i = 0 ; i < serviceGroups.size(); i++){
+            GroupAndTag groupAndTag = new GroupAndTag();
+            groupAndTag.setServiceGroup(serviceGroups.get(i));
+            groupAndTag.setGroupWords( groupWordService.selectGroupTag(serviceGroups.get(i).getGroupId()));
+            list.add(groupAndTag);
+        }
+        show.setData(list);
+        return show;
+    }
+    
+    @RequestMapping(value = "allCustom")
+    @ResponseBody
+    public  Show person(){
+        Show show = new Show();
+        show.setData(customerServiceService.selectAllCustomerService());
+        return show;
+    }
+    
+    
+    @RequestMapping(value = "selectByGroup")
+    @ResponseBody
+    public Show selectByGroup(@RequestParam("groupId") int groupId){
+        Show show = new Show();
+        show.setData(customerServiceService.selectCustomerServiceByGroup(groupId));
+        return show;
     }
 
     /**
@@ -62,7 +94,7 @@ public class CustomerServiceManagementController {
     /**
      * Create By Cjn
      * 用于批量离职客服人员 
-     * @param customId
+     * @param
      * @return
      */
     @RequestMapping(value = "deleteServerPerson")
@@ -90,7 +122,7 @@ public class CustomerServiceManagementController {
     /**
      * Create By cjn
      * 批量添加客服人员
-     * @param getJson json 字符串
+     * @param
      * @return show
      */
     @RequestMapping(value="addServerPerson")
@@ -142,6 +174,28 @@ public class CustomerServiceManagementController {
                 res.add(peopleDayAndTime);
             }
             show.setData(res);
+        }
+        return show;
+    }
+    @RequestMapping("updateService")
+    @ResponseBody
+    public Show updateService(@RequestParam("personList") String personList){
+        Show show = new Show();
+        Gson gson = new Gson();
+        List<CustomerService> customerServices = gson.fromJson(personList,new TypeToken<List<CustomerService>>(){}.getType());
+        int res = 0 ;
+        for (int i=0 ; i < customerServices.size(); i++){
+            int re= customerServiceService.updateCustomerService(customerServices.get(i).getServiceId(),customerServices.get(i).getName(),customerServices.get(i).getGroupId(),customerServices.get(i).getNickname(),
+                    customerServices.get(i).getEmployeeId(),customerServices.get(i).getAutoMessage(),customerServices.get(i).getIsDimission());
+            if (re ==1){
+                res++;
+            }
+        }
+        if (res == customerServices.size()){
+            show.setStatus(1);
+        }else{
+            show.setStatus(0);
+            show.setMessage("请求更新"+customerServices.size()+"条,"+"成功更新"+ res +"条。");
         }
         return show;
     }

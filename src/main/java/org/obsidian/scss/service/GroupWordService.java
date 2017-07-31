@@ -5,6 +5,7 @@ import org.obsidian.scss.entity.ServiceGroup;
 import org.obsidian.scss.util.Trie;
 
 import java.security.acl.Group;
+import java.util.*;
 
 /**
  * Created by Lee on 2017/7/15.
@@ -19,4 +20,5 @@ public interface GroupWordService {
      */
     int insertGroupWord(GroupWord groupWord);
     int deleteGroupWord(GroupWord groupWord);
+    List<GroupWord> selectGroupTag(int id);
 }

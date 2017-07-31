@@ -23,4 +23,6 @@ public interface ServiceGroupService {
     List<ServiceGroup> selectAllGroup();
     
     List<GroupAndPersonNum> selectGroupPersonNum(); 
+    
+    int deleteGroupById(int id);
 }
