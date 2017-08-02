@@ -4,6 +4,7 @@ import org.obsidian.scss.bean.IdList;
 import org.obsidian.scss.dao.AdvertisementMapper;
 import org.obsidian.scss.entity.Advertisement;
 import org.obsidian.scss.entity.AdvertisementExample;
+import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.service.AdvFlagService;
 import org.obsidian.scss.service.AdvertisementService;
 import org.obsidian.scss.service.FlagService;
@@ -82,12 +83,19 @@ public class AdvertisementImpl implements AdvertisementService {
         return 1;
     }
 
+    @Transactional
     public int delete(int id) {
         return advertisementMapper.deleteByPrimaryKey(id);
     }
 
+    @Transactional
     public int updateAdv(Advertisement advertisement) {
         int res = advertisementMapper.updateByPrimaryKey(advertisement);
         return res;
+    }
+
+    @Transactional
+    public List<Client> selectAdvClient(int advId) {
+        return advertisementMapper.selectAdvClient(advId);
     }
 }

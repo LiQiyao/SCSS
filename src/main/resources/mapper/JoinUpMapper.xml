@@ -199,4 +199,10 @@ AND join_up_id = (SELECT MAX(join_up_id) FROM join_up WHERE client_id= #{clientI
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectDuringClientNum" resultType="org.obsidian.scss.entity.JoinUp">
+    SELECT * FROM join_up WHERE time BETWEEN #{startTime} AND #{stopTime} GROUP BY client_id;
+  </select>
+  <select id="selectAccess" resultType="org.obsidian.scss.entity.AccessAndNumDuring">
+    SELECT a.access_id id,name,count(a.join_up_id) num FROM join_up a,access b WHERE a.access_id = b.access_id AND time BETWEEN #{startTime} AND #{stopTime} GROUP BY a.access_id
+  </select>
 </mapper>

@@ -2,12 +2,10 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.bean.AvgScoreList;
 import org.obsidian.scss.bean.ConversationEndReq;
+import org.obsidian.scss.bean.ScoreAndNum;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.dao.CustomerServiceMapper;
-import org.obsidian.scss.entity.Conversation;
-import org.obsidian.scss.entity.ConversationExample;
-import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.entity.DayAndTime;
+import org.obsidian.scss.entity.*;
 import org.obsidian.scss.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -178,6 +176,32 @@ public class ConversationServiceImpl implements ConversationService {
             criteria.andStopTimeLessThanOrEqualTo(stopTime);
         return conversationMapper.selectByExample(example).size();
     }
+
+    @Transactional
+    public double avgGrades(long startTime, long stopTime) {
+        double res = conversationMapper.selectAvgScore(startTime,stopTime);
+        return res;
+    }
+
+    @Transactional
+    public List<ScoreAndNum> scoreAndNum(long startTime, long stopTime) {
+        return conversationMapper.selectScore(startTime,stopTime);
+    }
+    
+    @Transactional
+    public List<ScoreAndRank> selectScoreAndRank(long startTime, long stopTime, int serviceId) {
+        return conversationMapper.selectScoreRank(startTime,stopTime,serviceId);
+    }
+    
+    @Transactional
+    public List<ConNumAndRank> selectConNumAndRank(long startTime, long stopTime, int serviceId) {
+        return conversationMapper.selectConNumAndRank(startTime,stopTime,serviceId);
+    }
+
+    @Transactional
+    public List<Client> selectClientChatList(int serviceId) {
+        return conversationMapper.selectClientChatList(serviceId);
+    }
 }
 class ConversationCount implements Comparable<ConversationCount>{
 
@@ -204,4 +228,5 @@ class ConversationCount implements Comparable<ConversationCount>{
     public void setCount(int count) {
         this.count = count;
     }
+    
 }

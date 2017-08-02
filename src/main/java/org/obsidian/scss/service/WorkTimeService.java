@@ -1,7 +1,9 @@
 package org.obsidian.scss.service;
 
+import org.obsidian.scss.entity.TimeAndRank;
 import org.obsidian.scss.entity.WorkTime;
 
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -29,5 +31,6 @@ public interface WorkTimeService {
      */
     
     int OnlineServer();
+    List<TimeAndRank> selectTimeAndRank(long startTime,long endTime,int serviceId);
     
 }

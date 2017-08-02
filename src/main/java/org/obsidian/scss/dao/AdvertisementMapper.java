@@ -3,6 +3,7 @@ package org.obsidian.scss.dao;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.Advertisement;
 import org.obsidian.scss.entity.AdvertisementExample;
+import org.obsidian.scss.entity.Client;
 
 import java.util.List;
 
@@ -34,4 +35,5 @@ public interface AdvertisementMapper {
     int countAdv();
     int insertAdv(@Param("content") String  content);
     List<Advertisement> selectId(@Param("content") String  content);
+    List<Client> selectAdvClient(@Param("advId") int  advId);
 }

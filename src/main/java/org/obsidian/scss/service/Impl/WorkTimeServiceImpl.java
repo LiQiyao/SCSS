@@ -3,6 +3,7 @@ package org.obsidian.scss.service.Impl;
 import org.obsidian.scss.dao.CustomerServiceMapper;
 import org.obsidian.scss.dao.WorkTimeMapper;
 import org.obsidian.scss.entity.CustomerService;
+import org.obsidian.scss.entity.TimeAndRank;
 import org.obsidian.scss.entity.WorkTime;
 import org.obsidian.scss.entity.WorkTimeExample;
 import org.obsidian.scss.service.WorkTimeService;
@@ -159,7 +160,11 @@ public class WorkTimeServiceImpl implements WorkTimeService {
     public int OnlineServer() {
         return  workTimeMapper.selectOnlineServerNum();
     }
-    
+
+    @Transactional
+    public List<TimeAndRank> selectTimeAndRank(long startTime, long endTime, int serviceId) {
+        return workTimeMapper.selectTimeAndRank(startTime,endTime,serviceId);
+    }
 }
 class OnlineTime implements Comparable<OnlineTime>{
     private long time;

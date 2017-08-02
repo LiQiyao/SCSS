@@ -171,6 +171,18 @@
     INSERT  INTO  advertisement(`adv_content`) VALUES (#{content});
   </insert>
   <select id="selectId" resultType="org.obsidian.scss.entity.Advertisement">
-    SELECT  * FROM advertisement WHERE adv_content = #{content}
+    SELECT  * FROM advertisement WHERE adv_content = #{content};
+  </select>
+  <select id="selectAdvClient" resultType="org.obsidian.scss.entity.Client">
+    SELECT
+	c1.*
+FROM
+	adv_flag a1,
+	client_flag b1,
+	client c1
+WHERE
+	a1.flag_id = b1.flag_id
+AND c1.client_id = b1.client_id
+AND a1.adv_id = #{advId};
   </select>
 </mapper>

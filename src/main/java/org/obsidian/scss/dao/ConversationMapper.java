@@ -2,10 +2,8 @@ package org.obsidian.scss.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.bean.AvgScoreList;
-import org.obsidian.scss.entity.Conversation;
-import org.obsidian.scss.entity.ConversationExample;
-import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.entity.DayAndTime;
+import org.obsidian.scss.bean.ScoreAndNum;
+import org.obsidian.scss.entity.*;
 
 import java.util.List;
 
@@ -66,5 +64,9 @@ public interface ConversationMapper {
     List<DayAndTime> selectRecentPeopleMonth(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
     List<DayAndTime> selectRecentPeopleWeekend(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
     List<DayAndTime> selectRecentPeopleHour(@Param("timestamp") Long timestamp,@Param("serviceId") int serviceId);
-    
+    double selectAvgScore(@Param("startTime") long startTime,@Param("stopTime") long stopTime);
+    List<ScoreAndNum> selectScore(@Param("startTime") long startTime,@Param("stopTime") long stopTime);
+    List<ScoreAndRank> selectScoreRank(@Param("startTime") long startTime,@Param("stopTime") long stopTime,@Param("serviceId") int serviceId);
+    List<ConNumAndRank> selectConNumAndRank(@Param("startTime") long startTime,@Param("stopTime") long stopTime,@Param("serviceId") int serviceId);
+    List<Client>selectClientChatList(@Param("serviceId") int serviceId);
 }

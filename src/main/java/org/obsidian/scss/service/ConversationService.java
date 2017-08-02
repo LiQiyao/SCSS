@@ -1,9 +1,8 @@
 package org.obsidian.scss.service;
 
 
-import org.obsidian.scss.entity.Conversation;
-import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.entity.DayAndTime;
+import org.obsidian.scss.bean.ScoreAndNum;
+import org.obsidian.scss.entity.*;
 
 import java.util.List;
 
@@ -49,4 +48,9 @@ public interface ConversationService {
     List<DayAndTime> selectRecentPeopleWeekend(int serviceId);
     List<DayAndTime> selectRecentPeopleHour(int serviceId);
     long selectDuringConverSationNum(long startTime,long stopTime);
+    double avgGrades(long startTime,long stopTime);
+    List<ScoreAndNum> scoreAndNum(long startTime,long stopTime);
+    List<ScoreAndRank> selectScoreAndRank(long startTime, long stopTime, int serviceId);
+    List<ConNumAndRank> selectConNumAndRank(long startTime, long stopTime, int serviceId);
+    List<Client> selectClientChatList(int serviceId);
 }

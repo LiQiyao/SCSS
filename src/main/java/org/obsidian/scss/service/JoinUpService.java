@@ -1,5 +1,6 @@
 package org.obsidian.scss.service;
 
+import org.obsidian.scss.entity.AccessAndNumDuring;
 import org.obsidian.scss.entity.JoinUp;
 
 import java.util.List;
@@ -29,4 +30,8 @@ public interface JoinUpService {
     List<JoinUp> getByClientId(int clientId);
 
     JoinUp getLastByClientId(int clientId);
+    
+    int selectDuringClientNum(long startTime,long stopTime);
+    
+    List<AccessAndNumDuring> selectAccess(long startTime,long stopTime);
 }

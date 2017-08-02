@@ -9,13 +9,8 @@ import org.obsidian.scss.bean.GroupAndTag;
 import org.obsidian.scss.bean.IdList;
 import org.obsidian.scss.bean.PeopleDayAndTime;
 import org.obsidian.scss.bean.Show;
-import org.obsidian.scss.entity.CustomerService;
-import org.obsidian.scss.entity.GroupWord;
-import org.obsidian.scss.entity.ServiceGroup;
-import org.obsidian.scss.service.ConversationService;
-import org.obsidian.scss.service.CustomerServiceService;
-import org.obsidian.scss.service.GroupWordService;
-import org.obsidian.scss.service.ServiceGroupService;
+import org.obsidian.scss.entity.*;
+import org.obsidian.scss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +30,8 @@ public class CustomerServiceManagementController {
     ConversationService conversationService;
     @Autowired
     GroupWordService groupWordService;
+    @Autowired
+    ChatLogService chatLogService;
     /**
      * Create By Cjn
      * 获取公司中所有的部门
@@ -200,4 +197,45 @@ public class CustomerServiceManagementController {
         return show;
     }
     
+    @RequestMapping("clientChatList")
+    @ResponseBody
+    public Show clientChatList(@RequestParam("serviceId") int serviceId){
+        Show show = new Show();
+        List<Client> clients = conversationService.selectClientChatList(serviceId);
+        if (clients == null||clients.size()==0){
+            show.setStatus(0);
+            show.setMessage("没有对话用户");
+        }else{
+            show.setData(clients);
+        }
+        return show;
+    }
+
+    @RequestMapping("clientAndServerChatLog")
+    @ResponseBody
+    public Show clientAndServerChatLog(@RequestParam("serviceId") int serviceId,@RequestParam("clientId") int clientId){
+        Show show = new Show();
+        List<ChatLogAndSendRecInfo> chatLogAndSendRecInfos = chatLogService.selectClientAndServerChatLog(clientId,serviceId);
+        if (chatLogAndSendRecInfos == null||chatLogAndSendRecInfos.size()==0){
+            show.setStatus(0);
+            show.setMessage("没有对话用户");
+        }else{
+            show.setData(chatLogAndSendRecInfos);
+        }
+        return show;
+    }
+
+    @RequestMapping("clientChatLog")
+    @ResponseBody
+    public Show clientAndServerChatLog(@RequestParam("clientId") int clientId){
+        Show show = new Show();
+        List<ChatLogAndSendRecInfo> chatLogAndSendRecInfos = chatLogService.selectClientChatLog(clientId);
+        if (chatLogAndSendRecInfos == null||chatLogAndSendRecInfos.size()==0){
+            show.setStatus(0);
+            show.setMessage("没有对话用户");
+        }else{
+            show.setData(chatLogAndSendRecInfos);
+        }
+        return show;
+    }
 }

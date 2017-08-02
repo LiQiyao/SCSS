@@ -1,6 +1,7 @@
 package org.obsidian.scss.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.obsidian.scss.entity.AccessAndNumDuring;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.entity.JoinUpExample;
 
@@ -30,4 +31,8 @@ public interface JoinUpMapper {
     List<JoinUp> selectByRecord(@Param("accessId") int accessId,@Param("account") String account);
 
     JoinUp selectLastJoinByClientId(int clientId);
+
+    List<JoinUp> selectDuringClientNum(@Param("startTime") long startTime,@Param("stopTime") long stopTime);
+    
+    List<AccessAndNumDuring> selectAccess(@Param("startTime") long startTime,@Param("stopTime") long stopTime);
 }

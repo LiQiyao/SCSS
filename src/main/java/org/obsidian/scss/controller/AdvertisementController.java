@@ -8,10 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.AdvertisementAndFlag;
 import org.obsidian.scss.bean.IdList;
 import org.obsidian.scss.bean.Show;
-import org.obsidian.scss.entity.AdvFlag;
-import org.obsidian.scss.entity.Advertisement;
-import org.obsidian.scss.entity.ClientAndFlag;
-import org.obsidian.scss.entity.Flag;
+import org.obsidian.scss.entity.*;
 import org.obsidian.scss.service.AdvFlagService;
 import org.obsidian.scss.service.AdvertisementService;
 import org.obsidian.scss.service.FlagService;
@@ -165,6 +162,22 @@ public class AdvertisementController {
             show.setStatus(0);
             show.setMessage("更新失败");
         }
+        return show;
+    }
+    /**
+     * 获取广告响应的推送客户
+     */
+    @RequestMapping("advertiseClient")
+    @ResponseBody
+    public Show advertiseClient(@RequestParam("advId") int advId){
+        Show show = new Show();
+        List<Client> clients = advertisementService.selectAdvClient(advId);
+       if (clients == null|| clients.size() ==0){
+           show.setStatus(0);
+           show.setMessage("没有推荐该广告的用户");
+       }else{
+           show.setData(clients);
+       }
         return show;
     }
 }

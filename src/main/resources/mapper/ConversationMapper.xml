@@ -375,4 +375,69 @@
     GROUP BY
     FROM_UNIXTIME(CAST((stop_time/1000) AS signed),'%Y%m%d%h');
   </select>
+  <select id="selectAvgScore" resultType="Double">
+    SELECT IFNULL(AVG(score),0) FROM conversation WHERE start_time <![CDATA[  >=  ]]> #{startTime}  AND stop_time <![CDATA[   <=  ]]> #{stopTime}
+  </select>
+  <select id="selectScore" resultType="org.obsidian.scss.bean.ScoreAndNum">
+    SELECT score,count(conversation_id) as countNum FROM conversation WHERE start_time <![CDATA[  >=  ]]> #{startTime} AND stop_time <![CDATA[   <=  ]]> #{stopTime} GROUP BY score
+  </select>
+  <select id="selectScoreRank" resultType="org.obsidian.scss.entity.ScoreAndRank">
+    SELECT
+    service_id,grades,
+    CASE
+    WHEN @rowtotal = obj.grades THEN
+    @rownum
+    WHEN @rowtotal := obj.grades THEN
+    @rownum :=@rownum + 1
+    WHEN @rowtotal = 0 THEN
+    @rownum :=@rownum + 1
+    END AS gradesrank FROM(
+    (SELECT
+    a.service_id,
+    AVG(score) AS grades
+    FROM
+    customer_service as a,
+    conversation as b
+    WHERE
+    a.service_id = b.service_id AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.stop_time <![CDATA[  <=  ]]> #{stopTime}
+    GROUP BY
+    a.service_id
+    ORDER BY grades desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+  </select>
+  
+  <select id="selectConNumAndRank" resultType="org.obsidian.scss.entity.ConNumAndRank">
+    SELECT
+    service_id,num,
+    CASE
+    WHEN @rowtotal = obj.num THEN
+    @rownum
+    WHEN @rowtotal := obj.num THEN
+    @rownum :=@rownum + 1
+    WHEN @rowtotal = 0 THEN
+    @rownum :=@rownum + 1
+    END AS numrank FROM(
+    (SELECT
+    a.service_id,
+    COUNT(conversation_id) AS num
+    FROM
+    customer_service as a,
+    conversation as b
+    WHERE
+     a.service_id = b.service_id AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.stop_time <![CDATA[  <=  ]]> #{stopTime}
+    GROUP BY
+    a.service_id
+    ORDER BY num desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+  </select>
+  <select id="selectClientChatList" resultType="org.obsidian.scss.entity.Client">
+    SELECT
+	b.*
+FROM
+	conversation a,
+	client b
+WHERE
+	a.client_id = b.client_id
+AND a.service_id = #{serviceId}
+GROUP BY
+	b.client_id
+  </select>
 </mapper>

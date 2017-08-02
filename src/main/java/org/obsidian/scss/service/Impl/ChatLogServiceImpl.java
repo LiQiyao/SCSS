@@ -3,6 +3,7 @@ package org.obsidian.scss.service.Impl;
 import org.obsidian.scss.dao.ChatLogMapper;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.entity.ChatLog;
+import org.obsidian.scss.entity.ChatLogAndSendRecInfo;
 import org.obsidian.scss.service.ChatLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,15 @@ public class ChatLogServiceImpl implements ChatLogService {
 
     public List<ChatLog> getClientSayByConversationId(int conversationId) {
         return chatLogMapper.selectClientSayByConversationId(conversationId);
+    }
+
+    @Transactional
+    public List<ChatLogAndSendRecInfo> selectClientAndServerChatLog(int clientId, int serviceId) {
+        return chatLogMapper.selectClientAndServerChatLog(clientId,serviceId);
+    }
+
+    @Transactional
+    public List<ChatLogAndSendRecInfo> selectClientChatLog(int clientId) {
+        return chatLogMapper.selectClientChatLog(clientId);
     }
 }

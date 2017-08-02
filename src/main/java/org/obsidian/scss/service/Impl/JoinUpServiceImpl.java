@@ -1,6 +1,7 @@
 package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.JoinUpMapper;
+import org.obsidian.scss.entity.AccessAndNumDuring;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.entity.JoinUpExample;
 import org.obsidian.scss.service.JoinUpService;
@@ -145,4 +146,12 @@ public class JoinUpServiceImpl implements JoinUpService {
         return joinUpMapper.selectLastJoinByClientId(clientId);
     }
 
+    public int selectDuringClientNum(long startTime, long stopTime) {
+        int res = joinUpMapper.selectDuringClientNum(startTime,stopTime).size();
+        return res;
+    }
+
+    public List<AccessAndNumDuring> selectAccess(long startTime, long stopTime) {
+        return joinUpMapper.selectAccess(startTime,stopTime);
+    }
 }

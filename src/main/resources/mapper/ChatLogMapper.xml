@@ -218,4 +218,45 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectClientAndServerChatLog" resultType="org.obsidian.scss.entity.ChatLogAndSendRecInfo">
+    SELECT
+	a.*,b.`name` as senderName, c.`name` as receiverName
+FROM
+	chat_log a,
+	client b,
+	customer_service c
+WHERE
+	if(
+		from_client = 1,
+		a.sender_id = b.client_id,
+		a.sender_id = c.service_id
+	)
+AND if(
+	from_client = 0,
+	a.receiver_id = b.client_id,
+	a.receiver_id = c.service_id
+)
+AND((a.sender_id = #{clientId} AND a.receiver_id = #{serviceId}) OR (a.sender_id= #{serviceId} AND a.receiver_id = #{clientId}))
+ORDER BY  a.time DESC
+  </select>
+  <select id="selectClientChatLog" resultType="org.obsidian.scss.entity.ChatLogAndSendRecInfo">
+    SELECT
+	a.*,b.`name` as senderName, c.`name` as receiverName
+FROM
+	chat_log a,
+	client b,
+	customer_service c
+WHERE
+	if(
+		from_client = 1,
+		a.sender_id = b.client_id,
+		a.sender_id = c.service_id
+	)
+AND if(
+	from_client = 0,
+	a.receiver_id = b.client_id,
+	a.receiver_id = c.service_id
+)
+AND(a.sender_id = #{clientId} OR a.receiver_id = #{clientId})ORDER BY  a.time DESC
+  </select>
 </mapper>

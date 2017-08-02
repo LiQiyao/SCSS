@@ -184,4 +184,29 @@
   <select id="selectOnlineServerNum" resultType="int">
     SELECT  COUNT(service_id) FROM work_time WHERE  end_time IS  NULL;
   </select>
+  
+  <select id="selectTimeAndRank" resultType="org.obsidian.scss.entity.TimeAndRank">
+
+    SELECT
+    service_id,tottime,
+    CASE
+    WHEN @rowtotal = obj.tottime THEN
+    @rownum
+    WHEN @rowtotal := obj.tottime THEN
+    @rownum :=@rownum + 1
+    WHEN @rowtotal = 0 THEN
+    @rownum :=@rownum + 1
+    END AS timerank FROM(
+    (SELECT
+    a.service_id,
+    SUM(end_time-start_time) AS tottime
+    FROM
+    customer_service as a,
+    work_time as b
+    WHERE
+    a.service_id = b.service_id AND b.end_time <![CDATA[  !=  ]]>"" AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.end_time  <![CDATA[  <=  ]]> #{endTime}
+    GROUP BY
+    a.service_id
+    ORDER BY tottime desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+  </select>
 </mapper>

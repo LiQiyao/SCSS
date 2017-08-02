@@ -1,6 +1,7 @@
 package org.obsidian.scss.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.obsidian.scss.entity.TimeAndRank;
 import org.obsidian.scss.entity.WorkTime;
 import org.obsidian.scss.entity.WorkTimeExample;
 
@@ -34,4 +35,5 @@ public interface WorkTimeMapper {
      * Create By CJN
      */
     int selectOnlineServerNum();
+    List<TimeAndRank> selectTimeAndRank(@Param("startTime") long startTime,@Param("endTime") long endTime,@Param("serviceId") int serviceId );
 }

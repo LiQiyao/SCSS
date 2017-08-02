@@ -3,6 +3,7 @@ package org.obsidian.scss.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.obsidian.scss.entity.ChatLog;
+import org.obsidian.scss.entity.ChatLogAndSendRecInfo;
 import org.obsidian.scss.entity.ChatLogExample;
 
 public interface ChatLogMapper {
@@ -25,4 +26,8 @@ public interface ChatLogMapper {
     List<ChatLog> selectByClientId(int clientId);
 
     List<ChatLog> selectClientSayByConversationId(int conversationId);
+    
+    List<ChatLogAndSendRecInfo> selectClientAndServerChatLog(@Param("clientId") int clientId,@Param("serviceId")int serviceId);
+    
+    List<ChatLogAndSendRecInfo> selectClientChatLog(@Param("clientId") int clientId);
 }

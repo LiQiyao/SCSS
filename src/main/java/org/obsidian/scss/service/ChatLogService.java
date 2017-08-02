@@ -1,6 +1,7 @@
 package org.obsidian.scss.service;
 
 import org.obsidian.scss.entity.ChatLog;
+import org.obsidian.scss.entity.ChatLogAndSendRecInfo;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ChatLogService {
     List<ChatLog> getByConversationId(int conversationId);
 
     List<ChatLog> getClientSayByConversationId(int conversationId);
+    
+    List<ChatLogAndSendRecInfo> selectClientAndServerChatLog(int clientId,int serviceId);
+    
+    List<ChatLogAndSendRecInfo> selectClientChatLog(int clientId);
 }
