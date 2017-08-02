@@ -64,7 +64,7 @@ public class ClientWS implements WebSocket{
 
     @OnClose
     public void onClose(){
-        System.out.println("!!!close");
+        System.out.println("Client!!!close");
         int conversationId = conversationService.getLastIdByClientId(clientId);
         conversationService.endConversation(conversationId, new Date().getTime(), null);
         //给客服发会话结束信号

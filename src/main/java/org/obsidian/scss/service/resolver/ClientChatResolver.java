@@ -90,13 +90,15 @@ public class ClientChatResolver implements ContentResolver {
         if (contentType == 0){//如果该消息是文字消息
             System.out.println("!!3");
             chatLogService.addWithConversationId(clientChat.getConversationId(),clientChat.getClientId(),webSocket.getServiceId(),0,clientChat.getContent(), new Date().getTime(),1);
+            System.out.println("3.5!!");
             if (webSocket.getServiceId() == 0){
+                System.out.println("3.6!!");
                 //如果该消息是发送给机器人的
-                if ("转接到人工客服".equals(clientChat.getContent())){
+                if (clientChat.getContent() != null && clientChat.getContent().contains("转接到人工客服")){
                     this.transfer(webSocket, clientChat);
-                    return;
                 }
                 //机器人直接给客户打标签
+                System.out.println("3.7!!");
                 this.takeFlags(webSocket,clientChat.getContent());
 
                 System.out.println("!!4");
@@ -111,14 +113,17 @@ public class ClientChatResolver implements ContentResolver {
                 }
             } else {
                 //如果该消息是发送给客服人员的
-
+                System.out.println("1.1!!");
                 //给客服人员推荐标签
                 this.recommandTags(webSocket,clientChat.getConversationId(),clientChat.getContent());
-
+                System.out.println("1.2!!");
                 List<Knowledge> knowledgeList = knowledgeService.getKnowledgeByContent(clientChat.getContent());
+                System.out.println("1.3!!");
                 Message<RecommandKnowledges> res = new Message<RecommandKnowledges>(new RecommandKnowledges(clientChat.getConversationId(),knowledgeList));
+                System.out.println("1.4!!");
                 try {
                     session.getBasicRemote().sendText(gson.toJson(message));
+                    System.out.println("1.5!!");
                     for (WebSocket sws : ServiceWS.wsVector){
                         if (sws.getServiceId() == webSocket.getServiceId()){
                             sws.getSession().getBasicRemote().sendText(gson.toJson(message));

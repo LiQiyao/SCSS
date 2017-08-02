@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/customerMobile.css">
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+    <link rel="stylesheet" href="css/layim.css">
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/layui/layui.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="kfWindow">
+        <div id="chatMain">
+            <div id="header">
+                <div id="header-back"><i class="layui-icon">&#xe603;</i></div>
+                <div id="header-title">在线客服</div>
+                <div id="header-rengong">人工服务</div>
+            </div>
+            <div id="chatMain-msgList">
+                <div class="layim-chat-main">
+                    <ul>
+                        <li v-for="msg in msgList" :class="{'layim-chat-mine': msg.fromClient }">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>{{ msg.fromClient==1 ? null : nickNameManager[0][msg.senderId] }}<i>{{ msg.time.Format('yyyy-MM-dd hh:mm:ss') }}</i>{{ msg.fromClient==1 ? nickNameManager[1][msg.senderId] : null }}</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div v-html="msg.content"></div>
+
+                                <div v-if="(!!msg.questionPush) && msg.questionPush.length>0">
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div v-for="question in msg.questionPush"><a class="questionPush" @click="fastSend(question)">{{ question }}</a></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="layim-chat-mine">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite><i>2017-1-1 19:38:11</i>我</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                我有问题！
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>机器人<i>2017-1-1 19:38:11</i></cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div>您有什么问题？</div>
+                                <div>
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div><a class="questionPush">这个网站大有问题</a></div>
+                                    <div><a class="questionPush">多问题处理机</a></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="layim-chat-mine">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite><i>2017-1-1 19:38:11</i>我</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                我有问题！
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>机器人<i>2017-1-1 19:38:11</i></cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div>您有什么问题？</div>
+                                <div>
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div><a class="questionPush">这个网站大有问题</a></div>
+                                    <div><a class="questionPush">多问题处理机</a></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="layim-chat-mine">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite><i>2017-1-1 19:38:11</i>我</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                我有问题！
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>机器人<i>2017-1-1 19:38:11</i></cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div>您有什么问题？</div>
+                                <div>
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div><a class="questionPush">这个网站大有问题</a></div>
+                                    <div><a class="questionPush">多问题处理机</a></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="layim-chat-mine">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite><i>2017-1-1 19:38:11</i>我</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                我有问题！
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>机器人<i>2017-1-1 19:38:11</i></cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div>您有什么问题？</div>
+                                <div>
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div><a class="questionPush">这个网站大有问题</a></div>
+                                    <div><a class="questionPush">多问题处理机</a></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="layim-chat-mine">
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite><i>2017-1-1 19:38:11</i>我</cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                我有问题！
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="layim-chat-user">
+                                <img src="img/tx.png"><cite>机器人<i>2017-1-1 19:38:11</i></cite>
+                            </div>
+                            <div class="layim-chat-text">
+                                <div>您有什么问题？</div>
+                                <div>
+                                    <hr>
+                                    <div>您是否想问：</div>
+                                    <div><a class="questionPush">这个网站大有问题</a></div>
+                                    <div><a class="questionPush">多问题处理机</a></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="inputBar">
+                <input type="text" id="input">
+                <button type="button" class="sendBtn">发送</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="js/src/customer2/customerMessage.js"></script>
+<script src="js/src/customer2/customerMobile.js"></script>
+<script src="js/src/customer2/customerHandle.js"></script>
+
+</html>

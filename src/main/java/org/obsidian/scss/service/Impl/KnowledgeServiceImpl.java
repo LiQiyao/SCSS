@@ -145,6 +145,9 @@ public class KnowledgeServiceImpl implements KnowledgeService{
                 questionPush.add(knowledge.getQuestion());
             }
         }
+        if (ans.equals("不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！")){
+            questionPush.add("转接到人工客服");
+        }
         System.out.println("!!!" + ans);
         return new Message<RobotChat>(new RobotChat(ans, questionPush, new Date().getTime()));
     }

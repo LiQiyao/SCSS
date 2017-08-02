@@ -9,7 +9,7 @@
          version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <welcome-file-list>
-    <welcome-file>/</welcome-file>
+    <welcome-file>/page/kf_login.html</welcome-file>
   </welcome-file-list>
   
   <!-- 定义参数 spring容器-->
