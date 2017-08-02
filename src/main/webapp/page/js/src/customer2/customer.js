@@ -1,4 +1,4 @@
-﻿class VueChatMessage {
+class VueChatMessage {
     constructor(senderId, fromClient, time, contentType, content) {
         this.senderId = senderId;
         this.fromClient = fromClient;
@@ -61,6 +61,15 @@ function openKF() {
     });
 }
 
+function openScore() {
+    layerIndex2 = layer.open({
+        type:1,
+        content:$('#scoreWindow'),
+        title:'会话已结束，请评分',
+        closeBtn:0,
+    });
+}
+
 let conversationId = null;
 let clientId = null;
 let FLAG_UPDATE_CHAT = false;
@@ -78,7 +87,7 @@ function establishedConnectionCallback() {
 }
 //WS 消息控制开始
 
-let webSocket = new WebSocket("ws://localhost:8080/ClientWS");
+let webSocket = new WebSocket("ws://192.168.253.1:8080/ClientWS");
 let MControl = {
     ws: webSocket,
     send: function (content) {
@@ -158,3 +167,34 @@ function getUserBriefInfo(userId, userType) { //userType 0-客户，1-客服
         MControl.send(new UserInfoReq(0, userId));
     }
 }
+
+let starList = $('.scoreWindow-starList').children();
+for(let i=0;i<starList.length;i++){
+    let dom = starList[i];
+    dom.index=i;
+    $(dom).hover(function(){
+        console.log('进'+dom.index);
+    },function(){
+        console.log('出'+dom.index);
+    });
+}
+let starApp = new Vue({
+    el:'#scoreWindow',
+    data:{
+        currentIndex:-1,
+    },
+    methods:{
+        leave:function(index){
+            this.currentIndex=-1;
+        },
+        enter:function(index){
+            this.currentIndex=index;
+        },
+        score:function(index){
+            let sc=index+1;
+            MControl.send(new SetScore(conversationId,sc));
+            layer.close(layerIndex2);
+            layer.msg('评分成功！');
+        }
+    }
+})

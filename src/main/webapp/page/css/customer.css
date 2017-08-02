@@ -57,3 +57,15 @@
 .questionPush:hover{
     text-decoration: underline;
 }
+#scoreWindow{
+    font-size: 30px;
+}
+.scoreWindow-starList{
+    padding-left: 60px;
+    padding-right: 60px;
+    line-height: 60px;
+}
+.golden{
+    color: goldenrod;
+    cursor: pointer;
+}

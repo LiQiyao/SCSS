@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/customer.css">
     <link rel="stylesheet" href="js/layui/css/layui.css">
     <link rel="stylesheet" href="css/layim.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/vue.js"></script>
@@ -55,6 +56,17 @@
                 <div class="chatMain-bottom-tip">按Enter发送消息，Shift+Enter换行</div>
             </div>
         </div>
+    </div>
+
+    <div id="scoreWindow" style="display:none;">
+        <span class="scoreWindow-starList">
+            <i class="fa" @click="score(0)" @mouseleave="leave(0)" @mouseenter="enter(0)" :class="{'fa-star golden':0<=currentIndex,'fa-star-o':0>currentIndex}" aria-hidden="true"></i>
+            <i class="fa" @click="score(1)" @mouseleave="leave(1)" @mouseenter="enter(1)" :class="{'fa-star golden':1<=currentIndex,'fa-star-o':1>currentIndex}" aria-hidden="true"></i>
+            <i class="fa" @click="score(2)" @mouseleave="leave(2)" @mouseenter="enter(2)" :class="{'fa-star golden':2<=currentIndex,'fa-star-o':2>currentIndex}" aria-hidden="true"></i>
+            <i class="fa" @click="score(3)" @mouseleave="leave(3)" @mouseenter="enter(3)" :class="{'fa-star golden':3<=currentIndex,'fa-star-o':3>currentIndex}" aria-hidden="true"></i>
+            <i class="fa" @click="score(4)" @mouseleave="leave(4)" @mouseenter="enter(4)" :class="{'fa-star golden':4<=currentIndex,'fa-star-o':4>currentIndex}" aria-hidden="true"></i>
+        </span>
+        
     </div>
 
 </body>
