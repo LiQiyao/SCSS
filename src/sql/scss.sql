@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-01 10:37:37
+Date: 2017-08-03 22:43:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,11 +42,13 @@ CREATE TABLE `advertisement` (
   `adv_id` int(20) NOT NULL AUTO_INCREMENT,
   `adv_content` varchar(600) NOT NULL,
   PRIMARY KEY (`adv_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of advertisement
 -- ----------------------------
+INSERT INTO `advertisement` VALUES ('1', '黑曜石房地产集团新楼盘盛大开业，请拨打电话 82131234 咨询我们！');
+INSERT INTO `advertisement` VALUES ('2', '江滨别墅第三期隆重开业，只要200万起，请拨打电话 82131235 咨询我们！');
 
 -- ----------------------------
 -- Table structure for adv_flag
@@ -64,6 +66,10 @@ CREATE TABLE `adv_flag` (
 -- ----------------------------
 -- Records of adv_flag
 -- ----------------------------
+INSERT INTO `adv_flag` VALUES ('3', '1');
+INSERT INTO `adv_flag` VALUES ('5', '1');
+INSERT INTO `adv_flag` VALUES ('9', '2');
+INSERT INTO `adv_flag` VALUES ('3', '2');
 
 -- ----------------------------
 -- Table structure for chat_log
@@ -82,7 +88,7 @@ CREATE TABLE `chat_log` (
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=318 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chat_log
@@ -377,6 +383,255 @@ INSERT INTO `chat_log` VALUES ('314', '119', '18', '0', '0', '转接到人工客
 INSERT INTO `chat_log` VALUES ('315', '119', '1', '18', '0', '你好', '1501327388287', '0');
 INSERT INTO `chat_log` VALUES ('316', '119', '18', '1', '0', '我很帅', '1501327403337', '1');
 INSERT INTO `chat_log` VALUES ('317', '119', '18', '1', '0', '很帅的', '1501327416238', '1');
+INSERT INTO `chat_log` VALUES ('318', '127', '22', '0', '0', '你好啊', '1501678664868', '1');
+INSERT INTO `chat_log` VALUES ('319', '127', '0', '22', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501678665493', '0');
+INSERT INTO `chat_log` VALUES ('320', '127', '22', '0', '0', '<p>转接到人工客服</p>', '1501678706338', '1');
+INSERT INTO `chat_log` VALUES ('321', '127', '0', '22', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501678706347', '0');
+INSERT INTO `chat_log` VALUES ('322', '127', '22', '0', '0', '转接到人工客服', '1501678721430', '1');
+INSERT INTO `chat_log` VALUES ('323', '127', '1', '22', '0', '你好', '1501678751857', '0');
+INSERT INTO `chat_log` VALUES ('325', '131', '23', '0', '0', 'nihao', '1501680004468', '1');
+INSERT INTO `chat_log` VALUES ('326', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680004482', '0');
+INSERT INTO `chat_log` VALUES ('327', '131', '23', '0', '0', '转接到人工客服', '1501680068349', '1');
+INSERT INTO `chat_log` VALUES ('328', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680068370', '0');
+INSERT INTO `chat_log` VALUES ('329', '131', '23', '0', '0', '转接到人工客服', '1501680071086', '1');
+INSERT INTO `chat_log` VALUES ('330', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680071106', '0');
+INSERT INTO `chat_log` VALUES ('331', '131', '23', '0', '0', '转接到人工客服', '1501680071832', '1');
+INSERT INTO `chat_log` VALUES ('332', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680071855', '0');
+INSERT INTO `chat_log` VALUES ('333', '131', '23', '0', '0', '转接到人工客服', '1501680072574', '1');
+INSERT INTO `chat_log` VALUES ('334', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680072589', '0');
+INSERT INTO `chat_log` VALUES ('335', '131', '23', '0', '0', '转接到人工客服', '1501680072788', '1');
+INSERT INTO `chat_log` VALUES ('336', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680072809', '0');
+INSERT INTO `chat_log` VALUES ('337', '131', '23', '0', '0', '转接到人工客服', '1501680073113', '1');
+INSERT INTO `chat_log` VALUES ('338', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680073130', '0');
+INSERT INTO `chat_log` VALUES ('339', '131', '23', '0', '0', '转接到人工客服', '1501680073442', '1');
+INSERT INTO `chat_log` VALUES ('340', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680073532', '0');
+INSERT INTO `chat_log` VALUES ('341', '131', '23', '0', '0', '转接到人工客服', '1501680073682', '1');
+INSERT INTO `chat_log` VALUES ('342', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680073700', '0');
+INSERT INTO `chat_log` VALUES ('343', '131', '23', '0', '0', '转接到人工客服', '1501680073894', '1');
+INSERT INTO `chat_log` VALUES ('344', '131', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680073915', '0');
+INSERT INTO `chat_log` VALUES ('345', '131', '1', '23', '0', '你好', '1501680077634', '0');
+INSERT INTO `chat_log` VALUES ('346', '131', '1', '23', '0', '<p>你好？</p><p><br></p>', '1501680099113', '0');
+INSERT INTO `chat_log` VALUES ('348', '132', '23', '0', '0', '说到底', '1501680219071', '1');
+INSERT INTO `chat_log` VALUES ('349', '132', '0', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680219076', '0');
+INSERT INTO `chat_log` VALUES ('350', '132', '23', '0', '0', '转接到人工客服', '1501680220518', '1');
+INSERT INTO `chat_log` VALUES ('351', '132', '1', '23', '0', '你好', '1501680220525', '0');
+INSERT INTO `chat_log` VALUES ('352', '132', '1', '23', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680220555', '0');
+INSERT INTO `chat_log` VALUES ('354', '133', '24', '0', '0', 'DSAD&nbsp;', '1501680880976', '1');
+INSERT INTO `chat_log` VALUES ('355', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680880992', '0');
+INSERT INTO `chat_log` VALUES ('356', '133', '24', '0', '0', '买房', '1501680885515', '1');
+INSERT INTO `chat_log` VALUES ('357', '133', '0', '24', '0', '不知道', '1501680886151', '0');
+INSERT INTO `chat_log` VALUES ('358', '133', '24', '0', '0', '涨价', '1501680890796', '1');
+INSERT INTO `chat_log` VALUES ('359', '133', '0', '24', '0', '涨价了', '1501680890812', '0');
+INSERT INTO `chat_log` VALUES ('360', '133', '24', '0', '0', '房价', '1501680908894', '1');
+INSERT INTO `chat_log` VALUES ('361', '133', '0', '24', '0', '涨价了', '1501680908908', '0');
+INSERT INTO `chat_log` VALUES ('362', '133', '24', '0', '0', '我要买房价买房，多少钱一平方啊？', '1501680909872', '1');
+INSERT INTO `chat_log` VALUES ('363', '133', '0', '24', '0', '不知道', '1501680909894', '0');
+INSERT INTO `chat_log` VALUES ('364', '133', '24', '0', '0', '最近的房价涨价了吗', '1501680912115', '1');
+INSERT INTO `chat_log` VALUES ('365', '133', '0', '24', '0', '涨价了', '1501680912136', '0');
+INSERT INTO `chat_log` VALUES ('366', '133', '24', '0', '0', '我要买房价买房，多少钱一平方啊？', '1501680913125', '1');
+INSERT INTO `chat_log` VALUES ('367', '133', '0', '24', '0', '不知道', '1501680913146', '0');
+INSERT INTO `chat_log` VALUES ('368', '133', '24', '0', '0', 'sd', '1501680918122', '1');
+INSERT INTO `chat_log` VALUES ('369', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680918129', '0');
+INSERT INTO `chat_log` VALUES ('370', '133', '24', '0', '0', '转接到人工客服', '1501680919022', '1');
+INSERT INTO `chat_log` VALUES ('371', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680919055', '0');
+INSERT INTO `chat_log` VALUES ('372', '133', '24', '0', '0', '转接到人工客服', '1501680934595', '1');
+INSERT INTO `chat_log` VALUES ('373', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680934612', '0');
+INSERT INTO `chat_log` VALUES ('374', '133', '24', '0', '0', '转接到人工客服', '1501680950079', '1');
+INSERT INTO `chat_log` VALUES ('375', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680950095', '0');
+INSERT INTO `chat_log` VALUES ('376', '133', '24', '0', '0', '转接到人工客服', '1501680955367', '1');
+INSERT INTO `chat_log` VALUES ('377', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680955411', '0');
+INSERT INTO `chat_log` VALUES ('378', '133', '24', '0', '0', '转接到人工客服', '1501680956282', '1');
+INSERT INTO `chat_log` VALUES ('379', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680956297', '0');
+INSERT INTO `chat_log` VALUES ('380', '133', '24', '0', '0', '转接到人工客服', '1501680956781', '1');
+INSERT INTO `chat_log` VALUES ('381', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680956794', '0');
+INSERT INTO `chat_log` VALUES ('382', '133', '24', '0', '0', '转接到人工客服', '1501680957148', '1');
+INSERT INTO `chat_log` VALUES ('383', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680957163', '0');
+INSERT INTO `chat_log` VALUES ('384', '133', '24', '0', '0', '转接到人工客服', '1501680957373', '1');
+INSERT INTO `chat_log` VALUES ('385', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680957389', '0');
+INSERT INTO `chat_log` VALUES ('386', '133', '24', '0', '0', '转接到人工客服', '1501680957787', '1');
+INSERT INTO `chat_log` VALUES ('387', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680957799', '0');
+INSERT INTO `chat_log` VALUES ('388', '133', '24', '0', '0', '转接到人工客服', '1501680958179', '1');
+INSERT INTO `chat_log` VALUES ('389', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680958194', '0');
+INSERT INTO `chat_log` VALUES ('390', '133', '24', '0', '0', '转接到人工客服', '1501680958449', '1');
+INSERT INTO `chat_log` VALUES ('391', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680958466', '0');
+INSERT INTO `chat_log` VALUES ('392', '133', '24', '0', '0', '转接到人工客服', '1501680958883', '1');
+INSERT INTO `chat_log` VALUES ('393', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680958895', '0');
+INSERT INTO `chat_log` VALUES ('394', '133', '24', '0', '0', '转接到人工客服', '1501680959442', '1');
+INSERT INTO `chat_log` VALUES ('395', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680959454', '0');
+INSERT INTO `chat_log` VALUES ('396', '133', '24', '0', '0', '转接到人工客服', '1501680960318', '1');
+INSERT INTO `chat_log` VALUES ('397', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680960331', '0');
+INSERT INTO `chat_log` VALUES ('398', '133', '24', '0', '0', '转接到人工客服', '1501680960930', '1');
+INSERT INTO `chat_log` VALUES ('399', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680960944', '0');
+INSERT INTO `chat_log` VALUES ('400', '133', '24', '0', '0', 'das', '1501680963835', '1');
+INSERT INTO `chat_log` VALUES ('401', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680963841', '0');
+INSERT INTO `chat_log` VALUES ('402', '133', '24', '0', '0', '转接到人工客服', '1501680966630', '1');
+INSERT INTO `chat_log` VALUES ('403', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680966646', '0');
+INSERT INTO `chat_log` VALUES ('404', '133', '24', '0', '0', '转接到人工客服', '1501680967418', '1');
+INSERT INTO `chat_log` VALUES ('405', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680967432', '0');
+INSERT INTO `chat_log` VALUES ('406', '133', '24', '0', '0', '转接到人工客服', '1501680968109', '1');
+INSERT INTO `chat_log` VALUES ('407', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680968121', '0');
+INSERT INTO `chat_log` VALUES ('408', '133', '24', '0', '0', '转接到人工客服', '1501680968839', '1');
+INSERT INTO `chat_log` VALUES ('409', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680968853', '0');
+INSERT INTO `chat_log` VALUES ('410', '133', '24', '0', '0', 'asd', '1501680970389', '1');
+INSERT INTO `chat_log` VALUES ('411', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501680970394', '0');
+INSERT INTO `chat_log` VALUES ('412', '133', '24', '0', '0', '转接到人工客服', '1501681024551', '1');
+INSERT INTO `chat_log` VALUES ('413', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681024570', '0');
+INSERT INTO `chat_log` VALUES ('414', '133', '24', '0', '0', '转接到人工客服', '1501681028855', '1');
+INSERT INTO `chat_log` VALUES ('415', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681028868', '0');
+INSERT INTO `chat_log` VALUES ('416', '133', '24', '0', '0', '转接到人工客服', '1501681028976', '1');
+INSERT INTO `chat_log` VALUES ('417', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681028995', '0');
+INSERT INTO `chat_log` VALUES ('418', '133', '24', '0', '0', '转接到人工客服', '1501681029179', '1');
+INSERT INTO `chat_log` VALUES ('419', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681029196', '0');
+INSERT INTO `chat_log` VALUES ('420', '133', '24', '0', '0', '转接到人工客服', '1501681029383', '1');
+INSERT INTO `chat_log` VALUES ('421', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681029401', '0');
+INSERT INTO `chat_log` VALUES ('422', '133', '24', '0', '0', '转接到人工客服', '1501681029561', '1');
+INSERT INTO `chat_log` VALUES ('423', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681029581', '0');
+INSERT INTO `chat_log` VALUES ('424', '133', '24', '0', '0', '转接到人工客服', '1501681029749', '1');
+INSERT INTO `chat_log` VALUES ('425', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681029767', '0');
+INSERT INTO `chat_log` VALUES ('426', '133', '24', '0', '0', '转接到人工客服', '1501681029933', '1');
+INSERT INTO `chat_log` VALUES ('427', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681029948', '0');
+INSERT INTO `chat_log` VALUES ('429', '133', '24', '0', '0', '转接到人工客服', '1501681058074', '1');
+INSERT INTO `chat_log` VALUES ('430', '133', '0', '24', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681058088', '0');
+INSERT INTO `chat_log` VALUES ('431', '143', '25', '0', '0', 'sad', '1501681337653', '1');
+INSERT INTO `chat_log` VALUES ('432', '143', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681337667', '0');
+INSERT INTO `chat_log` VALUES ('433', '143', '25', '0', '0', '转接到人工客服', '1501681339758', '1');
+INSERT INTO `chat_log` VALUES ('434', '143', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681339781', '0');
+INSERT INTO `chat_log` VALUES ('435', '143', '25', '0', '0', '转接到人工客服', '1501681406382', '1');
+INSERT INTO `chat_log` VALUES ('436', '143', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681406401', '0');
+INSERT INTO `chat_log` VALUES ('437', '143', '25', '0', '0', '转接到人工客服', '1501681434422', '1');
+INSERT INTO `chat_log` VALUES ('438', '143', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681434440', '0');
+INSERT INTO `chat_log` VALUES ('439', '145', '25', '0', '0', 'sda', '1501681456107', '1');
+INSERT INTO `chat_log` VALUES ('440', '145', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681456112', '0');
+INSERT INTO `chat_log` VALUES ('441', '145', '25', '0', '0', '转接到人工客服', '1501681458539', '1');
+INSERT INTO `chat_log` VALUES ('442', '145', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681458558', '0');
+INSERT INTO `chat_log` VALUES ('443', '145', '25', '0', '0', '<p><span>转接到人工客服</span></p>', '1501681512652', '1');
+INSERT INTO `chat_log` VALUES ('444', '145', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681512660', '0');
+INSERT INTO `chat_log` VALUES ('445', '146', '25', '0', '0', 'sddas', '1501681695507', '1');
+INSERT INTO `chat_log` VALUES ('446', '146', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681695528', '0');
+INSERT INTO `chat_log` VALUES ('447', '146', '25', '0', '0', '转接到人工客服', '1501681696901', '1');
+INSERT INTO `chat_log` VALUES ('448', '146', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501681696994', '0');
+INSERT INTO `chat_log` VALUES ('449', '146', '1', '25', '0', '你好', '1501681702480', '0');
+INSERT INTO `chat_log` VALUES ('451', '148', '25', '0', '0', '<p>dx</p>', '1501682184640', '1');
+INSERT INTO `chat_log` VALUES ('452', '148', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501682184652', '0');
+INSERT INTO `chat_log` VALUES ('453', '148', '25', '0', '0', '转接到人工客服', '1501682185771', '1');
+INSERT INTO `chat_log` VALUES ('454', '148', '1', '25', '0', '你好', '1501682185779', '0');
+INSERT INTO `chat_log` VALUES ('455', '148', '1', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501682185815', '0');
+INSERT INTO `chat_log` VALUES ('457', '150', '25', '0', '0', 'sad', '1501682466801', '1');
+INSERT INTO `chat_log` VALUES ('458', '150', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501682466814', '0');
+INSERT INTO `chat_log` VALUES ('459', '150', '25', '0', '0', '转接到人工客服', '1501682468543', '1');
+INSERT INTO `chat_log` VALUES ('460', '150', '1', '25', '0', '你好', '1501682468553', '0');
+INSERT INTO `chat_log` VALUES ('461', '150', '1', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501682468580', '0');
+INSERT INTO `chat_log` VALUES ('463', '152', '25', '0', '0', 'sdas', '1501682964354', '1');
+INSERT INTO `chat_log` VALUES ('464', '152', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501682964369', '0');
+INSERT INTO `chat_log` VALUES ('465', '152', '25', '0', '0', '转接到人工客服', '1501682965383', '1');
+INSERT INTO `chat_log` VALUES ('466', '156', '26', '0', '0', 'sdas', '1501683041896', '1');
+INSERT INTO `chat_log` VALUES ('467', '156', '0', '26', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501683041902', '0');
+INSERT INTO `chat_log` VALUES ('468', '156', '26', '0', '0', '转接到人工客服', '1501683043173', '1');
+INSERT INTO `chat_log` VALUES ('469', '156', '26', '0', '0', '转接到人工客服', '1501683122892', '1');
+INSERT INTO `chat_log` VALUES ('470', '156', '26', '0', '0', '转接到人工客服', '1501683125522', '1');
+INSERT INTO `chat_log` VALUES ('471', '156', '26', '0', '0', '转接到人工客服', '1501683125706', '1');
+INSERT INTO `chat_log` VALUES ('472', '156', '26', '0', '0', '转接到人工客服', '1501683125873', '1');
+INSERT INTO `chat_log` VALUES ('473', '160', '27', '0', '0', 'asd', '1501683221090', '1');
+INSERT INTO `chat_log` VALUES ('474', '160', '0', '27', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501683221106', '0');
+INSERT INTO `chat_log` VALUES ('475', '160', '27', '0', '0', '转接到人工客服', '1501683228448', '1');
+INSERT INTO `chat_log` VALUES ('476', '160', '1', '27', '0', '你好', '1501683249697', '0');
+INSERT INTO `chat_log` VALUES ('477', '161', '27', '0', '0', 'da', '1501683387984', '1');
+INSERT INTO `chat_log` VALUES ('478', '161', '0', '27', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501683387999', '0');
+INSERT INTO `chat_log` VALUES ('479', '161', '27', '0', '0', '转接到人工客服', '1501683411701', '1');
+INSERT INTO `chat_log` VALUES ('480', '161', '1', '27', '0', '你好', '1501683411714', '0');
+INSERT INTO `chat_log` VALUES ('481', '161', '1', '27', '0', '转接到人工客服', '1501683411753', '0');
+INSERT INTO `chat_log` VALUES ('482', '162', '27', '0', '0', '<p>最近房价涨价了吗？</p>', '1501683628504', '1');
+INSERT INTO `chat_log` VALUES ('483', '162', '0', '27', '0', '涨价了', '1501683628563', '0');
+INSERT INTO `chat_log` VALUES ('484', '162', '27', '0', '0', '我要买房价买房，多少钱一平方啊？', '1501683645496', '1');
+INSERT INTO `chat_log` VALUES ('485', '162', '0', '27', '0', '不知道', '1501683645523', '0');
+INSERT INTO `chat_log` VALUES ('486', '162', '27', '0', '0', 'ds', '1501683652122', '1');
+INSERT INTO `chat_log` VALUES ('487', '162', '0', '27', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501683652129', '0');
+INSERT INTO `chat_log` VALUES ('488', '162', '27', '0', '0', '转接到人工客服', '1501683655406', '1');
+INSERT INTO `chat_log` VALUES ('489', '162', '1', '27', '0', '你好', '1501683655414', '0');
+INSERT INTO `chat_log` VALUES ('490', '162', '1', '27', '0', '正在为您转接人工客服，请稍后……', '1501683655439', '0');
+INSERT INTO `chat_log` VALUES ('491', '162', '1', '27', '0', 'dasdasd', '1501683661348', '0');
+INSERT INTO `chat_log` VALUES ('492', '168', '25', '0', '0', 'dfds', '1501724655539', '1');
+INSERT INTO `chat_log` VALUES ('493', '168', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501724656631', '0');
+INSERT INTO `chat_log` VALUES ('494', '168', '25', '0', '0', '转接到人工客服', '1501724659548', '1');
+INSERT INTO `chat_log` VALUES ('495', '168', '0', '25', '0', '正在为您转接人工客服，请稍后……', '1501724661486', '0');
+INSERT INTO `chat_log` VALUES ('496', '168', '1', '25', '0', '你好', '1501724668618', '0');
+INSERT INTO `chat_log` VALUES ('498', '169', '25', '0', '0', 'sadsadsa', '1501725114894', '1');
+INSERT INTO `chat_log` VALUES ('499', '169', '0', '25', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501725114911', '0');
+INSERT INTO `chat_log` VALUES ('500', '169', '25', '0', '0', '转接到人工客服', '1501725115987', '1');
+INSERT INTO `chat_log` VALUES ('501', '169', '1', '25', '0', '你好', '1501725115996', '0');
+INSERT INTO `chat_log` VALUES ('502', '169', '1', '25', '0', '正在为您转接人工客服，请稍后……', '1501725116041', '0');
+INSERT INTO `chat_log` VALUES ('504', '170', '28', '0', '0', 'sdasd', '1501725199264', '1');
+INSERT INTO `chat_log` VALUES ('505', '170', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501725199273', '0');
+INSERT INTO `chat_log` VALUES ('506', '170', '28', '0', '0', '转接到人工客服', '1501725200951', '1');
+INSERT INTO `chat_log` VALUES ('507', '170', '0', '28', '0', '正在为您转接人工客服，请稍后……', '1501725200976', '0');
+INSERT INTO `chat_log` VALUES ('508', '170', '1', '28', '0', '你好', '1501725203958', '0');
+INSERT INTO `chat_log` VALUES ('510', '171', '28', '0', '0', '<p>涨价</p>', '1501725261148', '1');
+INSERT INTO `chat_log` VALUES ('511', '171', '0', '28', '0', '涨价了', '1501725261158', '0');
+INSERT INTO `chat_log` VALUES ('512', '171', '28', '0', '0', '房子涨价了吗', '1501725278415', '1');
+INSERT INTO `chat_log` VALUES ('513', '171', '0', '28', '0', '涨价了', '1501725278424', '0');
+INSERT INTO `chat_log` VALUES ('514', '171', '28', '0', '0', '你知道房子 涨价了吗', '1501725295824', '1');
+INSERT INTO `chat_log` VALUES ('515', '171', '0', '28', '0', '涨价了', '1501725295832', '0');
+INSERT INTO `chat_log` VALUES ('516', '173', '28', '0', '0', 'sdad', '1501726875092', '1');
+INSERT INTO `chat_log` VALUES ('517', '173', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501726875103', '0');
+INSERT INTO `chat_log` VALUES ('518', '173', '28', '0', '0', '转接到人工客服', '1501726877146', '1');
+INSERT INTO `chat_log` VALUES ('519', '173', '1', '28', '0', '你好', '1501726877155', '0');
+INSERT INTO `chat_log` VALUES ('520', '173', '1', '28', '0', '正在为您转接人工客服，请稍后……', '1501726877184', '0');
+INSERT INTO `chat_log` VALUES ('521', '173', '28', '1', '0', 'sdada', '1501726891964', '1');
+INSERT INTO `chat_log` VALUES ('522', '173', '1', '28', '0', 'sadas', '1501726895534', '0');
+INSERT INTO `chat_log` VALUES ('523', '173', '28', '1', '0', 'sadas', '1501726901384', '1');
+INSERT INTO `chat_log` VALUES ('524', '173', '28', '1', '0', 'dsad', '1501726940887', '1');
+INSERT INTO `chat_log` VALUES ('525', '174', '28', '0', '0', 'sadsa', '1501727054841', '1');
+INSERT INTO `chat_log` VALUES ('526', '174', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501727054873', '0');
+INSERT INTO `chat_log` VALUES ('527', '174', '28', '0', '0', '转接到人工客服', '1501727056252', '1');
+INSERT INTO `chat_log` VALUES ('528', '174', '1', '28', '0', '你好', '1501727056260', '0');
+INSERT INTO `chat_log` VALUES ('529', '174', '1', '28', '0', '正在为您转接人工客服，请稍后……', '1501727056329', '0');
+INSERT INTO `chat_log` VALUES ('530', '174', '28', '1', '0', 'sads', '1501727086835', '1');
+INSERT INTO `chat_log` VALUES ('531', '175', '28', '0', '0', 'sda', '1501727095948', '1');
+INSERT INTO `chat_log` VALUES ('532', '175', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501727095954', '0');
+INSERT INTO `chat_log` VALUES ('533', '175', '28', '0', '0', '转接到人工客服', '1501727096894', '1');
+INSERT INTO `chat_log` VALUES ('534', '175', '1', '28', '0', '你好', '1501727096899', '0');
+INSERT INTO `chat_log` VALUES ('535', '175', '1', '28', '0', '正在为您转接人工客服，请稍后……', '1501727096926', '0');
+INSERT INTO `chat_log` VALUES ('536', '175', '28', '1', '0', 'sdasa', '1501727216270', '1');
+INSERT INTO `chat_log` VALUES ('537', '175', '28', '1', '0', 'sddad', '1501727250736', '1');
+INSERT INTO `chat_log` VALUES ('538', '175', '28', '1', '0', 'sdaas', '1501727267373', '1');
+INSERT INTO `chat_log` VALUES ('539', '176', '28', '0', '0', 'dsasa', '1501728459440', '1');
+INSERT INTO `chat_log` VALUES ('540', '176', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501728459451', '0');
+INSERT INTO `chat_log` VALUES ('541', '176', '28', '0', '0', '转接到人工客服', '1501728460831', '1');
+INSERT INTO `chat_log` VALUES ('542', '176', '1', '28', '0', '你好', '1501728460842', '0');
+INSERT INTO `chat_log` VALUES ('543', '176', '1', '28', '0', '正在为您转接人工客服，请稍后……', '1501728460879', '0');
+INSERT INTO `chat_log` VALUES ('544', '177', '28', '0', '0', 'dsas', '1501728933021', '1');
+INSERT INTO `chat_log` VALUES ('545', '177', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501728933030', '0');
+INSERT INTO `chat_log` VALUES ('546', '177', '28', '0', '0', '转接到人工客服', '1501728934166', '1');
+INSERT INTO `chat_log` VALUES ('547', '177', '1', '28', '0', '你好', '1501728934176', '0');
+INSERT INTO `chat_log` VALUES ('548', '177', '1', '28', '0', '正在为您转接人工客服，请稍后……', '1501728934227', '0');
+INSERT INTO `chat_log` VALUES ('549', '178', '28', '0', '0', 'hgyjg', '1501729625827', '1');
+INSERT INTO `chat_log` VALUES ('550', '178', '0', '28', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501729625838', '0');
+INSERT INTO `chat_log` VALUES ('551', '178', '28', '0', '0', '转接到人工客服', '1501729638490', '1');
+INSERT INTO `chat_log` VALUES ('552', '178', '0', '28', '0', '正在为您转接人工客服，请稍后……', '1501729638501', '0');
+INSERT INTO `chat_log` VALUES ('553', '178', '1', '28', '0', '你好', '1501729638517', '0');
+INSERT INTO `chat_log` VALUES ('554', '178', '1', '28', '0', 'sadsa', '1501729710980', '0');
+INSERT INTO `chat_log` VALUES ('555', '178', '28', '1', '0', 'sadsa', '1501729715178', '1');
+INSERT INTO `chat_log` VALUES ('556', '178', '28', '1', '0', 'sad', '1501729774315', '1');
+INSERT INTO `chat_log` VALUES ('557', '178', '28', '1', '0', 'dsadsa', '1501729782531', '1');
+INSERT INTO `chat_log` VALUES ('558', '178', '28', '1', '0', 'sdasd', '1501729784553', '1');
+INSERT INTO `chat_log` VALUES ('559', '178', '28', '1', '0', 'dsadsad', '1501729786387', '1');
+INSERT INTO `chat_log` VALUES ('560', '179', '29', '0', '0', 'dsdsa', '1501733321058', '1');
+INSERT INTO `chat_log` VALUES ('561', '179', '0', '29', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501733321069', '0');
+INSERT INTO `chat_log` VALUES ('562', '179', '29', '0', '0', '转接到人工客服', '1501733322363', '1');
+INSERT INTO `chat_log` VALUES ('563', '179', '0', '29', '0', '正在为您转接人工客服，请稍后……', '1501733322374', '0');
+INSERT INTO `chat_log` VALUES ('564', '179', '1', '29', '0', '你好', '1501733326175', '0');
+INSERT INTO `chat_log` VALUES ('565', '179', '29', '1', '0', 'dsad', '1501733335763', '1');
+INSERT INTO `chat_log` VALUES ('566', '179', '1', '29', '0', '你好', '1501733346166', '0');
+INSERT INTO `chat_log` VALUES ('567', '179', '29', '1', '0', 'sadas', '1501733361024', '1');
+INSERT INTO `chat_log` VALUES ('568', '179', '29', '1', '0', 'sdsa', '1501733378266', '1');
+INSERT INTO `chat_log` VALUES ('569', '180', '25', '0', '0', '<p class=\"MsoNormal\"><span>我想知道一下你们公司的</span><span><font face=\"宋体\">楼盘</font> <font face=\"宋体\">信息</font></span><span>？</span></p>', '1501742653979', '1');
+INSERT INTO `chat_log` VALUES ('570', '180', '0', '25', '0', '您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。', '1501742654457', '0');
+INSERT INTO `chat_log` VALUES ('571', '180', '25', '0', '0', '我们公司楼盘的具体位置？', '1501742663790', '1');
+INSERT INTO `chat_log` VALUES ('572', '180', '0', '25', '0', '在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1501742663869', '0');
+INSERT INTO `chat_log` VALUES ('573', '180', '25', '0', '0', '<p class=\"MsoNormal\"><span>我</span><span>想</span><span><font face=\"宋体\">买房，</font> <font face=\"宋体\">首付</font></span><span>多少啊？</span></p>', '1501742677466', '1');
+INSERT INTO `chat_log` VALUES ('574', '180', '0', '25', '0', '不同户型的首付不同的哦，我们的首付最低十几万起喔，很实惠。', '1501742677493', '0');
+INSERT INTO `chat_log` VALUES ('575', '180', '25', '0', '0', '<p class=\"MsoNormal\"><span>你们楼盘都有哪些</span><span>户型</span><span>啊，有</span><span>大户型</span><span>的吗</span></p>', '1501742688698', '1');
+INSERT INTO `chat_log` VALUES ('576', '180', '0', '25', '0', '我们目前在售户型是78方（小户型）、120方（中户型）、135（大户型）方的都有，户型很方正的。', '1501742688717', '0');
 
 -- ----------------------------
 -- Table structure for client
@@ -391,7 +646,7 @@ CREATE TABLE `client` (
   `sex` int(20) DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_id` (`client_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of client
@@ -413,9 +668,18 @@ INSERT INTO `client` VALUES ('14', null, null, null, null, '0');
 INSERT INTO `client` VALUES ('15', null, null, null, null, '0');
 INSERT INTO `client` VALUES ('16', null, null, null, null, '0');
 INSERT INTO `client` VALUES ('17', null, null, null, null, '0');
-INSERT INTO `client` VALUES ('18', '测试者1', null, null, null, '1');
-INSERT INTO `client` VALUES ('19', '测试者2', '西湖区', 'abc@123.com', '88886666', '1');
-INSERT INTO `client` VALUES ('20', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('18', '王先生', '江苏', '821321@163.com', '89320102', '1');
+INSERT INTO `client` VALUES ('19', '张先生', '杭州', 'zhangsd@163.com', '82321991', '1');
+INSERT INTO `client` VALUES ('20', '李女士', '江西', 'lylyly@qq.com', '67673456', '2');
+INSERT INTO `client` VALUES ('21', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('22', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('23', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('24', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('25', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('26', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('27', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('28', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('29', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for client_flag
@@ -451,14 +715,18 @@ CREATE TABLE `common_language` (
   UNIQUE KEY `common_language_id` (`common_language_id`) USING BTREE,
   KEY `group_id` (`service_id`),
   CONSTRAINT `common_language_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of common_language
 -- ----------------------------
-INSERT INTO `common_language` VALUES ('1', null, '你好', '10');
-INSERT INTO `common_language` VALUES ('2', null, 'hello', '12');
-INSERT INTO `common_language` VALUES ('3', null, 'see you', '12');
+INSERT INTO `common_language` VALUES ('1', null, '你好，请问我能帮助您什么？', '11');
+INSERT INTO `common_language` VALUES ('2', null, '您好!很高兴为您服务，有什么可以为您效劳的。 ', '13');
+INSERT INTO `common_language` VALUES ('3', null, '亲，您说的我的确无法办到。希望我下次能帮到您。', '12');
+INSERT INTO `common_language` VALUES ('4', null, '呵呵，这真的让我很为难，我请示一下组长，看能不能给您一些折扣，不过估计有点难，亲，请您稍等! ', '1');
+INSERT INTO `common_language` VALUES ('5', null, '好的！谢谢咨询！', '1');
+INSERT INTO `common_language` VALUES ('6', null, '我们的楼盘在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1');
+INSERT INTO `common_language` VALUES ('7', null, '再见', '0');
 
 -- ----------------------------
 -- Table structure for conversation
@@ -477,41 +745,41 @@ CREATE TABLE `conversation` (
   KEY `service_id` (`service_id`),
   CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of conversation
 -- ----------------------------
-INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '1501327552055', '3');
+INSERT INTO `conversation` VALUES ('1', '1', '1', '1499443200000', '1501755003778', '3');
 INSERT INTO `conversation` VALUES ('2', '1', '0', '1499011200000', '1499013200000', '4');
-INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1501327552055', '5');
+INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '1501755003778', '5');
 INSERT INTO `conversation` VALUES ('4', '1', '0', '1499991300000', '1499991500000', '4');
 INSERT INTO `conversation` VALUES ('5', '1', '0', '1499991000000', '1500168287499', null);
 INSERT INTO `conversation` VALUES ('6', '2', '0', '1500518098602', null, null);
-INSERT INTO `conversation` VALUES ('7', '2', '1', '1500518362645', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('7', '2', '1', '1500518362645', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('8', '2', '0', '1500523956671', null, null);
-INSERT INTO `conversation` VALUES ('9', '2', '1', '1500524087661', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('10', '2', '1', '1500524619044', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('9', '2', '1', '1500524087661', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('10', '2', '1', '1500524619044', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('11', '2', '0', '1500524802896', null, null);
 INSERT INTO `conversation` VALUES ('12', '2', '0', '1500524813836', null, null);
 INSERT INTO `conversation` VALUES ('13', '2', '0', '1500524976193', null, null);
 INSERT INTO `conversation` VALUES ('14', '2', '0', '1500525268658', null, null);
 INSERT INTO `conversation` VALUES ('15', '2', '0', '1500525561131', null, '4');
-INSERT INTO `conversation` VALUES ('16', '2', '1', '1500533728186', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('17', '2', '1', '1500534756465', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('18', '2', '1', '1500534990824', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('19', '2', '1', '1500535064139', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('20', '2', '1', '1500535197136', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('21', '2', '1', '1500535440903', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('22', '2', '1', '1500535665659', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('23', '2', '1', '1500685496105', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('24', '2', '1', '1500685693702', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('25', '2', '1', '1500685884974', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('26', '2', '1', '1500686086898', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('27', '2', '1', '1500686219648', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('16', '2', '1', '1500533728186', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('17', '2', '1', '1500534756465', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('18', '2', '1', '1500534990824', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('19', '2', '1', '1500535064139', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('20', '2', '1', '1500535197136', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('21', '2', '1', '1500535440903', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('22', '2', '1', '1500535665659', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('23', '2', '1', '1500685496105', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('24', '2', '1', '1500685693702', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('25', '2', '1', '1500685884974', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('26', '2', '1', '1500686086898', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('27', '2', '1', '1500686219648', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('28', '2', '0', '1500686695117', null, null);
 INSERT INTO `conversation` VALUES ('29', '3', '0', '1500692316501', null, null);
-INSERT INTO `conversation` VALUES ('30', '3', '1', '1500692614959', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('30', '3', '1', '1500692614959', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('31', '3', '0', '1500693172586', null, null);
 INSERT INTO `conversation` VALUES ('32', '4', '0', '1500693191041', null, null);
 INSERT INTO `conversation` VALUES ('33', '5', '0', '1500693366792', null, null);
@@ -546,37 +814,37 @@ INSERT INTO `conversation` VALUES ('61', '19', '2', '1501158055900', '1501231865
 INSERT INTO `conversation` VALUES ('62', '19', '0', '1501158278778', '1501158289551', null);
 INSERT INTO `conversation` VALUES ('63', '19', '0', '1501158289941', '1501158386770', null);
 INSERT INTO `conversation` VALUES ('64', '19', '0', '1501158387092', '1501158504810', null);
-INSERT INTO `conversation` VALUES ('65', '19', '1', '1501158555605', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('66', '18', '1', '1501158632106', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('67', '18', '1', '1501159545755', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('68', '18', '1', '1501159651788', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('65', '19', '1', '1501158555605', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('66', '18', '1', '1501158632106', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('67', '18', '1', '1501159545755', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('68', '18', '1', '1501159651788', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('69', '18', '0', '1501218452825', '1501218455327', null);
-INSERT INTO `conversation` VALUES ('70', '18', '1', '1501218455715', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('71', '18', '1', '1501218650020', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('72', '18', '1', '1501219258799', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('70', '18', '1', '1501218455715', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('71', '18', '1', '1501218650020', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('72', '18', '1', '1501219258799', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('73', '18', '2', '1501221904813', '1501231865006', null);
-INSERT INTO `conversation` VALUES ('74', '18', '1', '1501222553686', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('75', '18', '1', '1501223918589', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('76', '18', '1', '1501223940345', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('74', '18', '1', '1501222553686', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('75', '18', '1', '1501223918589', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('76', '18', '1', '1501223940345', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('77', '18', '0', '1501224114568', '1501224173193', null);
-INSERT INTO `conversation` VALUES ('78', '18', '1', '1501224173630', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('79', '18', '1', '1501226190655', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('80', '18', '1', '1501226658447', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('81', '18', '1', '1501226780999', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('78', '18', '1', '1501224173630', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('79', '18', '1', '1501226190655', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('80', '18', '1', '1501226658447', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('81', '18', '1', '1501226780999', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('82', '18', '0', '1501226946852', '1501227116388', null);
-INSERT INTO `conversation` VALUES ('83', '18', '1', '1501227531313', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('84', '18', '1', '1501228175019', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('85', '18', '1', '1501228284399', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('86', '18', '1', '1501228920648', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('83', '18', '1', '1501227531313', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('84', '18', '1', '1501228175019', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('85', '18', '1', '1501228284399', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('86', '18', '1', '1501228920648', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('87', '20', '2', '1501228967471', '1501231865006', null);
-INSERT INTO `conversation` VALUES ('88', '20', '1', '1501229852203', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('89', '20', '1', '1501229988209', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('88', '20', '1', '1501229852203', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('89', '20', '1', '1501229988209', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('90', '20', '0', '1501230447981', '1501230552623', null);
-INSERT INTO `conversation` VALUES ('91', '20', '1', '1501230552949', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('92', '20', '1', '1501230605056', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('91', '20', '1', '1501230552949', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('92', '20', '1', '1501230605056', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('93', '20', '2', '1501231293206', '1501231865006', null);
 INSERT INTO `conversation` VALUES ('94', '20', '2', '1501231537499', '1501231865006', null);
-INSERT INTO `conversation` VALUES ('95', '20', '1', '1501231832074', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('95', '20', '1', '1501231832074', '1501755003778', null);
 INSERT INTO `conversation` VALUES ('96', '18', '0', '1501322507462', '1501322566458', null);
 INSERT INTO `conversation` VALUES ('97', '18', '0', '1501322566651', '1501323081758', null);
 INSERT INTO `conversation` VALUES ('98', '18', '0', '1501323081933', '1501323116540', null);
@@ -591,16 +859,79 @@ INSERT INTO `conversation` VALUES ('106', '18', '0', '1501323685030', '150132384
 INSERT INTO `conversation` VALUES ('107', '18', '0', '1501323846464', '1501323847321', null);
 INSERT INTO `conversation` VALUES ('108', '18', '0', '1501323847510', '1501323897550', null);
 INSERT INTO `conversation` VALUES ('109', '18', '0', '1501323897740', '1501324011364', null);
-INSERT INTO `conversation` VALUES ('110', '18', '1', '1501324011563', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('111', '18', '1', '1501324452071', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('112', '18', '1', '1501324809523', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('113', '18', '1', '1501325039435', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('114', '18', '1', '1501325126666', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('115', '18', '1', '1501325345674', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('116', '18', '1', '1501325560694', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('117', '18', '1', '1501326050516', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('118', '18', '1', '1501327149559', '1501327552055', null);
-INSERT INTO `conversation` VALUES ('119', '18', '1', '1501327327073', '1501327552055', null);
+INSERT INTO `conversation` VALUES ('110', '18', '1', '1501324011563', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('111', '18', '1', '1501324452071', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('112', '18', '1', '1501324809523', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('113', '18', '1', '1501325039435', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('114', '18', '1', '1501325126666', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('115', '18', '1', '1501325345674', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('116', '18', '1', '1501325560694', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('117', '18', '1', '1501326050516', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('118', '18', '1', '1501327149559', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('119', '18', '1', '1501327327073', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('120', '21', '0', '1501676030727', '1501676813427', null);
+INSERT INTO `conversation` VALUES ('121', '21', '0', '1501676814064', '1501676840843', null);
+INSERT INTO `conversation` VALUES ('122', '21', '0', '1501676840941', '1501676931715', null);
+INSERT INTO `conversation` VALUES ('123', '21', '0', '1501676931827', '1501676988276', null);
+INSERT INTO `conversation` VALUES ('124', '21', '0', '1501676949103', '1501676950909', null);
+INSERT INTO `conversation` VALUES ('125', '18', '0', '1501677769204', '1501677848509', null);
+INSERT INTO `conversation` VALUES ('126', '18', '0', '1501677848654', '1501677897196', null);
+INSERT INTO `conversation` VALUES ('127', '22', '1', '1501678652582', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('128', '18', '0', '1501679552539', '1501679591346', null);
+INSERT INTO `conversation` VALUES ('129', '18', '0', '1501679591615', '1501679748714', null);
+INSERT INTO `conversation` VALUES ('130', '23', '0', '1501679826469', '1501679991561', null);
+INSERT INTO `conversation` VALUES ('131', '23', '1', '1501679991998', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('132', '23', '1', '1501680208999', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('133', '24', '0', '1501680852125', '1501681093389', null);
+INSERT INTO `conversation` VALUES ('134', '18', '0', '1501680884292', '1501680924016', null);
+INSERT INTO `conversation` VALUES ('135', '18', '0', '1501680924247', '1501681024865', null);
+INSERT INTO `conversation` VALUES ('136', '18', '0', '1501681025090', '1501681073579', null);
+INSERT INTO `conversation` VALUES ('137', '18', '0', '1501681073835', '1501681093488', null);
+INSERT INTO `conversation` VALUES ('138', '18', '0', '1501681126858', '1501681160730', null);
+INSERT INTO `conversation` VALUES ('139', '18', '0', '1501681160891', '1501681186144', null);
+INSERT INTO `conversation` VALUES ('140', '18', '0', '1501681186341', '1501681188145', null);
+INSERT INTO `conversation` VALUES ('141', '18', '0', '1501681188344', '1501681231122', null);
+INSERT INTO `conversation` VALUES ('142', '18', '0', '1501681231359', '1501681297277', null);
+INSERT INTO `conversation` VALUES ('143', '25', '0', '1501681312955', '1501681439673', null);
+INSERT INTO `conversation` VALUES ('144', '25', '0', '1501681439942', '1501681448653', null);
+INSERT INTO `conversation` VALUES ('145', '25', '0', '1501681448885', '1501681449432', null);
+INSERT INTO `conversation` VALUES ('146', '25', '1', '1501681662531', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('147', '25', '0', '1501682152494', '1501682157807', null);
+INSERT INTO `conversation` VALUES ('148', '25', '1', '1501682174985', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('149', '18', '0', '1501682365233', '1501682899190', null);
+INSERT INTO `conversation` VALUES ('150', '25', '1', '1501682384086', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('151', '18', '0', '1501682899432', '1501682936923', null);
+INSERT INTO `conversation` VALUES ('152', '25', '0', '1501682952701', '1501683010401', null);
+INSERT INTO `conversation` VALUES ('153', '18', '0', '1501682954348', '1501683006897', null);
+INSERT INTO `conversation` VALUES ('154', '18', '0', '1501683007234', '1501683056334', null);
+INSERT INTO `conversation` VALUES ('155', '25', '0', '1501683010579', '1501683012960', null);
+INSERT INTO `conversation` VALUES ('156', '26', '0', '1501683036385', '1501683143315', null);
+INSERT INTO `conversation` VALUES ('157', '18', '0', '1501683056738', '1501683081584', null);
+INSERT INTO `conversation` VALUES ('158', '18', '0', '1501683081948', '1501683105891', null);
+INSERT INTO `conversation` VALUES ('159', '18', '0', '1501683106406', '1501683143251', null);
+INSERT INTO `conversation` VALUES ('160', '27', '1', '1501683210626', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('161', '27', '1', '1501683313958', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('162', '27', '1', '1501683609594', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('163', '18', '0', '1501683696810', '1501683762399', null);
+INSERT INTO `conversation` VALUES ('164', '18', '0', '1501683762719', '1501684124976', null);
+INSERT INTO `conversation` VALUES ('165', '18', '0', '1501684125420', '1501684163127', null);
+INSERT INTO `conversation` VALUES ('166', '18', '0', '1501684163458', '1501684206476', null);
+INSERT INTO `conversation` VALUES ('167', '18', '0', '1501684206821', '1501684306213', '4');
+INSERT INTO `conversation` VALUES ('168', '25', '1', '1501724634172', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('169', '25', '1', '1501725072271', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('170', '28', '1', '1501725185917', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('171', '28', '0', '1501725246796', '1501726750982', null);
+INSERT INTO `conversation` VALUES ('172', '28', '0', '1501726765243', '1501726867620', null);
+INSERT INTO `conversation` VALUES ('173', '28', '1', '1501726867715', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('174', '28', '1', '1501726996219', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('175', '28', '1', '1501727090039', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('176', '28', '1', '1501728452892', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('177', '28', '1', '1501728919628', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('178', '28', '1', '1501729608949', '1501755003778', null);
+INSERT INTO `conversation` VALUES ('179', '29', '1', '1501733295890', '1501755003778', '5');
+INSERT INTO `conversation` VALUES ('180', '25', '0', '1501742622899', '1501742634334', null);
+INSERT INTO `conversation` VALUES ('181', '25', '0', '1501742627727', '1501742634121', null);
+INSERT INTO `conversation` VALUES ('182', '25', '0', '1501744245243', '1501755004013', null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -625,10 +956,10 @@ CREATE TABLE `customer_service` (
 -- ----------------------------
 -- Records of customer_service
 -- ----------------------------
-INSERT INTO `customer_service` VALUES ('0', '机器人', '1', '小机器人', 'CCC', 'Hello，我是机器人客服', '0', '');
-INSERT INTO `customer_service` VALUES ('1', '李', '1', '小李', 'ABC', '你好', '0', 'ABC');
-INSERT INTO `customer_service` VALUES ('2', '2号客服', '2', '小二', 'CBA', '您好 我是小二', '0', '888888');
-INSERT INTO `customer_service` VALUES ('3', '3号客服', '1', '小三', 'AAA', '您好 我是小三', '0', '888888');
+INSERT INTO `customer_service` VALUES ('0', '智能客服', '1', '智能客服', 'HYS1000', 'Hello，我是智能客服，请问有什么可以帮您得吗', '0', '888888');
+INSERT INTO `customer_service` VALUES ('1', '李四', '2', '小李', 'HYS1001', 'Hello，我是客服小李，请问有什么可以帮您得吗', '0', '888888');
+INSERT INTO `customer_service` VALUES ('2', '张三', '1', '小张', 'HYS1002', 'Hello，我是客服小张，请问有什么可以帮您得吗', '0', '888888');
+INSERT INTO `customer_service` VALUES ('3', '王五', '4', '小王', 'HYS1003', 'Hello，我是客服小王，请问有什么可以帮您得吗', '0', '888888');
 
 -- ----------------------------
 -- Table structure for flag
@@ -640,15 +971,18 @@ CREATE TABLE `flag` (
   PRIMARY KEY (`flag_id`),
   UNIQUE KEY `tag_id` (`flag_id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flag
 -- ----------------------------
-INSERT INTO `flag` VALUES ('2', '很帅');
-INSERT INTO `flag` VALUES ('3', '很牛逼');
-INSERT INTO `flag` VALUES ('1', '很酷');
-INSERT INTO `flag` VALUES ('4', '非常牛逼');
+INSERT INTO `flag` VALUES ('4', '中户型');
+INSERT INTO `flag` VALUES ('6', '全款');
+INSERT INTO `flag` VALUES ('9', '别墅');
+INSERT INTO `flag` VALUES ('2', '大户型');
+INSERT INTO `flag` VALUES ('1', '小户型');
+INSERT INTO `flag` VALUES ('3', '想买房');
+INSERT INTO `flag` VALUES ('5', '要买房');
 
 -- ----------------------------
 -- Table structure for group_word
@@ -662,12 +996,20 @@ CREATE TABLE `group_word` (
 -- ----------------------------
 -- Records of group_word
 -- ----------------------------
-INSERT INTO `group_word` VALUES ('1', '退款');
-INSERT INTO `group_word` VALUES ('2', '要买房');
+INSERT INTO `group_word` VALUES ('1', '质量问题');
+INSERT INTO `group_word` VALUES ('1', '退钱');
 INSERT INTO `group_word` VALUES ('2', '想买房');
-INSERT INTO `group_word` VALUES ('3', '没钱');
+INSERT INTO `group_word` VALUES ('2', '要买房');
 INSERT INTO `group_word` VALUES ('2', '买房');
 INSERT INTO `group_word` VALUES ('1', '买了房');
+INSERT INTO `group_word` VALUES ('3', '咨询');
+INSERT INTO `group_word` VALUES ('4', '资金');
+INSERT INTO `group_word` VALUES ('4', '钱');
+INSERT INTO `group_word` VALUES ('4', '按揭');
+INSERT INTO `group_word` VALUES ('4', '贷款');
+INSERT INTO `group_word` VALUES ('4', '首付');
+INSERT INTO `group_word` VALUES ('5', '水电');
+INSERT INTO `group_word` VALUES ('5', '安全');
 
 -- ----------------------------
 -- Table structure for join_up
@@ -685,7 +1027,7 @@ CREATE TABLE `join_up` (
   KEY `access_id` (`access_id`) USING BTREE,
   CONSTRAINT `join_up_ibfk_1` FOREIGN KEY (`access_id`) REFERENCES `access` (`access_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `join_up_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of join_up
@@ -807,6 +1149,69 @@ INSERT INTO `join_up` VALUES ('114', '1', '18', '1501325560663', '1378112422');
 INSERT INTO `join_up` VALUES ('115', '1', '18', '1501326050497', '1378112422');
 INSERT INTO `join_up` VALUES ('116', '1', '18', '1501327149542', '1378112422');
 INSERT INTO `join_up` VALUES ('117', '1', '18', '1501327327058', '1378112422');
+INSERT INTO `join_up` VALUES ('118', '1', '21', '1501676030693', '4207701004');
+INSERT INTO `join_up` VALUES ('119', '1', '21', '1501676813435', '4207701004');
+INSERT INTO `join_up` VALUES ('120', '1', '21', '1501676840936', '4207701004');
+INSERT INTO `join_up` VALUES ('121', '1', '21', '1501676931817', '4207701004');
+INSERT INTO `join_up` VALUES ('122', '1', '21', '1501676949098', '4207701004');
+INSERT INTO `join_up` VALUES ('123', '1', '18', '1501677769145', '1378112422');
+INSERT INTO `join_up` VALUES ('124', '1', '18', '1501677848633', '1378112422');
+INSERT INTO `join_up` VALUES ('125', '1', '22', '1501678652576', '2496534588');
+INSERT INTO `join_up` VALUES ('126', '1', '18', '1501679552479', '1378112422');
+INSERT INTO `join_up` VALUES ('127', '1', '18', '1501679591544', '1378112422');
+INSERT INTO `join_up` VALUES ('128', '1', '23', '1501679826251', '7238421777');
+INSERT INTO `join_up` VALUES ('129', '1', '23', '1501679991974', '7238421777');
+INSERT INTO `join_up` VALUES ('130', '1', '23', '1501680208993', '7238421777');
+INSERT INTO `join_up` VALUES ('131', '1', '24', '1501680852085', '9787791840');
+INSERT INTO `join_up` VALUES ('132', '1', '18', '1501680884268', '1378112422');
+INSERT INTO `join_up` VALUES ('133', '1', '18', '1501680924234', '1378112422');
+INSERT INTO `join_up` VALUES ('134', '1', '18', '1501681025085', '1378112422');
+INSERT INTO `join_up` VALUES ('135', '1', '18', '1501681073814', '1378112422');
+INSERT INTO `join_up` VALUES ('136', '1', '18', '1501681126806', '1378112422');
+INSERT INTO `join_up` VALUES ('137', '1', '18', '1501681160873', '1378112422');
+INSERT INTO `join_up` VALUES ('138', '1', '18', '1501681186328', '1378112422');
+INSERT INTO `join_up` VALUES ('139', '1', '18', '1501681188326', '1378112422');
+INSERT INTO `join_up` VALUES ('140', '1', '18', '1501681231349', '1378112422');
+INSERT INTO `join_up` VALUES ('141', '1', '25', '1501681312928', '7880625495');
+INSERT INTO `join_up` VALUES ('142', '1', '25', '1501681439928', '7880625495');
+INSERT INTO `join_up` VALUES ('143', '1', '25', '1501681448861', '7880625495');
+INSERT INTO `join_up` VALUES ('144', '1', '25', '1501681662453', '7880625495');
+INSERT INTO `join_up` VALUES ('145', '1', '25', '1501682152439', '7880625495');
+INSERT INTO `join_up` VALUES ('146', '1', '25', '1501682174977', '7880625495');
+INSERT INTO `join_up` VALUES ('147', '1', '18', '1501682365180', '1378112422');
+INSERT INTO `join_up` VALUES ('148', '1', '25', '1501682384065', '7880625495');
+INSERT INTO `join_up` VALUES ('149', '1', '18', '1501682899416', '1378112422');
+INSERT INTO `join_up` VALUES ('150', '1', '25', '1501682952672', '7880625495');
+INSERT INTO `join_up` VALUES ('151', '1', '18', '1501682954328', '1378112422');
+INSERT INTO `join_up` VALUES ('152', '1', '18', '1501683007224', '1378112422');
+INSERT INTO `join_up` VALUES ('153', '1', '25', '1501683010552', '7880625495');
+INSERT INTO `join_up` VALUES ('154', '1', '26', '1501683036380', '3865366230');
+INSERT INTO `join_up` VALUES ('155', '1', '18', '1501683056714', '1378112422');
+INSERT INTO `join_up` VALUES ('156', '1', '18', '1501683081940', '1378112422');
+INSERT INTO `join_up` VALUES ('157', '1', '18', '1501683106352', '1378112422');
+INSERT INTO `join_up` VALUES ('158', '1', '27', '1501683210482', '7529884261');
+INSERT INTO `join_up` VALUES ('159', '1', '27', '1501683313907', '7529884261');
+INSERT INTO `join_up` VALUES ('160', '1', '27', '1501683609578', '7529884261');
+INSERT INTO `join_up` VALUES ('161', '1', '18', '1501683696789', '1378112422');
+INSERT INTO `join_up` VALUES ('162', '1', '18', '1501683762710', '1378112422');
+INSERT INTO `join_up` VALUES ('163', '1', '18', '1501684125411', '1378112422');
+INSERT INTO `join_up` VALUES ('164', '1', '18', '1501684163442', '1378112422');
+INSERT INTO `join_up` VALUES ('165', '1', '18', '1501684206806', '1378112422');
+INSERT INTO `join_up` VALUES ('166', '1', '25', '1501724633419', '7880625495');
+INSERT INTO `join_up` VALUES ('167', '1', '25', '1501725072249', '7880625495');
+INSERT INTO `join_up` VALUES ('168', '1', '28', '1501725185913', '5778290431');
+INSERT INTO `join_up` VALUES ('169', '1', '28', '1501725246790', '5778290431');
+INSERT INTO `join_up` VALUES ('170', '1', '28', '1501726765173', '5778290431');
+INSERT INTO `join_up` VALUES ('171', '1', '28', '1501726867703', '5778290431');
+INSERT INTO `join_up` VALUES ('172', '1', '28', '1501726996212', '5778290431');
+INSERT INTO `join_up` VALUES ('173', '1', '28', '1501727090031', '5778290431');
+INSERT INTO `join_up` VALUES ('174', '1', '28', '1501728452870', '5778290431');
+INSERT INTO `join_up` VALUES ('175', '1', '28', '1501728919612', '5778290431');
+INSERT INTO `join_up` VALUES ('176', '1', '28', '1501729608927', '5778290431');
+INSERT INTO `join_up` VALUES ('177', '1', '29', '1501733295884', '9711833392');
+INSERT INTO `join_up` VALUES ('178', '1', '25', '1501742622839', '7880625495');
+INSERT INTO `join_up` VALUES ('179', '1', '25', '1501742627704', '7880625495');
+INSERT INTO `join_up` VALUES ('180', '1', '25', '1501744245236', '7880625495');
 
 -- ----------------------------
 -- Table structure for keyword
@@ -817,17 +1222,38 @@ CREATE TABLE `keyword` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`keyword_id`),
   UNIQUE KEY `key_word` (`value`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of keyword
 -- ----------------------------
-INSERT INTO `keyword` VALUES ('1', '买房');
-INSERT INTO `keyword` VALUES ('2', '平方');
-INSERT INTO `keyword` VALUES ('4', '我要买房价买房，多少钱一平方啊？');
-INSERT INTO `keyword` VALUES ('3', '房价');
-INSERT INTO `keyword` VALUES ('8', '最近的房价涨价了吗');
-INSERT INTO `keyword` VALUES ('7', '涨价');
+INSERT INTO `keyword` VALUES ('61', '一期');
+INSERT INTO `keyword` VALUES ('55', '中户型');
+INSERT INTO `keyword` VALUES ('39', '买房');
+INSERT INTO `keyword` VALUES ('52', '买房的首付问题？');
+INSERT INTO `keyword` VALUES ('44', '位置');
+INSERT INTO `keyword` VALUES ('42', '信息');
+INSERT INTO `keyword` VALUES ('58', '别墅');
+INSERT INTO `keyword` VALUES ('47', '哪个地方');
+INSERT INTO `keyword` VALUES ('46', '哪儿');
+INSERT INTO `keyword` VALUES ('45', '哪里');
+INSERT INTO `keyword` VALUES ('38', '售楼');
+INSERT INTO `keyword` VALUES ('51', '多少钱');
+INSERT INTO `keyword` VALUES ('53', '大户型');
+INSERT INTO `keyword` VALUES ('54', '小户型');
+INSERT INTO `keyword` VALUES ('59', '小高层');
+INSERT INTO `keyword` VALUES ('56', '平方');
+INSERT INTO `keyword` VALUES ('48', '我们公司楼盘的具体位置？');
+INSERT INTO `keyword` VALUES ('50', '户型');
+INSERT INTO `keyword` VALUES ('37', '房产');
+INSERT INTO `keyword` VALUES ('60', '排屋');
+INSERT INTO `keyword` VALUES ('43', '本公司的楼盘信息？');
+INSERT INTO `keyword` VALUES ('41', '楼盘');
+INSERT INTO `keyword` VALUES ('57', '楼盘有哪些户型？');
+INSERT INTO `keyword` VALUES ('40', '洋房');
+INSERT INTO `keyword` VALUES ('9', '转接到人工客服');
+INSERT INTO `keyword` VALUES ('62', '这一期楼盘有别墅吗');
+INSERT INTO `keyword` VALUES ('49', '首付');
 
 -- ----------------------------
 -- Table structure for keyword_heat
@@ -843,142 +1269,17 @@ CREATE TABLE `keyword_heat` (
 -- ----------------------------
 -- Records of keyword_heat
 -- ----------------------------
-INSERT INTO `keyword_heat` VALUES ('7', '1500097538384');
-INSERT INTO `keyword_heat` VALUES ('7', '1500098363854');
-INSERT INTO `keyword_heat` VALUES ('7', '1500098403498');
-INSERT INTO `keyword_heat` VALUES ('3', '1500098403539');
-INSERT INTO `keyword_heat` VALUES ('7', '1500167869962');
-INSERT INTO `keyword_heat` VALUES ('7', '1500168036629');
-INSERT INTO `keyword_heat` VALUES ('7', '1500518170123');
-INSERT INTO `keyword_heat` VALUES ('3', '1500518170190');
-INSERT INTO `keyword_heat` VALUES ('7', '1500518403311');
-INSERT INTO `keyword_heat` VALUES ('3', '1500518403316');
-INSERT INTO `keyword_heat` VALUES ('3', '1501153579897');
-INSERT INTO `keyword_heat` VALUES ('7', '1501153579967');
-INSERT INTO `keyword_heat` VALUES ('1', '1501153579972');
-INSERT INTO `keyword_heat` VALUES ('3', '1501154629508');
-INSERT INTO `keyword_heat` VALUES ('7', '1501154629513');
-INSERT INTO `keyword_heat` VALUES ('1', '1501154629516');
-INSERT INTO `keyword_heat` VALUES ('3', '1501155000436');
-INSERT INTO `keyword_heat` VALUES ('7', '1501155000440');
-INSERT INTO `keyword_heat` VALUES ('1', '1501155000443');
-INSERT INTO `keyword_heat` VALUES ('1', '1501155125217');
-INSERT INTO `keyword_heat` VALUES ('7', '1501155137756');
-INSERT INTO `keyword_heat` VALUES ('3', '1501155243993');
-INSERT INTO `keyword_heat` VALUES ('1', '1501157200779');
-INSERT INTO `keyword_heat` VALUES ('3', '1501222732826');
-INSERT INTO `keyword_heat` VALUES ('7', '1501222733130');
-INSERT INTO `keyword_heat` VALUES ('1', '1501222733132');
-INSERT INTO `keyword_heat` VALUES ('3', '1501223921518');
-INSERT INTO `keyword_heat` VALUES ('7', '1501223921523');
-INSERT INTO `keyword_heat` VALUES ('1', '1501223921649');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224215954');
-INSERT INTO `keyword_heat` VALUES ('7', '1501224215959');
-INSERT INTO `keyword_heat` VALUES ('1', '1501224215962');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224453576');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224454559');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224455119');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224455877');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224456578');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224458294');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224458684');
-INSERT INTO `keyword_heat` VALUES ('3', '1501224459301');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226207538');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226208066');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226208619');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226210045');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226210861');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226211441');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226211909');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226212476');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226217085');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226219998');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226228353');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226228357');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226228361');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226234435');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226234543');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226234546');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226239484');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226239489');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226239604');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226243095');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226243099');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226243103');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226255434');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226255441');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226255445');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226259202');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226259205');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226259208');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226260409');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226260412');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226260415');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226261012');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226261017');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226261021');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226261603');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226261606');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226261609');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226641702');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226731736');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226792677');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226797787');
-INSERT INTO `keyword_heat` VALUES ('3', '1501226866328');
-INSERT INTO `keyword_heat` VALUES ('7', '1501226866334');
-INSERT INTO `keyword_heat` VALUES ('1', '1501226866339');
-INSERT INTO `keyword_heat` VALUES ('3', '1501227538339');
-INSERT INTO `keyword_heat` VALUES ('7', '1501227538342');
-INSERT INTO `keyword_heat` VALUES ('1', '1501227538346');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323629652');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323629882');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323634079');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323634084');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323634088');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323634092');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323691490');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323691495');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323691500');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323691528');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323693639');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323693642');
-INSERT INTO `keyword_heat` VALUES ('8', '1501323693683');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323698773');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323698777');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323698781');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323698806');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323704116');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323704119');
-INSERT INTO `keyword_heat` VALUES ('8', '1501323704121');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323709879');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323709882');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323709887');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323709890');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323712351');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323712355');
-INSERT INTO `keyword_heat` VALUES ('8', '1501323712359');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323855666');
-INSERT INTO `keyword_heat` VALUES ('8', '1501323855669');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323855671');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323901654');
-INSERT INTO `keyword_heat` VALUES ('8', '1501323901656');
-INSERT INTO `keyword_heat` VALUES ('7', '1501323901662');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323919658');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323919781');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323919791');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323919801');
-INSERT INTO `keyword_heat` VALUES ('4', '1501323919873');
-INSERT INTO `keyword_heat` VALUES ('3', '1501323919876');
-INSERT INTO `keyword_heat` VALUES ('2', '1501323919977');
-INSERT INTO `keyword_heat` VALUES ('1', '1501323919985');
-INSERT INTO `keyword_heat` VALUES ('3', '1501324019313');
-INSERT INTO `keyword_heat` VALUES ('2', '1501324019318');
-INSERT INTO `keyword_heat` VALUES ('1', '1501324019324');
-INSERT INTO `keyword_heat` VALUES ('4', '1501324019329');
-INSERT INTO `keyword_heat` VALUES ('7', '1501324022010');
-INSERT INTO `keyword_heat` VALUES ('3', '1501324022016');
-INSERT INTO `keyword_heat` VALUES ('8', '1501324022021');
-INSERT INTO `keyword_heat` VALUES ('3', '1501324902763');
+INSERT INTO `keyword_heat` VALUES ('9', '1501733322370');
+INSERT INTO `keyword_heat` VALUES ('42', '1501742654002');
+INSERT INTO `keyword_heat` VALUES ('41', '1501742654059');
+INSERT INTO `keyword_heat` VALUES ('48', '1501742663797');
+INSERT INTO `keyword_heat` VALUES ('44', '1501742663802');
+INSERT INTO `keyword_heat` VALUES ('41', '1501742663865');
+INSERT INTO `keyword_heat` VALUES ('39', '1501742677484');
+INSERT INTO `keyword_heat` VALUES ('49', '1501742677490');
+INSERT INTO `keyword_heat` VALUES ('53', '1501742688710');
+INSERT INTO `keyword_heat` VALUES ('50', '1501742688712');
+INSERT INTO `keyword_heat` VALUES ('41', '1501742688715');
 
 -- ----------------------------
 -- Table structure for knowledge
@@ -993,13 +1294,17 @@ CREATE TABLE `knowledge` (
   `time` bigint(20) NOT NULL,
   PRIMARY KEY (`knowledge_id`),
   UNIQUE KEY `knowledge_id` (`knowledge_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of knowledge
 -- ----------------------------
-INSERT INTO `knowledge` VALUES ('1', '我要买房价买房，多少钱一平方啊？', '不知道', '1', '1', '1');
-INSERT INTO `knowledge` VALUES ('3', '最近的房价涨价了吗', '涨价了', '1', '1', '1');
+INSERT INTO `knowledge` VALUES ('4', '转接到人工客服', '正在为您转接人工客服，请稍后……', '1', '0', '1');
+INSERT INTO `knowledge` VALUES ('24', '本公司的楼盘信息？', '您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。', '1', '1', '0');
+INSERT INTO `knowledge` VALUES ('25', '我们公司楼盘的具体位置？', '在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1', '1', '0');
+INSERT INTO `knowledge` VALUES ('26', '买房的首付问题？', '不同户型的首付不同的哦，我们的首付最低十几万起喔，很实惠。', '1', '1', '0');
+INSERT INTO `knowledge` VALUES ('27', '楼盘有哪些户型？', '我们目前在售户型是78方（小户型）、120方（中户型）、135（大户型）方的都有，户型很方正的。', '1', '1', '0');
+INSERT INTO `knowledge` VALUES ('28', '这一期楼盘有别墅吗', '我们这期的楼盘有别墅、小高层和排屋，而且设计风格都很美观喔。', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for knowledge_keyword
@@ -1014,13 +1319,37 @@ CREATE TABLE `knowledge_keyword` (
 -- ----------------------------
 -- Records of knowledge_keyword
 -- ----------------------------
-INSERT INTO `knowledge_keyword` VALUES ('1', '1');
-INSERT INTO `knowledge_keyword` VALUES ('2', '1');
-INSERT INTO `knowledge_keyword` VALUES ('3', '1');
-INSERT INTO `knowledge_keyword` VALUES ('3', '3');
-INSERT INTO `knowledge_keyword` VALUES ('4', '1');
-INSERT INTO `knowledge_keyword` VALUES ('7', '3');
-INSERT INTO `knowledge_keyword` VALUES ('8', '3');
+INSERT INTO `knowledge_keyword` VALUES ('9', '4');
+INSERT INTO `knowledge_keyword` VALUES ('37', '24');
+INSERT INTO `knowledge_keyword` VALUES ('38', '24');
+INSERT INTO `knowledge_keyword` VALUES ('39', '24');
+INSERT INTO `knowledge_keyword` VALUES ('39', '26');
+INSERT INTO `knowledge_keyword` VALUES ('40', '24');
+INSERT INTO `knowledge_keyword` VALUES ('41', '24');
+INSERT INTO `knowledge_keyword` VALUES ('41', '25');
+INSERT INTO `knowledge_keyword` VALUES ('41', '28');
+INSERT INTO `knowledge_keyword` VALUES ('42', '24');
+INSERT INTO `knowledge_keyword` VALUES ('43', '24');
+INSERT INTO `knowledge_keyword` VALUES ('44', '25');
+INSERT INTO `knowledge_keyword` VALUES ('45', '25');
+INSERT INTO `knowledge_keyword` VALUES ('46', '25');
+INSERT INTO `knowledge_keyword` VALUES ('47', '25');
+INSERT INTO `knowledge_keyword` VALUES ('48', '25');
+INSERT INTO `knowledge_keyword` VALUES ('49', '26');
+INSERT INTO `knowledge_keyword` VALUES ('50', '26');
+INSERT INTO `knowledge_keyword` VALUES ('50', '27');
+INSERT INTO `knowledge_keyword` VALUES ('51', '26');
+INSERT INTO `knowledge_keyword` VALUES ('52', '26');
+INSERT INTO `knowledge_keyword` VALUES ('53', '27');
+INSERT INTO `knowledge_keyword` VALUES ('54', '27');
+INSERT INTO `knowledge_keyword` VALUES ('55', '27');
+INSERT INTO `knowledge_keyword` VALUES ('56', '27');
+INSERT INTO `knowledge_keyword` VALUES ('57', '27');
+INSERT INTO `knowledge_keyword` VALUES ('58', '28');
+INSERT INTO `knowledge_keyword` VALUES ('59', '28');
+INSERT INTO `knowledge_keyword` VALUES ('60', '28');
+INSERT INTO `knowledge_keyword` VALUES ('61', '28');
+INSERT INTO `knowledge_keyword` VALUES ('62', '28');
 
 -- ----------------------------
 -- Table structure for notification
@@ -1039,7 +1368,7 @@ CREATE TABLE `notification` (
   KEY `not_id` (`not_id`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`nt_id`) REFERENCES `notification_type` (`nt_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`not_id`) REFERENCES `notification_object_type` (`not_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notification
@@ -1125,6 +1454,26 @@ INSERT INTO `notification` VALUES ('79', '1', '3', '1', '编号为18的客户接
 INSERT INTO `notification` VALUES ('80', '1', '3', '1', '编号为18的客户接入到会话中', '1501326078507');
 INSERT INTO `notification` VALUES ('81', '1', '3', '1', '编号为18的客户接入到会话中', '1501327175069');
 INSERT INTO `notification` VALUES ('82', '1', '3', '1', '编号为18的客户接入到会话中', '1501327388305');
+INSERT INTO `notification` VALUES ('83', '1', '3', '1', '编号为22的客户接入到会话中', '1501678751882');
+INSERT INTO `notification` VALUES ('84', '1', '3', '1', '编号为23的客户接入到会话中', '1501680077717');
+INSERT INTO `notification` VALUES ('85', '1', '3', '1', '编号为23的客户接入到会话中', '1501680220538');
+INSERT INTO `notification` VALUES ('86', '1', '3', '1', '编号为25的客户接入到会话中', '1501681702492');
+INSERT INTO `notification` VALUES ('87', '1', '3', '1', '编号为25的客户接入到会话中', '1501682185791');
+INSERT INTO `notification` VALUES ('88', '1', '3', '1', '编号为25的客户接入到会话中', '1501682468565');
+INSERT INTO `notification` VALUES ('89', '1', '3', '1', '编号为27的客户接入到会话中', '1501683249817');
+INSERT INTO `notification` VALUES ('90', '1', '3', '1', '编号为27的客户接入到会话中', '1501683411730');
+INSERT INTO `notification` VALUES ('91', '1', '3', '1', '编号为27的客户接入到会话中', '1501683655425');
+INSERT INTO `notification` VALUES ('92', '1', '3', '1', '编号为25的客户接入到会话中', '1501724668622');
+INSERT INTO `notification` VALUES ('93', '1', '3', '1', '编号为25的客户接入到会话中', '1501725116017');
+INSERT INTO `notification` VALUES ('94', '1', '3', '1', '编号为28的客户接入到会话中', '1501725203962');
+INSERT INTO `notification` VALUES ('95', '1', '3', '1', '编号为28的客户接入到会话中', '1501726877166');
+INSERT INTO `notification` VALUES ('96', '1', '3', '1', '编号为28的客户接入到会话中', '1501727056315');
+INSERT INTO `notification` VALUES ('97', '1', '3', '1', '编号为28的客户接入到会话中', '1501727096906');
+INSERT INTO `notification` VALUES ('98', '1', '3', '1', '编号为28的客户接入到会话中', '1501728460857');
+INSERT INTO `notification` VALUES ('99', '1', '3', '1', '编号为28的客户接入到会话中', '1501728934190');
+INSERT INTO `notification` VALUES ('100', '1', '3', '1', '编号为28的客户接入到会话中', '1501729638539');
+INSERT INTO `notification` VALUES ('101', '1', '3', '1', '编号为29的客户接入到会话中', '1501733326181');
+INSERT INTO `notification` VALUES ('102', '2', '1', '1', '今天晚上8点-12点系统维护。', '1501758354164');
 
 -- ----------------------------
 -- Table structure for notification_object_type
@@ -1206,13 +1555,16 @@ CREATE TABLE `service_group` (
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of service_group
 -- ----------------------------
-INSERT INTO `service_group` VALUES ('1', '售后组');
-INSERT INTO `service_group` VALUES ('2', '售前组');
+INSERT INTO `service_group` VALUES ('1', '楼盘售后组');
+INSERT INTO `service_group` VALUES ('2', '楼盘售前组');
+INSERT INTO `service_group` VALUES ('3', '广告投送组');
+INSERT INTO `service_group` VALUES ('4', '贷款咨询组');
+INSERT INTO `service_group` VALUES ('5', '物业管理组');
 
 -- ----------------------------
 -- Table structure for work_time
@@ -1226,7 +1578,7 @@ CREATE TABLE `work_time` (
   PRIMARY KEY (`work_time_id`),
   KEY `service_id` (`service_id`),
   CONSTRAINT `work_time_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of work_time
@@ -1357,3 +1709,38 @@ INSERT INTO `work_time` VALUES ('123', '1', '1501327146721', '1501327199029');
 INSERT INTO `work_time` VALUES ('124', '1', '1501327199313', '1501327303359');
 INSERT INTO `work_time` VALUES ('125', '1', '1501327303662', '1501327324820');
 INSERT INTO `work_time` VALUES ('126', '1', '1501327325184', '1501327551966');
+INSERT INTO `work_time` VALUES ('127', '1', '1501675953917', '1501677633705');
+INSERT INTO `work_time` VALUES ('128', '1', '1501677643054', '1501677741657');
+INSERT INTO `work_time` VALUES ('129', '1', '1501678616527', '1501679748479');
+INSERT INTO `work_time` VALUES ('130', '1', '1501679838950', '1501679993751');
+INSERT INTO `work_time` VALUES ('131', '1', '1501679994396', '1501680758116');
+INSERT INTO `work_time` VALUES ('132', '1', '1501680872044', '1501680931912');
+INSERT INTO `work_time` VALUES ('133', '1', '1501680932212', '1501681017099');
+INSERT INTO `work_time` VALUES ('134', '1', '1501681021342', '1501681051454');
+INSERT INTO `work_time` VALUES ('135', '1', '1501681056227', '1501681093244');
+INSERT INTO `work_time` VALUES ('136', '1', '1501681332125', '1501681416214');
+INSERT INTO `work_time` VALUES ('137', '1', '1501681416888', '1501681442657');
+INSERT INTO `work_time` VALUES ('138', '1', '1501681446230', '1501681518379');
+INSERT INTO `work_time` VALUES ('139', '1', '1501681678347', '1501682116473');
+INSERT INTO `work_time` VALUES ('140', '1', '1501682179452', '1501682185807');
+INSERT INTO `work_time` VALUES ('141', '1', '1501682427392', '1501682936681');
+INSERT INTO `work_time` VALUES ('142', '1', '1501683000794', '1501683002438');
+INSERT INTO `work_time` VALUES ('143', '1', '1501683002693', '1501683002759');
+INSERT INTO `work_time` VALUES ('144', '1', '1501683203955', '1501683295546');
+INSERT INTO `work_time` VALUES ('145', '1', '1501683322081', '1501683324144');
+INSERT INTO `work_time` VALUES ('146', '1', '1501683324434', '1501683635793');
+INSERT INTO `work_time` VALUES ('147', '1', '1501683637728', '1501684302955');
+INSERT INTO `work_time` VALUES ('148', '1', '1501723748317', '1501723908704');
+INSERT INTO `work_time` VALUES ('149', '1', '1501724665801', '1501725041979');
+INSERT INTO `work_time` VALUES ('150', '1', '1501725063830', '1501725169284');
+INSERT INTO `work_time` VALUES ('151', '1', '1501725170878', '1501726750863');
+INSERT INTO `work_time` VALUES ('152', '1', '1501726860922', '1501726925954');
+INSERT INTO `work_time` VALUES ('153', '1', '1501726986969', '1501727056308');
+INSERT INTO `work_time` VALUES ('154', '1', '1501727080101', '1501727081072');
+INSERT INTO `work_time` VALUES ('155', '1', '1501727081678', '1501727106162');
+INSERT INTO `work_time` VALUES ('156', '1', '1501728442857', '1501728922369');
+INSERT INTO `work_time` VALUES ('157', '1', '1501728924291', '1501729574159');
+INSERT INTO `work_time` VALUES ('158', '1', '1501729612015', '1501733168399');
+INSERT INTO `work_time` VALUES ('159', '1', '1501733306045', '1501735057658');
+INSERT INTO `work_time` VALUES ('160', '1', '1501742635942', '1501744233586');
+INSERT INTO `work_time` VALUES ('161', '1', '1501744252859', '1501755003497');

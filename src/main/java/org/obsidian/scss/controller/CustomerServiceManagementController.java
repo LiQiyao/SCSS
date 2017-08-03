@@ -180,6 +180,7 @@ public class CustomerServiceManagementController {
         Show show = new Show();
         Gson gson = new Gson();
         List<CustomerService> customerServices = gson.fromJson(personList,new TypeToken<List<CustomerService>>(){}.getType());
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxx");
         int res = 0 ;
         for (int i=0 ; i < customerServices.size(); i++){
             int re= customerServiceService.updateCustomerService(customerServices.get(i).getServiceId(),customerServices.get(i).getName(),customerServices.get(i).getGroupId(),customerServices.get(i).getNickname(),

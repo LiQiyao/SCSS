@@ -57,9 +57,9 @@ public class CommonLanguageController {
     
     @RequestMapping("addCommonLanguage")
     @ResponseBody
-    public Show addCommonLanguage(@RequestParam("content")String content,@RequestParam("uid") int uid){
+    public Show addCommonLanguage(@RequestParam("content")String content){
         Show show = new Show();
-        int res = commonLanguageService.insertServiceLanguage(uid,content);
+        int res = commonLanguageService.insertCommonLanguage(content);
         if (res == 0){
             show.setStatus(0);
             show.setMessage("插入失败");

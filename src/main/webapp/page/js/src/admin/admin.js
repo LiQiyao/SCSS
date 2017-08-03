@@ -598,6 +598,7 @@ function addCustomerServiceTr([searType, parameter])
                             <td>${tmp.password}</td>
                             <td>${tmp.autoMessage}</td>
                             <td>
+                                <button type="button" class="layui-btn layui-btn-small layui-btn-primary editCustomerService" name="">编辑</button>
                                 <button type="button" class="layui-btn layui-btn-small layui-btn-normal customerServiceChatLog" name="" serviceId="${tmp.serviceId}" serviceName="${tmp.name}" id="">聊天记录</button>
                             </td>
                         </tr>`)
@@ -844,90 +845,95 @@ $(document).on("click", "#searchCustomerServiceBtn", function()
     }
 )
 
-// $(document).on("click", ".editCustomerService", function()
-//     {
-//         var parentTr = $($(this).parents("tr").get(0));
-//         var serviceIdOld = $(this).attr("serviceId");
-//         var groupNameOld = $(parentTr.children().get(1)).text();
-//         var nameOld = $(parentTr.children().get(2)).text();
-//         var nicknameOld = $(parentTr.children().get(3)).text();
-//         var employeeIdOld = $(parentTr.children().get(4)).text();
-//         var autoMessageOld = $(parentTr.children().get(5)).text();
-//
-//         layui.use(['layer', 'form'], function()
-//             {
-//                 var layer = layui.layer;
-//                 var form = layui.form();
-//
-//                 layer.open(
-//                     {
-//                         title: "编辑人员",
-//                         content: $("#addCustomerServiceContent").html(),
-//                         area: ['800px', '600px'],
-//                         btn1: function(index)
-//                         {
-//                             var addCustomerServiceForm = $("#addCustomerServiceForm").get(0);
-//                             var name = addCustomerServiceForm.name.value;
-//                             var nickname = addCustomerServiceForm.nickname.value;
-//                             var employeeId = addCustomerServiceForm.employeeId.value;
-//                             var autoMessage = addCustomerServiceForm.autoMessage.value;
-//                             var personList = [];
-//                             personList.push(
-//                                 {
-//                                     "serviceId": serviceIdOld,
-//                                     "name": name,
-//                                     "groupId": groupId,
-//                                     "nickname": nickname,
-//                                     "employeeId": employeeId,
-//                                     "autoMessage": autoMessage
-//                                 }
-//                             )
-//
-//                             $.ajax(
-//                                 {
-//                                     url: ip + "addServerPerson" + ends,
-//                                     dataType: 'json',
-//                                     data: "personList=" + personList,
-//                                     type: 'post',
-//                                     success: function(data)
-//                                     {
-//                                         layer.msg(data.message);
-//                                     }
-//                                 }
-//                             )
-//
-//                             layer.close(index);
-//                             addCustomerServiceTr(['allCustom']);
-//                         }
-//                     }
-//                 )
-//
-//                 var formOld = $("#addCustomerServiceForm").get(0);
-//                 formOld.name.value = nameOld;
-//                 formOld.nickname.value = nicknameOld;
-//                 formOld.employeeId.value = employeeIdOld;
-//                 formOld.autoMessage.value = autoMessageOld;
-//
-//                 for(let i = 0; i < customerServiceGroup.length; i++)
-//                 {
-//                     if(customerServiceGroup[i] != undefined)
-//                     {
-//                         $("#chooseCustomerServiceGroup").append("<option value=" + i + ">" + customerServiceGroup[i] + "</option>");
-//                     }
-//                 }
-//                 $("#chooseCustomerServiceGroup option:contains(" + groupNameOld + ")").attr("selected", true);
-//
-//                 form.render();
-//
-//                 form.on('select(chooseCustomerServiceGroup)', function(data)
-//                     {
-//                         groupId = data.value;
-//                     }
-//                 );
-//             }
-//         );
-//     }
-// )
+$(document).on("click", ".editCustomerService", function()
+    {
+        var parentTr = $($(this).parents("tr").get(0));
+        var serviceIdOld = $(this).attr("serviceId");
+        var groupNameOld = $(parentTr.children().get(1)).text();
+        var nameOld = $(parentTr.children().get(2)).text();
+        var nicknameOld = $(parentTr.children().get(3)).text();
+        var employeeIdOld = $(parentTr.children().get(4)).text();
+        var autoMessageOld = $(parentTr.children().get(6)).text();
+        var groupId;
+
+        layui.use(['layer', 'form'], function()
+            {
+                var layer = layui.layer;
+                var form = layui.form();
+
+                layer.open(
+                    {
+                        title: "编辑人员",
+                        content: $("#addCustomerServiceContent").html(),
+                        area: ['800px', '600px'],
+                        btn1: function(index)
+                        {
+                            var addCustomerServiceForm = $("#addCustomerServiceForm").get(0);
+                            var name = addCustomerServiceForm.name.value;
+                            var nickname = addCustomerServiceForm.nickname.value;
+                            var employeeId = addCustomerServiceForm.employeeId.value;
+                            var autoMessage = addCustomerServiceForm.autoMessage.value;
+                            var personList = [];
+                            personList.push(
+                                {
+                                    "serviceId": serviceIdOld,
+                                    "name": name,
+                                    "groupId": groupId,
+                                    "nickname": nickname,
+                                    "employeeId": employeeId,
+                                    "autoMessage": autoMessage,
+                                    "isDimission": 0,
+                                    "password": null,
+                                }
+                            );
+
+
+                            $.ajax(
+                                {
+                                    url: ip + "updateService" + ends,
+                                    dataType: 'json',
+                                    data: "personList=" + personList,
+                                    type: 'get',
+                                    success: function(data)
+                                    {
+                                        layer.msg(data.message);
+                                        flash();
+                                    }
+                                }
+                            )
+
+                            layer.close(index);
+                            addCustomerServiceTr(['allCustom']);
+                        }
+                    }
+                )
+
+                var formOld = $("#addCustomerServiceForm").get(0);
+                formOld.name.value = nameOld;
+                formOld.nickname.value = nicknameOld;
+                formOld.employeeId.value = employeeIdOld;
+                formOld.autoMessage.value = autoMessageOld;
+
+                for(let i = 0; i < customerServiceGroup.length; i++)
+                {
+                    if(customerServiceGroup[i] != undefined)
+                    {
+                        $("#chooseCustomerServiceGroup").append("<option value=" + i + ">" + customerServiceGroup[i] + "</option>");
+                    }
+                }
+                $("#chooseCustomerServiceGroup option:contains(" + groupNameOld + ")").attr("selected", true);
+
+                form.render();
+
+                form.on('select(chooseCustomerServiceGroup)', function(data)
+                    {
+                        groupId = data.value;
+                    }
+                );
+            }
+        );
+    }
+)
 
 $(document).on("click", ".customerServiceChatLog", function()
     {
@@ -969,6 +975,10 @@ $(document).on("click", ".customerServiceChatLog", function()
                                 for(let i = 0; i < data.length; i++)
                                 {
                                     var tmp = data[i];
+                                    if(tmp.name == null)
+                                    {
+                                        tmp.name = "匿名用户";
+                                    }
                                     $clientList.append(`
                                         <div class="chat-list-item" serviceId="${serviceId}" clientId="${tmp.clientId}">
                                             <img class="chat-list-item-img" src="img/tx.png" alt="">
@@ -995,7 +1005,7 @@ $(document).on("click", ".chat-list-item", function()
         $.ajax(
             {
                 url: ip + "clientAndServerChatLog" + ends,
-                type: 'post',
+                type: 'get',
                 data: "serviceId=" + serviceId + "&clientId=" + clientId,
                 dataType: 'json',
                 success: function(data)
@@ -1004,7 +1014,7 @@ $(document).on("click", ".chat-list-item", function()
                     {
                         data = data.data;
                         var $customerServiceChatLog = $("#customerServiceChatLog");
-                        $customerServiceChatLog.html(" ");
+                        $customerServiceChatLog.html("");
                         for(let i = 0; i < data.length; i++)
                         {
                             var tmp = data[i];
@@ -1572,7 +1582,6 @@ function addKeyWordDiv(value, flag)
 
 function appendKeyWord()
 {
-    console.log(newKeyWords);
     var tagsDiv = "";
     for(let i = 0; i < newKeyWords.length; i++)
     {
@@ -1587,12 +1596,14 @@ $(document).on("click", ".editKnowledge", function()
         var quesOld = parentDiv.find("div[ques]").attr("ques");
         var ansOld = parentDiv.find("div[ans]").attr("ans");
         var levelOld = parentDiv.find("div[level]").attr("level");
+        var knowledgeId = $(this).attr("knowledgeId");
         newKeyWords = [];
         parentDiv.find(".tag").each(function()
             {
                 newKeyWords.push($(this).text().trim());
             }
-        )
+        );
+        console.log(newKeyWords);
 
         layui.use(['layer', 'form'], function()
             {
@@ -1612,18 +1623,18 @@ $(document).on("click", ".editKnowledge", function()
 
                             $.ajax(
                                 {
-                                    url: ip + "addKnowledge" + ends,
-                                    type: 'post',
-                                    data: "question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + level,
+                                    url: ip + "updateKnowledge" + ends,
+                                    type: 'get',
+                                    data: "knowledgeId="+ knowledgeId + "&question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + levelOld,
                                     dataType: 'json',
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
 
-                            addKnowledgeBaseDiv(['knowledgeSearch', 'keyword=""']);
                             newKeyWords = [];
                         },
                         cancle: function()
@@ -1645,7 +1656,7 @@ $(document).on("click", ".editKnowledge", function()
                 form.on('radio(level)', function(data)
                     {
                         console.log(data.value); //被点击的radio的value值
-                        level = data.value;
+                        levelOld = data.value;
                     }
                 )
             }
@@ -1976,13 +1987,14 @@ $(document).on("click", "#deleteCommonLanguageBtn", function()
                     {
                         $.ajax(
                             {
-                                type: 'post',
+                                type: 'get',
                                 url: ip + "deleteCommonLanguage" + ends,
                                 dataType: 'json',
                                 data: "deleteId=" + commonLanguageDetele,
                                 success: function(data)
                                 {
                                     layer.msg(data.message);
+                                    flash();
                                 }
                             }
                         )
@@ -2015,12 +2027,12 @@ $(document).on("click", "#addCommonLanguageBtn", function()
                         btn1: function()
                         {
                             var addCommonLanguageForm = $("#addCommonLanguageForm").get(0);
-                            var content = addCommonLanguageForm.content;
+                            var content = addCommonLanguageForm.content.value;
 
                             $.ajax(
                                 {
                                     url: ip + "addCommonLanguage" + ends,
-                                    type: 'post',
+                                    type: 'get',
                                     data: "content=" + content,
                                     dataType: 'json',
                                     success: function(data)
@@ -2098,12 +2110,12 @@ function addClientTr(parameter)
                             tmp = tmp.client;
 
                         $("#client").append(`<tr>
-                                <td>${tmp.name}</td>
-                                <td>${tmp.sex}</td>
-                                <td>${tmp.address}</td>
+                                <td>${tmp.name?tmp.name:"未知"}</td>
+                                <td>${tmp.sex?tmp.sex:"未知"}</td>
+                                <td>${tmp.address?tmp.address:"未知"}</td>
                                 <td>${flagsTmp.join("、")}</td>
-                                <td>${tmp.telephone}</td>
-                                <td>${tmp.email}</td>
+                                <td>${tmp.telephone?tmp.telephone:"未知"}</td>
+                                <td>${tmp.email?tmp.email:"未知"}</td>
                                 <td>
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientId="${tmp.clientId}" clientName="${tmp.name}" name="" id="">聊天记录</button>
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientId="${tmp.clientId}" name="" id="">详细信息</button>
@@ -2410,7 +2422,7 @@ $(document).on("click", "#deleteAdvertisementBtn", function()
                         )
 
                         advertisementDetele = [];
-                        addAdvertisement(['advertisement']);
+                        flash();
                     },
                     function()
                     {
@@ -2761,12 +2773,12 @@ $(document).on("click", "#addCustomerServiceGroupBtn", function()
 
                             $.ajax(
                                 {
-                                    url: ip + "addGroups" + ends,
+                                    url: ip + "addGroup" + ends,
                                     type: 'get',
                                     data:
                                         {
-                                            'name': groupName,
-                                            'word': newKeyWords
+                                            'groupName': groupName,
+                                            'groupTag': newKeyWords.join(" "),
                                         },
                                     dataType: 'json',
                                     success: function (data) {
@@ -2817,3 +2829,41 @@ $(document).on("click", ".editCustomerServiceDivisionalStructureBtn", function()
         )
     }
 )
+
+$(document).on("click", ".deleteCustomerServiceDivisionalStructureBtn", function ()
+    {
+        var groupId = $(this).attr("groupId");
+        layui.use(['layer'], function()
+            {
+                var layer = layui.layer;
+
+                layer.confirm('确认删除？',
+                    {
+                        icon: 0
+                    },
+                    function()
+                    {
+                        $.ajax(
+                            {
+                                type: 'get',
+                                url: ip + "deleteGroupById" + ends,
+                                dataType: 'json',
+                                data: "groupId=" + groupId,
+                                success: function(data)
+                                {
+                                    layer.msg(data.message);
+                                    flash();
+                                }
+                            }
+                        )
+
+                        advertisementDetele = [];
+                    },
+                    function()
+                    {
+                        // layer.msg("no");
+                    }
+                )
+            }
+        )
+})
