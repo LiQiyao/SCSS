@@ -127,12 +127,12 @@ public class KeyWordAndKnowledgeManagementController {
     
     @RequestMapping("deleteKnowledge")
     @ResponseBody
-    public Show deleteKnowledge(@RequestParam("groupId") int id){
+    public Show deleteKnowledge(@RequestParam("knowledgeId") int id){
         Show show = new Show();
         int res = knowledgeService.removeKnowledge(id);
         if (res == 0){
             show.setStatus(0);
-            show.setMessage("操作失败");
+            show.setMessage("操作成功");
         }
         return show;
     }

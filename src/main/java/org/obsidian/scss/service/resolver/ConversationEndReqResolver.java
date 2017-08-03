@@ -51,6 +51,7 @@ public class ConversationEndReqResolver implements ContentResolver {
         for (WebSocket ws : ClientWS.wsVector){
             if (ws.getClientId() == clientId){
                 try {
+                    System.out.println("clientId:" +clientId);
                     ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ScoreReq>(scoreReq)));
                 } catch (IOException e) {
                     e.printStackTrace();

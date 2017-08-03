@@ -94,9 +94,7 @@ public class ClientChatResolver implements ContentResolver {
             if (webSocket.getServiceId() == 0){
                 System.out.println("3.6!!");
                 //如果该消息是发送给机器人的
-                if (clientChat.getContent() != null && clientChat.getContent().contains("转接到人工客服")){
-                    this.transfer(webSocket, clientChat);
-                }
+
                 //机器人直接给客户打标签
                 System.out.println("3.7!!");
                 this.takeFlags(webSocket,clientChat.getContent());
@@ -110,6 +108,9 @@ public class ClientChatResolver implements ContentResolver {
                     session.getBasicRemote().sendText(gson.toJson(res));
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                if (clientChat.getContent() != null && clientChat.getContent().contains("转接到人工客服")){
+                    this.transfer(webSocket, clientChat);
                 }
             } else {
                 //如果该消息是发送给客服人员的
