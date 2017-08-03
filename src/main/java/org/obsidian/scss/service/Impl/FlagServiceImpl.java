@@ -139,17 +139,24 @@ public class FlagServiceImpl implements FlagService {
     }
 
     @Transactional
-    public List<String> recommendFlags(int clientId, String content) {
+    public List<String> recommendFlags(Integer clientId, String content) {
         List<Flag> found = this.getFlagByContent(content);
-        List<Flag> hasList = this.selectAllFlag(clientId);
+        List<Flag> hasList = new ArrayList<Flag>();
         Set<String> hasSet = new HashSet<String>();
-        for(int i=0;i<hasList.size();i++){
-            hasSet.add(hasList.get(i).getName());
-        }
         List<String> recommendFlags = new ArrayList<String>();
-        for(int i=0;i<found.size();i++){
-            if(!hasSet.contains(found.get(i).getName())){
-                recommendFlags.add(found.get(i).getName());
+        if(clientId != null){
+            hasList = this.selectAllFlag(clientId.intValue());
+        }
+        if(hasList != null && hasList.size() > 0){
+            for(int i=0;i<hasList.size();i++){
+                hasSet.add(hasList.get(i).getName());
+            }
+        }
+        if(found != null && found.size() > 0){
+            for(int i=0;i<found.size();i++){
+                if(!hasSet.contains(found.get(i).getName())){
+                    recommendFlags.add(found.get(i).getName());
+                }
             }
         }
         return recommendFlags;

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Administrator on 2017/7/11.
  */
 public interface FlagService {
-    List<String> recommendFlags(int clientId,String content);
+    List<String> recommendFlags(Integer clientId,String content);
 
     List<Flag> getFlagByContent(String content);
 
