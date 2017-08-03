@@ -1,5 +1,6 @@
 package org.obsidian.scss.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -34,28 +35,28 @@ public class ServerGroupController {
      * @param 
      * @return
      */
-    @RequestMapping("addGroups")
+    @RequestMapping("addGroup")
     @ResponseBody
-    public Show addGroup(@RequestParam("groups") String getJson){
-        Gson gson = new Gson();
-        List<NameList> groups = gson.fromJson(getJson,new TypeToken<List<NameList>>(){}.getType());
-        int res = 0 ;
-        for (int i=0 ; i < groups.size(); i++){
-            int re = 0;
-            if(serviceGroupService.selectGroupByName(groups.get(i).getName()) == null)
-            {
-                re = serviceGroupService.insertGroup(groups.get(i).getName());
-            }
-            if (re ==1){
-                res++;
-            }
+    public Show addGroup(@RequestParam("groupName") String groupName,@RequestParam("groupTag") String groupTag){
+        int re = 0;
+        if(serviceGroupService.selectGroupByName(groupName) == null) {
+            re = serviceGroupService.insertGroup(groupName);
         }
+        
         Show show = new Show();
-        if (res == groups.size()){
+        if (re != 0){
+            String [] arr = groupTag.split("\\s+");
+            GroupWord groupWord = new GroupWord();
+            groupWord.setGroupId(serviceGroupService.selectGroupByName(groupName).getGroupId());
+            for(String ss : arr){
+                groupWord.setWord(ss);
+                groupWordService.selectTagIsExit(groupWord.getGroupId(),groupWord.getWord());
+                groupWordService.insertGroupWord(groupWord);
+            }
             show.setStatus(1);
         }else{
             show.setStatus(0);
-            show.setMessage("请求插入"+groups.size()+"条,"+"成功插入"+ res +"条。");
+            show.setMessage("插入失败");
         }
         return show;
     }

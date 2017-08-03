@@ -21,4 +21,5 @@ public interface GroupWordService {
     int insertGroupWord(GroupWord groupWord);
     int deleteGroupWord(GroupWord groupWord);
     List<GroupWord> selectGroupTag(int id);
+    int selectTagIsExit(int groupId,String content);
 }

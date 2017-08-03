@@ -28,6 +28,7 @@ public class CommonLanguageController {
     public Show commonLanguage (){
         List<CommonLanguage> list = commonLanguageService.selectAllCommonLanguage();
         Show show = new Show();
+        show.setData(list);
         return show;
     }
     

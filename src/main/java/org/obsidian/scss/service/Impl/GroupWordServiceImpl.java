@@ -94,4 +94,18 @@ public class GroupWordServiceImpl implements GroupWordService {
         criteria.andGroupIdEqualTo(id);
         return groupWordMapper.selectByExample(example);
     }
+
+    public int selectTagIsExit(int groupId,String content) {
+        GroupWordExample example = new GroupWordExample();
+        GroupWordExample.Criteria criteria = example.createCriteria();
+        criteria.andGroupIdEqualTo(groupId);
+        criteria.andWordEqualTo(content);
+        List<GroupWord> list = groupWordMapper.selectByExample(example);
+        if (list !=null && list.size() != 0 ){
+            return 1;
+        }else{
+            return 0;
+        }
+       
+    }
 }
