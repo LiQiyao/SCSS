@@ -49,3 +49,7 @@ MControl.addHandle('RobotChat',function(chat){
 
     FLAG_UPDATE_CHAT =true;
 });
+
+MControl.addHandle('ScoreReq',function(data){
+    openScore();
+});
