@@ -186,8 +186,12 @@
   </select>
   
   <select id="selectTimeAndRank" resultType="org.obsidian.scss.entity.TimeAndRank">
-
-    SELECT
+SELECT
+	service_id,
+	tottime,
+	timerank
+FROM
+    (SELECT
     service_id,tottime,
     CASE
     WHEN @rowtotal = obj.tottime THEN
@@ -207,6 +211,6 @@
     a.service_id = b.service_id AND b.end_time <![CDATA[  !=  ]]>"" AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.end_time  <![CDATA[  <=  ]]> #{endTime}
     GROUP BY
     a.service_id
-    ORDER BY tottime desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+    ORDER BY tottime desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r)) as cc WHERE  service_id = #{serviceId}
   </select>
 </mapper>

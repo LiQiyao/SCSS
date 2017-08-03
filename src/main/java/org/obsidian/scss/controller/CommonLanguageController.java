@@ -24,10 +24,11 @@ public class CommonLanguageController {
     CommonLanguageService commonLanguageService;
     
     @RequestMapping("commonLanguage")
-    public String commonLanguage (Model model){
+    @ResponseBody
+    public Show commonLanguage (){
         List<CommonLanguage> list = commonLanguageService.selectAllCommonLanguage();
-        model.addAttribute("commonLanguageList",list);
-        return "commonLanguage";
+        Show show = new Show();
+        return show;
     }
     
     

@@ -215,4 +215,7 @@
   <update id="updateDimission" parameterType="Integer">
     UPDATE customer_service SET is_dimission = 1 WHERE service_id = #{service_id};
   </update>
+  <select id="selectAllCustom" resultType="org.obsidian.scss.entity.CustomerService">
+    SELECT * FROM customer_service;
+  </select>
 </mapper>

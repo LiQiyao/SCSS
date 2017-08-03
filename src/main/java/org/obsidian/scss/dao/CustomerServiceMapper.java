@@ -40,4 +40,6 @@ public interface CustomerServiceMapper {
     CustomerService verify(@Param("employeeId") String employeeId,@Param("password") String password);
 
     CustomerService selectByEIdAndPwd(@Param("employeeId") String employeeId,@Param("password") String password);
+    
+    List<CustomerService> selectAllCustom();
 }

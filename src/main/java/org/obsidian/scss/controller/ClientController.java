@@ -26,7 +26,9 @@ public class ClientController {
     ClientService clientService;
     
     @RequestMapping("client")
-    public String client(Model model){
+    @ResponseBody
+    public Show client(){
+        Show show = new Show();
         List<ClientAndFlag> clientAndFlags = new ArrayList<ClientAndFlag>();
         List<Client> clients = clientService.selectAllClient();
         for (int i = 0 ; i <clients.size();i++){
@@ -36,8 +38,8 @@ public class ClientController {
                 clientAndFlag.setFlags(clientService.selectAllFlag(clients.get(i).getClientId()));
             clientAndFlags.add(clientAndFlag);
         }
-        model.addAttribute("clientFlags",clientAndFlags);
-        return "client"; 
+        show.setData(clientAndFlags);
+        return show; 
     }
     
     @RequestMapping("clientSearchByName")
@@ -52,7 +54,7 @@ public class ClientController {
             List<Flag> flags = clientService.selectAllFlag(clients.get(i).getClientId());
             if (flags != null){
                 for (int j = 0;j<flags.size();j++){
-                    if (flags.get(i).getName().contains(name)){
+                    if (flags.get(j).getName().contains(name)){
                         flag = true;
                         break;
                     }

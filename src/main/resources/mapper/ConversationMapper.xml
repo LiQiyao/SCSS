@@ -382,7 +382,12 @@
     SELECT score,count(conversation_id) as countNum FROM conversation WHERE start_time <![CDATA[  >=  ]]> #{startTime} AND stop_time <![CDATA[   <=  ]]> #{stopTime} GROUP BY score
   </select>
   <select id="selectScoreRank" resultType="org.obsidian.scss.entity.ScoreAndRank">
-    SELECT
+SELECT
+	service_id,
+	grades,
+	gradesrank
+FROM
+   (SELECT
     service_id,grades,
     CASE
     WHEN @rowtotal = obj.grades THEN
@@ -402,11 +407,16 @@
     a.service_id = b.service_id AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.stop_time <![CDATA[  <=  ]]> #{stopTime}
     GROUP BY
     a.service_id
-    ORDER BY grades desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+    ORDER BY grades desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r)) as cc WHERE  service_id = #{serviceId}
   </select>
   
   <select id="selectConNumAndRank" resultType="org.obsidian.scss.entity.ConNumAndRank">
-    SELECT
+SELECT
+	service_id,
+	num,
+	numrank
+FROM
+    (SELECT
     service_id,num,
     CASE
     WHEN @rowtotal = obj.num THEN
@@ -426,7 +436,7 @@
      a.service_id = b.service_id AND b.start_time <![CDATA[  >=  ]]> #{startTime} AND b.stop_time <![CDATA[  <=  ]]> #{stopTime}
     GROUP BY
     a.service_id
-    ORDER BY num desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r) WHERE  service_id = #{serviceId}
+    ORDER BY num desc) as obj,(SELECT @rownum := 0 ,@rowtotal := NULL) r)) as cc WHERE  service_id = #{serviceId}
   </select>
   <select id="selectClientChatList" resultType="org.obsidian.scss.entity.Client">
     SELECT

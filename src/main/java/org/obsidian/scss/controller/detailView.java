@@ -61,9 +61,9 @@ public class detailView {
         List<CustomerService> customerServices = customerServiceService.selectAllCustomerService();
         for (int i = 0 ; i < customerServices.size();i++){
             ServiceAndRankInfo serviceAndRankInfo = new ServiceAndRankInfo();
-            List<ScoreAndRank>scoreAndRanks = conversationService.selectScoreAndRank(startTime,stopTime,1);
-            List<ConNumAndRank> conNumAndRanks = conversationService.selectConNumAndRank(startTime,stopTime,1);
-            List<TimeAndRank> timeAndRanks = workTimeService.selectTimeAndRank(startTime,stopTime,1);
+            List<ScoreAndRank>scoreAndRanks = conversationService.selectScoreAndRank(startTime,stopTime,customerServices.get(i).getServiceId());
+            List<ConNumAndRank> conNumAndRanks = conversationService.selectConNumAndRank(startTime,stopTime,customerServices.get(i).getServiceId());
+            List<TimeAndRank> timeAndRanks = workTimeService.selectTimeAndRank(startTime,stopTime,customerServices.get(i).getServiceId());
             serviceAndRankInfo.setScoreAndRanks(scoreAndRanks);
             serviceAndRankInfo.setConNumAndRanks(conNumAndRanks);
             serviceAndRankInfo.setTimeAndRanks(timeAndRanks);

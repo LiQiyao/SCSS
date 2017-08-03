@@ -88,8 +88,7 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
     @Transactional
     public List<CustomerService> selectAllCustomerService(){
         List<CustomerService> list;
-        CustomerServiceExample example = new CustomerServiceExample();
-        list = customerServiceMapper.selectByExample(example);
+        list = customerServiceMapper.selectAllCustom();
         if(list.size() == 0 || list == null){
             return null;
         }
