@@ -1363,7 +1363,7 @@ function addPersonalPerformanceTr(startTime, endsTime)
                 data:
                 {
                     'startTime': startTime,
-                    'stoptime': endsTime
+                    'stopTime': new Date(+endsTime + 24 * 60 * 60 * 1000).getTime()
                 },
                 dataType: 'json',
                 success: function(data)
@@ -1372,18 +1372,45 @@ function addPersonalPerformanceTr(startTime, endsTime)
                     {
                         data = data.data;
                         var $personalPerformance = $("#personalPerformance");
-                        // $personalPerformance.html(" ");
+                        $personalPerformance.html("");
                         for(let i = 0; i < data.length; i++)
                         {
                             var tmp = data[i];
-                            var time = new Date(tmp.timeAndRanks[0].tottime);
+                            var conNumAndRanks = tmp.conNumAndRanks[0];
+                            if(conNumAndRanks == null)
+                            {
+                                conNumAndRanks = {};
+                                conNumAndRanks.num = "暂无";
+                                conNumAndRanks.numrank = "暂无";
+                            }
+                            var scoreAndRanks = tmp.scoreAndRanks[0];
+                            if(scoreAndRanks == null)
+                            {
+                                scoreAndRanks = {};
+                                scoreAndRanks.grades = "暂无";
+                                scoreAndRanks.gradesrank = "暂无";
+                            }
+                            var timeAndRanks = tmp.timeAndRanks[0];
+                            if(timeAndRanks == null)
+                            {
+                                timeAndRanks = {};
+                                timeAndRanks.timerank = "暂无";
+                                var tmpTime = new Date();
+                                tmpTime.setHours(0);
+                                tmpTime.setMinutes(0);
+                                tmpTime.setSeconds(0);
+                                tmpTime.setMilliseconds(0);
+                                timeAndRanks.tottime = tmpTime.getTime();
+                            }
+
+                            var time = new Date(timeAndRanks.tottime);
                             $personalPerformance.append(`
                                 <tr>
                                     <td>${tmp.customerService.name}</td>
                                     <td>${tmp.serviceGroup.name}</td>
-                                    <td>50&nbsp;&nbsp;/&nbsp;&nbsp;5</td>
-                                    <td>${[jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(":")}&nbsp;&nbsp;/&nbsp;&nbsp;${tmp.timeAndRanks[0].timerank}</td>
-                                    <td>4.8&nbsp;&nbsp;/&nbsp;&nbsp;1</td>
+                                    <td>${conNumAndRanks.num}&nbsp;&nbsp;/&nbsp;&nbsp;${conNumAndRanks.numrank}</td>
+                                    <td>${[jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(":")}&nbsp;&nbsp;/&nbsp;&nbsp;${timeAndRanks.timerank}</td>
+                                    <td>${scoreAndRanks.grades}&nbsp;&nbsp;/&nbsp;&nbsp;${scoreAndRanks.gradesrank}</td>
                                 </tr>`);
                         }
                     }
@@ -1845,94 +1872,94 @@ var commonLanguage =
 
 function addCommonLanguageTr()
 {
-    // $.ajax(
-    //     {
-    //         // url: ip + searType + ends,
-    //         url: ip + "allCommonLanguage" + ends,
-    //         dataType: 'json',
-    //         // data: parameter,
-    //         type: "get",
-    //         success: function(data)
-    //         {
-    //             if(data && data.status >= 1)
-    //             {
-    //                 // $("#commonLanguage").html(" ");
-    //                 data = data.data;
-    //                 for(let i = 0; i < data.length; i++)
-    //                 {
-    //                     let tmp = data[i];
-    //                     $("#commonLanguage").append(`<tr>
-    //                         <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonLanguageId="${tmp.commonLanguageId}"></td>
-    //                         <td>${tmp.content}</td>
-    //                         <td>${tmp.frequency}</td>
-    //                     </tr>`);
-    //                 }
-    //             }
-    //
-    //
-    //         }
-    //     }
-    // )
-
-    layui.use('form', function()
+    $.ajax(
         {
-            var form = layui.form();
-
-            //全选
-            form.on('checkbox(allChooseCommonLanguage)', function(data)
+            // url: ip + searType + ends,
+            url: ip + "commonLanguage" + ends,
+            dataType: 'json',
+            // data: parameter,
+            type: "get",
+            success: function(data)
+            {
+                if(data && data.status >= 1)
                 {
-                    commonLanguageDetele = [];
-                    var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-                    child.each(function(index, item)
-                        {
-                            item.checked = data.elem.checked;
-                            if(data.elem.checked)
+                    $("#commonLanguage").html("");
+                    data = data.data;
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        let tmp = data[i];
+                        $("#commonLanguage").append(`<tr>
+                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonLanguageId="${tmp.commonLanguageId}"></td>
+                            <td>${tmp.content}</td>
+                            <td>${tmp.frequency}</td>
+                        </tr>`);
+                    }
+                }
+
+                layui.use('form', function()
+                    {
+                        var form = layui.form();
+
+                        //全选
+                        form.on('checkbox(allChooseCommonLanguage)', function(data)
                             {
-                                if(index != 0)
+                                commonLanguageDetele = [];
+                                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                                child.each(function(index, item)
+                                    {
+                                        item.checked = data.elem.checked;
+                                        if(data.elem.checked)
+                                        {
+                                            if(index != 0)
+                                            {
+                                                commonLanguageDetele.push(
+                                                    {
+                                                        "id": $(item).attr("commonLanguageId"),
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                );
+                                form.render('checkbox');
+                            }
+                        );
+
+                        form.on('checkbox(commonLanguage)', function(data)
+                            {
+                                var commonLanguageId = $(data.elem).attr("commonLanguageId");
+
+                                if(data.elem.checked)
                                 {
                                     commonLanguageDetele.push(
                                         {
-                                            "id": $(item).attr("commonLanguageId"),
+                                            "id": commonLanguageId,
                                         }
                                     )
                                 }
+                                else
+                                {
+                                    for(let  i = 0; i < commonLanguageDetele.length; i++)
+                                    {
+                                        if(commonLanguageDetele[i].id == commonLanguageId)
+                                        {
+                                            commonLanguageDetele.splice(i, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                                form.render('checkbox');
                             }
-                        }
-                    );
-                    form.render('checkbox');
-                }
-            );
+                        );
 
-            form.on('checkbox(commonLanguage)', function(data)
-                {
-                    var commonLanguageId = $(data.elem).attr("commonLanguageId");
-
-                    if(data.elem.checked)
-                    {
-                        commonLanguageDetele.push(
-                            {
-                                "id": commonLanguageId,
-                            }
-                        )
+                        form.render('checkbox');
                     }
-                    else
-                    {
-                        for(let  i = 0; i < commonLanguageDetele.length; i++)
-                        {
-                            if(commonLanguageDetele[i].id == commonLanguageId)
-                            {
-                                commonLanguageDetele.splice(i, 1);
-                                break;
-                            }
-                        }
-                    }
-                    form.render('checkbox');
-                }
-            );
-
-            form.render('checkbox');
+                );
+            }
         }
-    );
+    )
+
+
 }
 
 $(document).on("click", "#deleteCommonLanguageBtn", function()
@@ -1999,6 +2026,7 @@ $(document).on("click", "#addCommonLanguageBtn", function()
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
@@ -2057,17 +2085,23 @@ function addClientTr(parameter)
                 if(data && data.status >= 1)
                 {
                     data = data.data;
-                    $("#client").html(" ");
+                    $("#client").html("");
                     for(let i = 0; i < data.length; i++)
                     {
                         var tmp = data[i];
-                        if(tmp.flags == 1)
+                        var flags = tmp.flags;
+                        var flagsTmp = [];
+                        for(let j = 0; j < flags.length; j++)
                         {
+                            flagsTmp.push(flags[j].name);
+                        }
                             tmp = tmp.client;
-                            $("#client").append(`<tr>
+
+                        $("#client").append(`<tr>
                                 <td>${tmp.name}</td>
                                 <td>${tmp.sex}</td>
                                 <td>${tmp.address}</td>
+                                <td>${flagsTmp.join("、")}</td>
                                 <td>${tmp.telephone}</td>
                                 <td>${tmp.email}</td>
                                 <td>
@@ -2075,7 +2109,6 @@ function addClientTr(parameter)
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientId="${tmp.clientId}" name="" id="">详细信息</button>
                                 </td>
                             </tr>`);
-                        }
                     }
                 }
             }
@@ -2330,6 +2363,7 @@ $(document).on("click", "#addAdvertisementBtn", function()
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
@@ -2412,8 +2446,55 @@ var notice =
 
     'chart': function()
     {
-
+        addNoticeTr();
     }
+}
+
+function addNoticeTr() {
+    $.ajax(
+        {
+            url: ip + "notification" + ends,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if(data && data.status >= 1)
+                {
+                    data = data.data;
+                    var $notice = $("#notice");
+                    $notice.html("");
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        var tmp = data[i];
+                        var notification = tmp.notification;
+                        var getMessageObject = tmp.getMessageObject;
+                        var getMessageName;
+                        var not = noticeObjTypeArray[notification.notId];
+                        var nt = noticeTypeArray[notification.ntId];
+                        var content = notification.content;
+                        var time = new Date(notification.time);
+
+                        if(typeof getMessageObject == "object")
+                        {
+                            getMessageName = getMessageObject.name;
+                        }
+                        else
+                        {
+                            getMessageName = getMessageObject;
+                        }
+
+                        $notice.append(`
+                            <tr>
+                                <td>${getMessageName}</td>
+                                <td>${not}</td>
+                                <td>${nt}</td>
+                                <td>${[time.getFullYear(), jia0(time.getMonth() + 1), jia0(time.getDate())].join('-') + ' ' + [jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(':')}</td>
+                                <td>${content}</td>
+                            </tr>`)
+                    }
+                }
+            }
+        }
+    )
 }
 
 $(document).on("click", "#addNoticeBtn", function()
@@ -2471,7 +2552,7 @@ $(document).on("click", "#addNoticeBtn", function()
                             $.ajax(
                                 {
                                     url: ip + "addNotification" + ends,
-                                    type: 'post',
+                                    type: 'get',
                                     data:
                                     {
                                         'ntId': 2,
@@ -2510,6 +2591,7 @@ $(document).on("click", "#addNoticeBtn", function()
                         var $chooseObjGroupDiv = $("#chooseObjGroupDiv");
                         if(noticeObjType == 1)
                         {
+                            objId = 1;
                             $chooseObjPersonDiv.hide();
                             $chooseObjGroupDiv.hide();
                         }
@@ -2636,7 +2718,7 @@ function addCustomerServiceDivisionalStructureDiv()
                         {
                             groupWordsTmp.push(groupWords[j].word);
                         }
-                        console.log(groupWordsTmp);
+
                         $("#customerServiceDivisionalStructures").append(`
                             <div class="division">
                                 <div class="tab"></div>
@@ -2645,10 +2727,10 @@ function addCustomerServiceDivisionalStructureDiv()
                                     <i>${groupWordsTmp.join("、")}</i>
                                 </div>
                                 <div class="division-btn">
-                                    <button class="layui-btn editCustomerServiceDivisionalStructure" groupId="${i}">
+                                    <button class="layui-btn editCustomerServiceDivisionalStructureBtn" groupId="${i}">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="layui-btn layui-btn-danger deleteCustomerServiceDivisionalStructure" groupId="${i}">
+                                    <button class="layui-btn layui-btn-danger deleteCustomerServiceDivisionalStructureBtn" groupId="${i}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
@@ -2658,14 +2740,6 @@ function addCustomerServiceDivisionalStructureDiv()
             }
         }
     )
-
-    for(let i = 0; i < customerServiceGroup.length; i++)
-    {
-        if(customerServiceGroup[i] != undefined)
-        {
-
-        }
-    }
 }
 
 $(document).on("click", "#addCustomerServiceGroupBtn", function()
@@ -2681,6 +2755,30 @@ $(document).on("click", "#addCustomerServiceGroupBtn", function()
                         title: '添加组别',
                         content: $("#addCustomerServiceGroupContent").html(),
                         area: ['600px', '400px'],
+                        btn1: function () {
+                            var addCustomerServiceGroupForm = $("#addCustomerServiceGroupForm").get(0);
+                            var groupName = addCustomerServiceGroupForm.groupName.value;
+
+                            $.ajax(
+                                {
+                                    url: ip + "addGroups" + ends,
+                                    type: 'get',
+                                    data:
+                                        {
+                                            'name': groupName,
+                                            'word': newKeyWords
+                                        },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if(data && data.status >= 1)
+                                        {
+                                            layer.msg(data.message);
+                                            flash();
+                                        }
+                                    }
+                                }
+                            )
+                        }
                     }
                 )
 
@@ -2690,7 +2788,7 @@ $(document).on("click", "#addCustomerServiceGroupBtn", function()
     }
 )
 
-$(document).on("click", ".editCustomerServiceGroupBtn", function()
+$(document).on("click", ".editCustomerServiceDivisionalStructureBtn", function()
     {
         var $parentDiv = $(this).parents(".division-btn").prev();
         var groupName = $parentDiv.children("a").text();
