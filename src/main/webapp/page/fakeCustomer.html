@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="js/layui/css/layui.css">
+	<link rel="stylesheet" href="css/layim.css">
+	<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+	<link rel="stylesheet" href="css/clientService.css">
+
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/layui/layui.js"></script>
+	<script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+</head>
+<body>
+<div style="overflow:hidden;">
+<div class="header">
+	<img id="logo" src="img/logo.png">
+	<div class="headBar layui-form">
+		<span>假客户！！！</span>
+		<span>kefu009</span>
+		<input type="checkbox" name="onlineSwitch" lay-skin="switch" lay-text="在线|离线" checked>
+		<a href="#">登出</a>
+	</div>
+</div>
+<div class="leftNavBar">
+	<div id="navtab-chat" class="tab chosed"><i class="layui-icon icon">&#xe63a;</i></div>
+	<div id="navtab-dashboard" class="tab"><i class="layui-icon icon">&#xe628;</i></div>
+	<div id="navtab-knowledge" class="tab"><i class="layui-icon icon">&#xe62a;</i></div>
+	<div id="navtab-client" class="tab"><i class="layui-icon icon">&#xe613;</i></div>
+	<div id="navtab-setting" class="tab"><i class="layui-icon icon">&#xe620;</i></div>
+</div>
+<div id="content">
+	<div class="full" id="chatApp">
+		<div id="chatLeft">
+			<div id="chatLeft-top">
+				<blockquote class="layui-elem-quote" style="font-size: 18px">当前会话</blockquote>
+				<button class="layui-btn layui-btn-small" id="btn-newTalk"><i class="layui-icon">&#xe608;</i>接入新会话</button>
+			</div>
+			<div id="chatLeft-list">
+				<div class="chatLeft-list-item" v-for="conversation in conversationList" @click="chooseConversation(conversation)" :class="{'item-chosed': (currentConversation==conversation) }">
+					<img class="chatLeft-list-item-avatar" :src="conversation.avatar">
+					<div class="chatLeft-list-item-name">{{ conversation.userNickName }}</div>
+					<div class="chatLeft-list-item-time">{{  conversation.msgList.length-1 >=0 ? conversation.msgList[conversation.msgList.length-1].time.Format('hh:mm') :null  }}</div>
+					<div class="chatLeft-list-item-msg">{{ conversation.msgList.length-1 >=0 ? conversation.msgList[conversation.msgList.length-1].content :null }}</div>
+					<div class="chatLeft-list-item-reddot" v-if="conversation.hasNewMsg"></div>
+				</div>
+
+			</div>
+		</div>
+		<div id="chatMain">
+			<div id="chatMain-head">
+				<img class="chatMain-head-avatar" :src="currentConversation.avatar">
+				<span class="chatMain-head-name">{{ currentConversation.userNickName }}</span>
+				<div class="chatMain-head-btnGroup">
+					<button class="layui-btn layui-btn-primary layui-btn-small">转接会话</button>
+					<button class="layui-btn layui-btn-danger layui-btn-small">结束会话</button>
+				</div>
+			</div>
+			<div id="chatMain-msgList">
+				<div class="layim-chat-main">
+					<ul>
+						<li v-for="msg in currentConversation.msgList" :class="{'layim-chat-mine': msg.isMine }">
+						<div class="layim-chat-user">
+							<img src="img/tx.png"><cite>{{ msg.isMine ? null : msg.userNickName }}<i>{{ msg.time.Format('yyyy-MM-dd hh:mm:ss') }}</i>{{ msg.isMine ? msg.userNickName : null }}</cite>
+						</div>
+						<div class="layim-chat-text" v-html="msg.content">
+							
+						</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			<form class="layui-form">
+				<textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_editor"></textarea>
+			</form>
+			<div class="chatMain-bottom">
+				<button class="layui-btn">发送</button>
+				<div class="chatMain-bottom-tip">按Enter发送消息，Shift+Enter换行</div>
+			</div>
+		</div>
+		<div id="chatRight">
+			<div id="chatRight-a">
+				
+				<div class="layui-tab layui-tab-card chatRight-tab" lay-filter="chatRight-a">
+				  <ul class="layui-tab-title" id="chatRight-a-tab">
+				    <li>用户资料</li>
+				    <li class="layui-this" lay-id="tab-zhishiku">知识库</li>
+				  </ul>
+				  <div class="layui-tab-content rin-tab-content" id="chatRight-a-content">
+				    <div class="layui-tab-item">
+				    	<form class="layui-form layui-form-pane" action="">
+				    		<center><button type="button" onclick="openClientSearch();" class="layui-btn layui-btn-small layui-btn-radius layui-btn-primary" style="width:90%;">改变当前会话指向用户</button></center>
+				    		<hr>
+				    		<label class="layui-form-label rin-form-label">姓名</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+							
+							
+						    <label class="layui-form-label rin-form-label">单选框</label>
+						    <div class="layui-input-block rin-input-block">
+						    	<div style="height: 20px; line-height:22px; width: calc(100% - 2px); border: 1px solid #e6e6e6;">
+						    		<input type="radio" class="rin-radio" name="sex" value="男" title="男" lay-ignore><span>男</span>
+						    		<input type="radio" class="rin-radio" name="sex" value="女" title="女" lay-ignore><span>女</span>
+						    		<input type="radio" class="rin-radio" name="sex" value="未知" title="未知" checked="" lay-ignore><span>未知</span>
+						    	</div>
+						    </div>
+							
+
+				    		<label class="layui-form-label rin-form-label">电话</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">电子邮箱</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">微信</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">QQ</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">微博</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">淘宝</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">支付宝</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		<label class="layui-form-label rin-form-label">地址</label>
+				    		<div class="layui-input-block rin-input-block">
+				    			<input type="text" name="clientName" class="layui-input rin-input"></input>
+				    		</div>
+				    		
+				    		<div style="overflow: hidden;">
+				    			<div style="float: right;">
+				    				<button type="button" class="layui-btn layui-btn-small" onclick="console.log('hh')">更改</button>
+				    				<button type="button" class="layui-btn layui-btn-primary layui-btn-small">重置</button>
+				    			</div>
+				    		</div>
+				    	</form>
+				    	<fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+				    		<legend style="font-size: 16px;">已添加的标签</legend>
+				    		<div class="layui-field-box">
+					    		<ul class="tagList">
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    		</ul>
+				    		</div>
+				    	</fieldset>
+				    	<fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+				    		<legend style="font-size: 16px;">可添加的标签</legend>
+				    		<div class="layui-field-box">
+					    		<ul class="tagList">
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">商务</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">年轻人</button></li>
+					    			<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini">高端</button></li>
+					    		</ul>
+
+				    		</div>
+				    	</fieldset>
+				    </div>
+				    <div class="layui-tab-item layui-show">
+				    	<div>
+					    	<div class="layui-input-inline" style="width: calc(80% - 6px);">
+					    	    <input type="text" name="keyword" placeholder="请输入关键词" class="layui-input" style="height: 30px;line-height: 30px;">
+					    	</div>
+					    	<button type="button" class="layui-btn layui-btn-small" style="width: 20%;"><i class="layui-icon icon" style="line-height: 25px;">&#xe615;</i></button>
+				    	</div>
+				    	<div>
+				    		<div class="fastKnowledgeItem" v-for="knowledge in currentConversation.knowledgeList">
+				    			<div class="fastKnowledgeItem-key">{{ knowledge.keyWord }}</div>
+				    			<div class="fastKnowledgeItem-info" @click="clickKnowledge(knowledge.content)">{{ knowledge.content }}</div>
+				    		</div>
+				    	</div>
+				    </div>
+				  </div>
+				</div>
+				
+				
+			</div>
+			<div id="chatRight-b">
+				<div class="layui-tab layui-tab-card chatRight-tab" lay-filter="chatRight-b">
+				  <ul class="layui-tab-title">
+				    <li class="layui-this" lay-id="tab-changyongyu">常用语</li>
+				    <li>聊天记录</li>
+				  </ul>
+				  <div class="layui-tab-content rin-tab-content" id="chatRight-b-content">
+				    <div class="layui-tab-item layui-show" id="chatRight-b-content-1">
+				    	<ul class="common-language">
+				    		<li v-for="commonLang in commonLangManager.commonLangList" @click="commonLangManager.send(commonLang)">{{ commonLang.sentence }}</li>
+				    	</ul>
+				    </div>
+				    <div class="layui-tab-item" id="chatRight-b-content-2">
+				    	<div class="chatHistory">
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗？我要买房！</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗？我要买房！先进生产力的发展要求、中国先进文化的前进方向、中国最广大人民的根本利益。</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有先进生产力的发展要求、中国先进文化的前进方向、中国最广大人民的根本利益。</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗先进生产力的发展要求、中国先进文化的前进方向、中国最广大人民的根本利益。先进生产力的发展要求、中国先进文化的前进方向、中国最广大人民的根本利益。！</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗？我要买房！</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗？我要买房！</div>
+				    		</div>
+				    		<div class="chatHistory-item">
+				    			<div class="chatHistory-item-title"><span>SunSunSun</span><span class="chatHistory-item-time">2017-7-1 19:38:55</span></div>
+				    			<div class="chatHistory-item-content">你好，有人吗？我要买房！</div>
+				    		</div>
+				    	</div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="full" style="display: none">bbb</div>
+	<div class="full" style="display: none">ccc</div>
+	<div class="full" style="display: none">ddd</div>
+	<div class="full" style="display: none">
+		<div class="layui-tab layui-tab-card" lay-filter="demo">
+		  <ul class="layui-tab-title">
+		    <li class="layui-this">网站设置</li>
+		    <li>用户管理</li>
+		    <li>权限分配</li>
+		    <li>商品管理</li>
+		    <li>订单管理</li>
+		  </ul>
+		  <div class="layui-tab-content" style="height: 100px;">
+		    <div class="layui-tab-item layui-show">1</div>
+		    <div class="layui-tab-item">2</div>
+		    <div class="layui-tab-item">3</div>
+		    <div class="layui-tab-item">4</div>
+		    <div class="layui-tab-item">5</div>
+		    <div class="layui-tab-item">6</div>
+		    <div class="layui-tab-item">7</div>
+		  </div>
+		</div>
+	</div>
+
+	<div id="notification">
+		<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>这里是通知标题</div>
+		<div class="notification-off" onclick="hideNotification()"><i class="layui-icon icon">&#x1006;</i></div>
+		<div class="notification-msg">这里是通知内容，通知内容。这里是通知内容，通知内容。</div>
+	</div>
+	<div id="notificationCenter">
+		<div class="notificationCenter-title">通知中心</div>
+		<div class="notification-off" onclick="closeNotificationCenter()"><i class="layui-icon icon">&#x1006;</i></div>
+		<hr style="margin:3px 0;">
+		<div class="notificationCenter-list">
+			<div class="notificationCenter-item">
+				<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>这里是通知标题</div>
+				<div>这里是通知内容，通知内容。这里是通知内容，通知内容。</div>
+			</div>
+			<div class="notificationCenter-item">
+				<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>这里是通知标题</div>
+				<div>这里是通知内容，通知内容。这里是通知内容，通知内容。</div>
+			</div>
+			<div class="notificationCenter-item">
+				<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>这里是通知标题</div>
+				<div>这里是通知内容，通知内容。这里是通知内容，通知内容。</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="statusBar">
+	<span>当前会话数：9</span>
+	<span>队列等待人数：5</span>
+	<span>工号：kefu007</span>
+	<span>组别：售后组</span>
+	<span>内部名称：售后组李刚</span>
+	<span>对外昵称：小李</span>
+	<div id="notificationCenterBtn" onclick="openNotificationCenter()">通知中心<span>(1)</span></div>
+</div>
+
+</div>
+</body>
+<div id="clientSearch">
+	<div>
+		<div class="layui-input-inline" style="width: calc(80% - 6px);">
+			<input type="text" name="keyword" placeholder="请输入客户名称" class="layui-input" >
+		</div>
+		<button type="button" class="layui-btn" style="width: 20%;"><i class="layui-icon icon" style="line-height: inital;"></i></button>
+	</div>
+	<ul id="clientSearch-list">
+		<li><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">张三</span></li>
+		<li><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">李四</span></li>
+		<li class="clientSearch-li-chosed"><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">高育良</span></li>
+		<li><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">张三</span></li>
+		<li><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">李四</span></li>
+
+	</ul>
+	<center>
+		<button type="button" class="layui-btn" style="width:45%;">确定</button>
+		<button type="button" class="layui-btn layui-btn-primary" style="width:45%;">取消</button>
+	</center>
+</div>
+</html>
+
+<script src="js/src/customer/customerMessage.js"></script>
+<script src="js/src/customer/customer.js"></script>
+<script src="js/src/customer/customerHandle.js"></script>
+<script>
+let isInChatTab=true;
+
+let DoubleBarMode=true;
+
+function hideNotification(){
+	$('#notification').animate({right:"-400px"});
+}
+function showNotification(){
+	$('#notification').animate({right:"0px"});
+	setTimeout(hideNotification,5000);
+}
+function openNotificationCenter(){
+	$('#notificationCenter').animate({bottom:"0px"});
+}
+function closeNotificationCenter(){
+	$('#notificationCenter').animate({bottom:"-600px"});
+}
+
+function hideBBar() {
+	if(DoubleBarMode){
+		$('#chatRight-b').hide();
+		// dom操作
+		$('#chatRight-a-content').append($('#chatRight-b-content-1'));
+		$('#chatRight-a-content').append($('#chatRight-b-content-2'));
+		$('#chatRight-a-tab').append($('<li id="tempTab1"></li>').text('常用语'));
+		$('#chatRight-a-tab').append($('<li id="tempTab2"></li>').text('聊天记录'));
+		$('#chatRight-a').width('100%');
+
+
+		DoubleBarMode=false;
+	}
+
+	
+}
+function showBBar() {
+	if(DoubleBarMode==false){
+		// dom操作
+		$('#chatRight-b-content').prepend($('#chatRight-b-content-2'));
+		$('#chatRight-b-content').prepend($('#chatRight-b-content-1'));
+		$('#tempTab1').remove();
+		$('#tempTab2').remove();
+		element.tabChange('chatRight-a','tab-zhishiku');
+		element.tabChange('chatRight-b','tab-changyongyu');
+		$('#chatRight-a').width('50%');
+		$('#chatRight-b').width('50%').show();
+
+		DoubleBarMode=true;
+	}
+	
+}
+function checkRightWidth() {
+	if($('#chatRight').width()<400){
+		hideBBar();
+	}else{
+		showBBar();
+	}
+}
+
+let leftNavBtnList=$('.leftNavBar').children();
+for(let i=0;i<leftNavBtnList.length;i++){
+	leftNavBtnList[i].index=i;
+}
+leftNavBtnList.click(function() {
+	$('#content').children().hide();
+	$($('#content').children()[this.index]).show();
+	leftNavBtnList.attr("class","tab");
+	$(this).addClass('chosed');
+	if(this.index==0){
+		isInChatTab=true;
+	}else{
+		isInChatTab=false;
+	}
+});
+
+//调大小
+$('#chatLeft').resizable({
+	handles:'e',
+	/*maxWidth:500,
+	minWidth:230,*/
+	resize:function(event,ui){
+		$('#chatMain').width($('#content').width()-ui.size.width-$('#chatRight').width());
+	}
+});
+$('#chatMain').resizable({
+	handles:'e',
+	/*maxWidth:($('#content').width()-$('#chatLeft').width())*0.7,
+	minWidth:450,*/
+	resize:function(event,ui){
+		$('#chatRight').width($('#content').width()-ui.size.width-$('#chatLeft').width());
+		checkRightWidth();
+	}
+});
+$(window).resize(function() {
+	let bili=$('#content').width()/($('#chatLeft').width()+$('#chatMain').width()+$('#chatRight').width());
+	$('#chatLeft').width($('#chatLeft').width()*bili);
+	$('#chatMain').width($('#chatMain').width()*bili);
+	$('#chatRight').width($('#chatRight').width()*bili);
+
+	checkRightWidth();
+});
+$('body').bind('resize',function(){return false;})
+
+function openClientSearch(){
+	layer.open({
+		type:1,
+		content:$('#clientSearch'),
+		title:'改变当前会话指向用户',
+	});
+}
+
+</script>

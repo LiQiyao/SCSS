@@ -1,0 +1,558 @@
+body{
+	min-width: 1020px;
+}
+
+.header{
+	height:50px;
+	background-color: #ffffff;
+	box-shadow: 0 0 1px 0 rgb(160,160,160) inset;
+}
+.statusBar{
+	position: absolute;
+	bottom: 0px;
+	height: 30px;
+	width: 100%;
+	background-color: rgb(33,115,70);
+	min-width: 1020px;
+}
+.statusBar > span{
+	margin-left: 20px;
+	margin-right: 20px;
+	color: white;
+	line-height: 30px;
+	font-size:15px;
+}
+.leftNavBar{
+	position: absolute;
+	left: 0px;
+	top: 50px;
+	bottom: 30px;
+	width: 50px;
+	background-color: #F9F9F9;
+	box-shadow: 0 0 1px 0 rgb(160,160,160) inset;
+}
+.leftNavBar .tab{
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	cursor:pointer;
+}
+.leftNavBar .chosed{
+	background-color: rgb(159,213,183);
+	color:white;
+}
+
+.leftNavBar .tab:hover{
+	background-color: rgb(211,240,224);
+}
+.leftNavBar .chosed:hover{
+	background-color: rgb(159,213,183);
+	color:white;
+}
+.leftNavBar .icon{
+	font-size: 30px;
+	line-height: 50px;
+}
+#outContent{
+	position: absolute;
+	top:50px;
+	left: 50px;
+	bottom: 30px;
+	right: 0;
+	overflow: hidden;
+	min-width: 970px;
+}
+.full{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+#chatLeft{
+	float: left;
+	height: 100%;
+	width: 20%;
+	/*background-color: rgba(173,252,173,0.8)*/;
+}
+#chatMain{
+	float: left;
+	height: 100%;
+	width: 40%;
+	/*background-color: rgba(255,54,54,0.8);*/
+	box-shadow: 0 0 1px 0 rgb(160,160,160) inset;
+}
+#chatRight{
+	float: left;
+	height: 100%;
+	width: 40%;
+	/* background-color: rgba(255,251,144,0.8); */
+}
+#chatLeft-top{
+	width:100%;
+	height: 50px;
+	border-bottom: 1px solid #D9D9D9;
+	overflow: hidden;
+}
+#btn-newTalk{
+	position: absolute;
+	top: 10px;
+	right: 15px;
+}
+#chatLeft-list{
+	overflow: auto;
+	overflow-y: auto;
+	height: calc(100% - 52px);
+}
+.chatLeft-list-item{
+	overflow: auto;
+	border-bottom: 1px solid #E5E5E5;
+	position: relative;
+	
+}
+.chatLeft-list-item:hover{
+	background-color: #F4F4F4;
+	cursor:pointer;
+}
+.item-chosed{
+	background-color: #D3F0E0;
+}
+.item-chosed:hover{
+	background-color: #D3F0E0;
+}
+.chatLeft-list-item-avatar{
+	float: left;
+	border-radius: 100%;
+	margin: 5px;
+	width: 40px;
+	height: 40px;
+}
+.chatLeft-list-item-name{
+	float: left;
+	margin:4px;
+	width: calc(100% - 110px);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.chatLeft-list-item-time{
+	float: right;
+	margin:4px;
+	color: #7E7E7E;
+}
+.chatLeft-list-item-msg{
+	float: left;
+	width: calc(100% - 60px);
+	margin-left: 4px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #7E7E7E;
+}
+.chatLeft-list-item-reddot{
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	background-color: red;
+	top: 2px;
+	left: 40px;
+}
+#chatMain-head{
+	overflow: hidden;
+	background-color: #F9F9F9;
+	box-shadow: 0 0 1px 0 rgb(160,160,160) inset;
+}
+.chatMain-head-avatar{
+	float: left;
+	border-radius: 100%;
+	margin: 5px;
+	width: 30px;
+	height: 30px;
+}
+.chatMain-head-name{
+	line-height: 40px;
+	margin-left: 5px;
+}
+.chatMain-head-btnGroup{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+#chatMain-msgList{
+	height: calc(100% - 40px - 50px - 185px); /*-上部标题 -下部按钮区 -编辑器区*/
+	overflow: auto;
+	overflow-y: auto;
+}
+.chatMain-bottom{
+	height: 40px;
+	padding: 5px;
+}
+.chatMain-bottom button{
+	float: right;
+	width: 100px;
+}
+.chatMain-bottom-tip{
+	line-height: 40px;
+	float: right;
+	margin-right: 20px;
+	color: #212121;
+}
+#chatRight-a{
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+#chatRight-b{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+.chatRight-tab{
+	margin: 0;
+	height: calc(100% - 2px);
+}
+
+#logo{
+	width:40px;
+	height: 40px;
+	margin: 5px;
+	/*-webkit-animation: "loading" 0.01s infinite linear;*/
+}
+
+
+
+.rin-form-label{
+	padding:0px 0px !important;
+	height: auto !important;
+	width:80px !important;
+}
+
+.rin-input-block{
+	margin-left: 80px !important;
+	min-height: 30px !important;
+}
+
+.rin-input{
+	height: 22px !important;
+	line-height: 22px !important;
+}
+.rin-radio{
+	margin-left: 5px;
+}
+.rin-tab-content{
+	overflow-y:auto;
+	padding-bottom: 0;
+	height: calc(100% - 41px - 10px);
+}
+.layui-field-box button{
+	margin-bottom: 5px;
+}
+.fastKnowledgeItem{
+	margin:5px 0;
+	padding: 5px;
+	border: 1px solid #C1C1C1;
+	cursor:pointer;
+}
+.fastKnowledgeItem:hover{
+	background-color: #E4FFF0;
+	border-color: #C0CEC0;
+}
+.fastKnowledgeItem-key{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.fastKnowledgeItem-info{
+	color: #969696;
+}
+.common-language li{
+	font-weight: bold;
+	border: 1px solid #D8D8D8;
+	background-color: aliceblue;
+	padding: 5px;
+	border-radius: 10px;
+	margin: 5px 0;
+	background-color: rgb(253, 253, 253);
+	cursor:pointer;
+}
+.common-language li:hover{
+	border-color: #E0F1FF;
+	background-color: #FFE9E9;
+}
+
+.tagList li{
+	display: inline-block;
+}
+.chatHistory-item-title{
+	color: blue;
+}
+
+.chatHistory-item-time{
+	padding-left: 10px;
+}
+
+.chatHistory-item-content{
+	padding-left: 5px;
+}
+
+#clientSearch{
+	width: 300px;
+	display: none;
+	padding: 5px;
+}
+#clientSearch-list{
+	height: 240px;
+	overflow-y: auto;
+	margin: 10px 0;
+}
+#clientSearch-list li{
+	padding:0 5px;
+	line-height: 1.8em;
+	font-size: 1.2em;
+	cursor:pointer;
+}
+#clientSearch-list li:hover{
+	background-color: #D2EFE0;
+}
+.clientSearch-li-name{
+	padding-left: 5px;
+}
+.clientSearch-li-chosed{
+	background-color: #199E93;
+	color: white;
+}
+.clientSearch-li-chosed:hover{
+	background-color: #199E93 !important;
+	color: white !important;
+}
+
+#transferWindow{
+	width: 300px;
+	display: none;
+	padding: 5px;
+}
+#transfer-serviceList{
+	height: 240px;
+	overflow-y: auto;
+	margin: 10px 0;
+}
+
+.transfer-member-avatar{
+	padding-left: 16px;
+}
+.transfer-item{
+	padding: 0 5px;
+	line-height: 1.8em;
+	font-size: 1.2em;
+	cursor: pointer;
+}
+.transfer-item:hover{
+	background-color: #D2EFE0;
+}
+.transfer-item-chosed{
+	background-color: #199E93;
+	color: white;
+}
+.transfer-item-chosed:hover{
+	background-color: #199E93 !important;
+	color: white !important;
+}
+
+.headBar{
+	float: right;
+	margin: 15px;
+}
+.headBar .layui-form-switch{
+	margin:0 10px;
+}
+#notificationCenterBtn{
+	height: 30px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 0 20px;
+	background-color: #007ACC;
+	color: white;
+	line-height: 30px;
+	font-size:15px;
+}
+#notificationCenterBtn:hover{
+	background-color: #1E8AD2;
+	cursor: pointer;
+}
+#notification{
+	position: absolute;
+	bottom: 10px;
+	right: -300px;
+	width: 240px;
+	height: 60px;
+	background-color: #007ACC;
+	color: white;
+	padding: 8px;
+	/*border: 1px solid #180fd0;*/
+	box-shadow: 1px 1px 8px 1px #888888;
+}
+.notification-title{
+	font-weight: bold;
+	font-size: 1.1em;
+}
+.notification-off{
+	position: absolute;
+	top:5px;
+	right: 5px;
+}
+.notification-off:hover{
+	background-color: rgb(97, 179, 233);
+	cursor: pointer;
+}
+#notificationCenter{
+	height: 50%;
+	width: 240px;
+	position: absolute;
+	right: 0px;
+	bottom: -500px;
+	box-shadow: 1px 1px 8px 1px #888888;
+	background-color: #007ACC;
+	color: white;
+	padding: 8px;
+	
+}
+.notificationCenter-title{
+	font-family: "楷体";
+	font-size: 24px;
+}
+.notificationCenter-list{
+	height: calc(100% - 10px - 33px);
+	overflow-y: auto;
+}
+.notificationCenter-item{
+	padding: 5px;
+	margin: 1px 0;
+}
+.notificationCenter-item:hover{
+	background-color: #1E8AD2;
+}
+.fastKnowledgeItem-key span{
+	padding-right: 10px;
+}
+.keyWordTag{
+	padding:2px;
+	border-radius: 4px;
+	color: black;
+}
+
+.tongji-top{
+	overflow: hidden;
+}
+.tongji-top-avatar{
+	border-radius: 100%;
+	width:100px;
+	margin: 10px;
+	float: left;
+}
+#tongji{
+	background-color: #f0f3f3;
+}
+/* From孙奇 统计板块 */
+.overview-div
+{
+    width: calc(25% - 30px);
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    float: left;
+
+    text-align: center;
+}
+
+.overview-num-div
+{
+    padding: 8px;
+    border-radius: 3px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    line-height: normal;
+}
+
+.panel, .panel-body, .panel-heading
+{
+    overflow: hidden;
+}
+
+.panel
+{
+    position: relative;
+    margin-bottom:20px;
+    background-color:#fff;
+    border:1px solid transparent;
+    border-radius:4px;
+    -webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);
+    box-shadow:0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-body
+{
+    position: relative;
+    padding:15px;
+    border-top: 1px dotted #E3E7EA;
+}
+
+.panel-heading
+{
+    line-height: 1;
+    padding:10px 15px;
+    border-bottom:1px solid transparent;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+}
+
+.panel-title
+{
+    margin-top:0;
+    margin-bottom:0;
+    font-size:16px;
+    color:inherit;
+}
+
+.panel-success
+{
+    background: #1f7bb6;
+    color: #ffffff;
+}
+
+.panel-info
+{
+    background: #1ab394;
+    color: #ffffff;
+}
+
+.panel-primary
+{
+    background: #29a3cc;
+    color: #ffffff;
+}
+
+.panel-warning
+{
+    background: #EF9F00;
+    color: #ffffff;
+}
+
+.total
+{
+    font-size: 1.2em;
+	font-weight: 200;
+	padding-right: 5px;
+}
+
+.total-num
+{
+    font-size: 3.0em;
+}
+
+
+
+/* FROM 孙奇 统计板块 END */
+
+.rin-panel{
+	float: left;
+	margin:0 20px 20px 20px;
+	width: calc(50% - 42px);
+}

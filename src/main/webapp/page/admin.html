@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<htm>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>admin</title>
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin" id="main">
+        <div class="layui-header">
+            <div class="admin-header">
+                <ul class="layui-nav" lay-filter="user">
+                    <li class="layui-nav-item">
+                        <a href="javascript:void(0);"><i class="layui-icon">&#xe612;</i>运维人员</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:void(0);">修改密码</a></dd>
+                            <dd><a href="javascript:void(0);">退出</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
+                    <li class="layui-nav-item layui-this"><a href="javascript:;" lay-id="overview">概览</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="customerService">客服人员管理</a></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">绩效</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" lay-id="wholePerformance">整体绩效</a></dd>
+                            <dd><a href="javascript:;" lay-id="personalPerformance">客服绩效</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="knowledgeBase">知识库管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="commonLanguage">常用语管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="client">客户管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="advertisement">广告管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" lay-id="notice">通知中心</a></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">设置</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" lay-id="customerServiceDivisionalStructures">客服部门结构设置</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" lay-id="overview">概览</li>
+                </ul>
+                <div class="layui-tab-content fade-in-right">
+                    <div class="layui-tab-item layui-show">
+                        <div class="row">
+                            <div class="overview-div">
+                                <div class="overview-num-div panel-success">
+                                    <i class="fa fa-bar-chart pull-left"></i>
+                                    <span class="total">客服在线人数</span>
+                                    <span class="total-num">&nbsp;21</span>
+                                </div>
+                            </div>
+                            <div class="overview-div">
+                                <div class="overview-num-div panel-info">
+                                    <i class="fa fa-bar-chart pull-left"></i>
+                                    <span class="total">总客服人数</span>
+                                    <span class="total-num">&nbsp;30</span>
+                                </div>
+                            </div>
+                            <div class="overview-div">
+                                <div class="overview-num-div panel-primary">
+                                    <i class="fa fa-bar-chart pull-left"></i>
+                                    <span class="total">在线客户人数</span>
+                                    <span class="total-num">&nbsp;37</span>
+                                </div>
+                            </div>
+                            <div class="overview-div">
+                                <div class="overview-num-div panel-warning">
+                                    <i class="fa fa-bar-chart pull-left"></i>
+                                    <span class="total">广告数</span>
+                                    <span class="total-num">&nbsp;10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-pie-chart pull-left"></i>
+                                        &nbsp;部门统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="staffNum" style="width: 100%; height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-bar-chart pull-left"></i>
+                                        &nbsp;近15天每个月会话人数
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="halfMonthInfo" style="width: 100%; height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-line-chart pull-left"></i>
+                                        &nbsp;24小时每分钟实时人数
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="minuteInfo" style="width: 100%; height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-list-ul pull-left"></i>
+                                        &nbsp;通知
+                                    </div>
+                                    <div class="panel-body">
+                                        <div style="width: 100%; height: 400px;">
+                                            <table class="layui-table" style="margin: 0;" lay-even lay-skin="nob">
+                                                <colgroup>
+                                                    <col width="70%">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>编号为2的客户接入到会话中</td>
+                                                        <td>2017-07-08</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-line-chart pull-left"></i>
+                                        &nbsp;近7天各个时段会话数
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="dayInfo" style="width: 100%; height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-list-ul pull-left"></i>
+                                        &nbsp;近7天热词
+                                    </div>
+                                    <div class="panel-body">
+                                        <div style="width: 100%; height: 400px;">
+                                            <table class="layui-table" style="margin: 0;" lay-even lay-skin="nob">
+                                                <colgroup>
+                                                    <col width="80%">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>位置</td>
+                                                        <td>110</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>首付</td>
+                                                        <td>100</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>大户型</td>
+                                                        <td>80</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>楼盘</td>
+                                                        <td>20</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+        </div>
+    </div>
+    <template id="changePass">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">原密码:</label>
+                <div class="layui-input-block">
+                    <input type="password" name="oldPass" required  lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码:</label>
+                <div class="layui-input-block">
+                    <input type="password" name="newPass" required  lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">重复新密码:</label>
+                <div class="layui-input-block">
+                    <input type="password" name="newPassAgain" required  lay-verify="required" placeholder="请重复新密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+
+            </div>
+        </form>
+    </template>
+    <template id="customerServiceContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-heading"> -->
+                        <table width="100%">
+                            <colgroup>
+                                <col width="15%">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                            <button class="layui-btn layui-btn-normal" id="addCustomerServiceBtn">添加人员</button>
+                                            <button class="layui-btn layui-btn-danger" id="deleteCustomerServiceBtn">删除人员</button>
+                                        </div>
+                                        <div class="search-local-right">
+                                            <div class="btn-local-left">
+                                                <button class="layui-btn layui-btn-primary" id="filterCustomerServiceBtn">
+                                                    <i class="fa fa-filter"></i>&nbsp;筛选
+                                                </button>
+                                            </div>
+                                            <div id="searchCustomerServiceDiv" class="search">
+                                                <div class="search-div">
+                                                    <input type="search" class="layui-input" name="" value="">
+                                                </div>
+                                                <div class="search-icon-div" id="searchCustomerServiceBtn">
+                                                    <div class="search-icon">
+                                                        <i class="layui-icon">&#xe615;</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="3.06%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="42.07%">
+                                                        <col width="23.29%">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseCustomerService"></th>
+                                                            <th>小组</th>
+                                                            <th>姓名</th>
+                                                            <th>昵称</th>
+                                                            <th>ID</th>
+                                                            <th>密码</th>
+                                                            <th>自动回复</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="3.06%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="6.12%">
+                                                        <col width="42.07%">
+                                                        <col width="23.29%">
+                                                    </colgroup>
+                                                    <tbody id="customerService">
+                                                        <!-- <tr>
+                                                            <td><input type="checkbox" name="" lay-skin="primary"></td>
+                                                            <td>手机组</td>
+                                                            <td>李</td>
+                                                            <td>小李</td>
+                                                            <td>ABC</td>
+                                                            <td>Hello，我是机器人客服</td>
+                                                            <td>
+                                                                <button type="button" class="layui-btn layui-btn-small layui-btn-primary" name="">编辑</button>
+                                                                <button type="button" class="layui-btn layui-btn-small layui-btn-normal" name="">聊天记录</button>
+                                                                <button type="button" class="layui-btn layui-btn-small layui-btn-danger" name="">个人绩效</button>
+                                                            </td>
+                                                        </tr> -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="filterCustomerServiceContent">
+        <form class="layui-form" action="" method="post">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">小组:</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <select name="" id="filterCustomerServiceGroup" lay-filter="filterCustomerServiceGroup" lay-verify="" lay-search>
+                            <option value="" checked></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="addCustomerServiceContent">
+        <form action="" class="layui-form" id="addCustomerServiceForm">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">姓名:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="name" placeholder="请输入内容" value="">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">昵称:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="nickname" placeholder="请输入内容" value="">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">小组:</label>
+                <div class="layui-input-block">
+                    <select name="groupId" id="chooseCustomerServiceGroup" lay-filter="chooseCustomerServiceGroup" lay-verify="">
+                        <option value="" checked></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">ID:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="employeeId" placeholder="请输入内容" value="">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">自动<br>回复:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="autoMessage" placeholder="请输入内容" value="">
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="customerServiceChatLogContent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span style="font-size: 1.8em;">聊天记录</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="margin-bottom: 0px;">
+                    <div class="panel-heading">
+                        <div class="chat-log-left" id="clietnList">
+                            <div class="chat-list-item">
+                                <img class="chat-list-item-img" src="img/tx.png" alt="">
+                                <div class="chat-list-item-name">
+                                    <span>微信5552158</span>
+                                </div>
+                            </div>
+                            <div class="chat-list-item">
+                                <img class="chat-list-item-img" src="img/tx.png" alt="">
+                                <div class="chat-list-item-name">
+                                    <span>微信5552158</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-log-right" id="customerServiceChatLog">
+                            <!-- <div class="chat-history-item">
+                                <div class="chat-history-item-title">
+                                    <span class="chat-history-item-name">微信5552158&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="chat-history-item-time">2017-07-28 10:23</span>
+                                </div>
+                                <div class="chat-history-item-content">
+                                    <span>123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123</span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="show-tip">
+                            请选择客户
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="wholePerformanceContent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="btn-local-left">
+                        </div>
+                        <div class="search-local-right">
+                            <div class="layui-form-pane">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="wholePerformanceStartTime" placeholder="起始日期" autocomplete="off" class="layui-input" id="wholePerformanceStartTime">
+                                        </div>
+                                        <div class="layui-form-mid">-</div>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="wholePerformanceEndTime" placeholder="终止日期" autocomplete="off" class="layui-input" id="wholePerformanceEndTime">
+                                        </div>
+                                        <button class="layui-btn layui-btn-normal" type="button" name="button" id="chooseWholePerformanceTime">确定</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="overview-div">
+                <div class="overview-num-div panel-success">
+                    <i class="fa fa-bar-chart pull-left"></i>
+                    <span class="total">总会话数</span>
+                    <span class="total-num">&nbsp;129</span>
+                </div>
+            </div>
+            <div class="overview-div">
+                <div class="overview-num-div panel-info">
+                    <i class="fa fa-bar-chart pull-left"></i>
+                    <span class="total">总客户数</span>
+                    <span class="total-num">&nbsp;95</span>
+                </div>
+            </div>
+            <div class="overview-div">
+                <div class="overview-num-div panel-primary">
+                    <i class="fa fa-bar-chart pull-left"></i>
+                    <span class="total">客服平均在线时长</span>
+                    <span class="total-num">&nbsp;6:02:37</span>
+                </div>
+            </div>
+            <div class="overview-div">
+                <div class="overview-num-div panel-warning">
+                    <i class="fa fa-bar-chart pull-left"></i>
+                    <span class="total">客服平均分</span>
+                    <span class="total-num">&nbsp;4.6</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-line-chart pull-left"></i>
+                        &nbsp;客户来源
+                    </div>
+                    <div class="panel-body">
+                        <div id="customerSource" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <i class="fa fa-line-chart pull-left"></i>
+                        &nbsp;评分分布
+                    </div>
+                    <div class="panel-body">
+                        <div id="scoreDistribution" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="personalPerformanceContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-heading"> -->
+                        <table width="100%">
+                            <colgroup>
+                                <col width="15%">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                        </div>
+                                        <div class="search-local-right">
+                                            <div class="layui-form-pane">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="wholePerformanceStartTime" placeholder="起始日期" autocomplete="off" class="layui-input" id="personalPerformanceStartTime">
+                                                        </div>
+                                                        <div class="layui-form-mid">-</div>
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="wholePerformanceEndTime" placeholder="终止日期" autocomplete="off" class="layui-input" id="personalPerformanceEndTime">
+                                                        </div>
+                                                        <button class="layui-btn layui-btn-normal" type="button" name="button" id="choosePersonalPerformanceTime">确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="230">
+                                                        <col width="230">
+                                                        <col width="400">
+                                                        <col width="400">
+                                                        <col>
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center">客服名字</th>
+                                                            <th style="text-align: center">客服组</th>
+                                                            <th style="text-align: center">会话数&nbsp;&nbsp;/&nbsp;&nbsp;排名</th>
+                                                            <th style="text-align: center">在线时长&nbsp;&nbsp;/&nbsp;&nbsp;排名</th>
+                                                            <th style="text-align: center">平均分&nbsp;&nbsp;/&nbsp;&nbsp;排名</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line" style="text-align: center">
+                                                    <colgroup>
+                                                        <col width="230">
+                                                        <col width="230">
+                                                        <col width="400">
+                                                        <col width="400">
+                                                        <col>
+                                                    </colgroup>
+                                                    <tbody id="personalPerformance">
+                                                        <tr>
+                                                            <td>小李</td>
+                                                            <td>售后组</td>
+                                                            <td>50&nbsp;&nbsp;/&nbsp;&nbsp;5</td>
+                                                            <td>04:05&nbsp;&nbsp;/&nbsp;&nbsp;2</td>
+                                                            <td>4.8&nbsp;&nbsp;/&nbsp;&nbsp;1</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="knowledgeBaseContent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="btn-local-left">
+                            <button class="layui-btn layui-btn-normal" id="addKnowledgeBaseBtn">添加知识</button>
+                        </div>
+                        <div class="search-local-right">
+                            <!-- <div class="btn-local-left">
+                                <button class="layui-btn layui-btn-primary" id="filterKnowledgeBaseBtn">
+                                    <i class="fa fa-filter"></i>&nbsp;筛选
+                                </button>
+                            </div> -->
+                            <div class="search">
+                                <div class="search-div" id="searchKnowledgeBaseDiv">
+                                    <input type="search" name="" value="">
+                                </div>
+                                <div class="search-icon-div" id="searchKnowledgeBaseBtn">
+                                    <div class="search-icon">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="masonry">
+            <!-- <div class="col-lg-3">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="close-local">
+                            <i class="fa fa-pencil" title="编辑"></i>
+                            <i class="layui-icon close-btn" title="关闭">&#x1006;</i>
+                        </div>
+                        <div class="level">
+                            全平台
+                        </div>
+                        <div class="ques">
+                            手机为何经常发烫？
+                        </div>
+                        <div class="ans">
+                            因为CPU。
+                        </div>
+                        <div class="tags">
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                            <div class="tag">发烫</div>
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                            <div class="tag">
+                                发热
+                                <i class="layui-icon tag-close-local">&#x1006;</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </template>
+    <template id="addKnowledgeBaseContent">
+        <form action="" class="layui-form" id="addKnowledgeBaseForm">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">问题:</label>
+                <div class="layui-input-block">
+                    <textarea name="ques" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">答案:</label>
+                <div class="layui-input-block">
+                    <textarea name="ans" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">类别:</label>
+                <div class="layui-input-block">
+                    <input type="radio" lay-filter="level" name="level" value="0" title="全平台">
+                    <input type="radio" lay-filter="level" name="level" value="1" title="公司">
+                    <input type="radio" lay-filter="level" name="level" value="2" title="客服">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键词:</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="tag" id="keyWordInput" placeholder="请输入内容" value="">
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" type="button" id="addTag">添加</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <div class="tags" id="keyWords">
+                        <!-- <div class="tag">
+                            发热
+                            <i class="layui-icon tag-close-local">&#x1006;</i>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="commonLanguageContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-body"> -->
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                            <button class="layui-btn layui-btn-normal" id="addCommonLanguageBtn">添加常用语</button>
+                                            <button class="layui-btn layui-btn-danger" id="deleteCommonLanguageBtn">删除常用语</button>
+                                        </div>
+                                        <!-- <div class="search-local-right">
+                                            <div id="searchCommonLanguageDiv" class="search">
+                                                <div class="search-div">
+                                                    <input type="search" name="" value="">
+                                                </div>
+                                                <div class="search-icon-div">
+                                                    <div class="search-icon">
+                                                        <i class="layui-icon">&#xe615;</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="50">
+                                                        <!-- <col width="200"> -->
+                                                        <col>
+                                                        <col width="100">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseCommonLanguage"></th>
+                                                            <!-- <th>创建者</th> -->
+                                                            <th>常用语</th>
+                                                            <th>使用频率</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="50">
+                                                        <col>
+                                                        <col width="100">
+                                                    <tbody id="commonLanguage">
+                                                        <tr>
+                                                            <td><input type="checkbox" name="" lay-skin="primary"></td>
+                                                            <td>你好</td>
+                                                            <td>10</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="addCommonLanguageContent">
+        <form action="" class="layui-form" id="addCommonLanguageForm">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">常用语:</label>
+                <div class="layui-input-block">
+                    <textarea name="content" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="clientContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-body"> -->
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                            <!-- <button class="layui-btn layui-btn-normal" id="addCustomerBtn">添加客户</button> -->
+                                            <!-- <button class="layui-btn layui-btn-danger" id="deleteClientBtn">删除客户</button> -->
+                                        </div>
+                                        <div class="search-local-right">
+                                            <div id="searchClientDiv" class="search">
+                                                <div class="search-div">
+                                                    <input type="search" name="" value="">
+                                                </div>
+                                                <div class="search-icon-div" id="searchClientBtn">
+                                                    <div class="search-icon">
+                                                        <i class="layui-icon">&#xe615;</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <table class="layui-table" id="clientTable" lay-skin="line">
+                                                <colgroup>
+                                                    <!-- <col width="50"> -->
+                                                    <!-- <col width="80">
+                                                    <col width="60">
+                                                    <col>
+                                                    <col width="140">
+                                                    <col width="140">
+                                                    <col width="150"> -->
+                                                    <col width="4.89%">
+                                                    <col width="3.67%">
+                                                    <col width="58.15%">
+                                                    <col width="8.56%">
+                                                    <col width="10.56%">
+                                                    <col width="14.17%">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <!-- <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseCustomer"></th> -->
+                                                        <th>名字</th>
+                                                        <th>性别</th>
+                                                        <th>地址</th>
+                                                        <th>电话</th>
+                                                        <th>email</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <table class="layui-table" lay-skin="line">
+                                                <colgroup>
+                                                    <col width="4.89%">
+                                                    <col width="3.67%">
+                                                    <col width="58.15%">
+                                                    <col width="8.56%">
+                                                    <col width="10.56%">
+                                                    <col width="14.17%">
+                                                </colgroup>
+                                                <tbody id="client">
+                                                    <!-- <tr>
+                                                        <td></td>
+                                                        <td>闲心</td>
+                                                        <td>男</td>
+                                                        <td>浙江丽水青田XXXXXXXXXX</td>
+                                                        <td>13112345678</td>
+                                                        <td>54568123456</td>
+                                                        <td>
+                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" name="" id="">聊天记录</button>
+                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" name="" id="">详细信息</button>
+                                                        </td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="clientChatLogContent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span style="font-size: 1.8em;">聊天记录</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="margin-bottom: 0px;">
+                    <div class="panel-heading">
+                        <div class="chat-log-right" id="clientChatLog" style="width: 100%">
+                            <div class="chat-history-item">
+                                <div class="chat-history-item-title">
+                                    <span class="chat-history-item-name">微信5552158&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="chat-history-item-time">2017-07-28 10:23</span>
+                                </div>
+                                <div class="chat-history-item-content">
+                                    <span>123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="advertisementContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-body"> -->
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                            <button class="layui-btn layui-btn-normal" id="addAdvertisementBtn">添加广告</button>
+                                            <button class="layui-btn layui-btn-danger" id="deleteAdvertisementBtn">删除广告</button>
+                                        </div>
+                                        <div class="search-local-right">
+                                            <div id="searchAdvertisementDiv" class="search">
+                                                <div class="search-div">
+                                                    <input type="search" name="" value="">
+                                                </div>
+                                                <div class="search-icon-div" id="searchAdvertisementBtn">
+                                                    <div class="search-icon">
+                                                        <i class="layui-icon">&#xe615;</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="50">
+                                                        <col width="150">
+                                                        <col>
+                                                        <col width="200">
+                                                        <col width="110">
+                                                        <col width="110">
+                                                        <col width="230">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseAdvertisement"></th>
+                                                            <th>推送商</th>
+                                                            <th>内容</th>
+                                                            <th>标签</th>
+                                                            <th>起始时间</th>
+                                                            <th>终止时间</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <div class="layui-form">
+                                                <table class="layui-table" lay-skin="line">
+                                                    <colgroup>
+                                                        <col width="50">
+                                                        <col width="150">
+                                                        <col>
+                                                        <col width="200">
+                                                        <col width="110">
+                                                        <col width="110">
+                                                        <col width="230">
+                                                    </colgroup>
+                                                    <tbody id="advertisement">
+                                                        <tr>
+                                                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="advertisement"></td>
+                                                            <td>立白</td>
+                                                            <td>小葵花妈妈课堂开课了</td>
+                                                            <td>不伤手的立白</td>
+                                                            <td>2017-07-01</td>
+                                                            <td>2017-07-31</td>
+                                                            <td>
+                                                                <button type="button" class="layui-btn layui-btn-small layui-btn-normal" name="" id="">推送名单</button>
+                                                                <button type="button" class="layui-btn layui-btn-small layui-btn-warm" name="" id="">详细信息</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="addAdvertisementContent">
+        <form action="" class="layui-form" id="addAdvertisementForm">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">推送商:</label>
+                <div class="layui-input-block">
+                    <textarea name="pushProvider" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容:</label>
+                <div class="layui-input-block">
+                    <textarea name="content" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间:</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" name="wholePerformanceStartTime" placeholder="起始日期" autocomplete="off" class="layui-input" id="advertisementStartTime">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="wholePerformanceEndTime" placeholder="终止日期" autocomplete="off" class="layui-input" id="advertisementEndTime">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签:</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="tag" id="keyWordInput" placeholder="请输入内容" value="">
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" type="button" id="addTag">添加</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <div class="tags" id="keyWords">
+                        <!-- <div class="tag">
+                            发热
+                            <i class="layui-icon tag-close-local">&#x1006;</i>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="noticeContent">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="panel">
+                    <!-- <div class="panel-body"> -->
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="btn-local-left">
+                                            <button class="layui-btn layui-btn-normal" id="addNoticeBtn">创建通知</button>
+                                            <!-- <button class="layui-btn layui-btn-danger" id="deleteNoticeBtn">删除通知</button> -->
+                                        </div>
+                                        <div class="search-local-right">
+                                            <div class="btn-local-left">
+                                                <button class="layui-btn layui-btn-primary" id="filterNoticeBtn">
+                                                    <i class="fa fa-filter"></i>&nbsp;筛选
+                                                </button>
+                                            </div>
+                                            <div id="searchNoticeDiv" class="search">
+                                                <div class="search-div">
+                                                    <input type="search" name="" value="">
+                                                </div>
+                                                <div class="search-icon-div">
+                                                    <div class="search-icon">
+                                                        <i class="layui-icon">&#xe615;</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px" style="background:#F0F3F3"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px;">
+                                        <div class="table-div-top">
+                                            <table class="layui-table" lay-skin="line">
+                                                <colgroup>
+                                                    <col width="130">
+                                                    <col width="110">
+                                                    <col width="120">
+                                                    <col width="180">
+                                                    <col>
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>操作人员</th>
+                                                        <th>对象类型</th>
+                                                        <th>通知类型</th>
+                                                        <th>时间</th>
+                                                        <th>内容</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="table-div-bottom">
+                                            <table class="layui-table" lay-skin="line">
+                                                <colgroup>
+                                                    <col width="130">
+                                                    <col width="110">
+                                                    <col width="120">
+                                                    <col width="180">
+                                                    <col>
+                                                <tbody id="notice">
+                                                    <tr>
+                                                        <td>小李</td>
+                                                        <td>客服组</td>
+                                                        <td>聊天转接通知</td>
+                                                        <td>2017-07-08 15:35:32</td>
+                                                        <td>编号为2的客户接入到会话中</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="addNoticeContent">
+        <form action="" class="layui-form" id="addNoticeForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">类型:</label>
+                <div class="layui-input-block">
+                    <select name="" id="chooseNoticeType" lay-filter="chooseNoticeType" lay-verify="">
+                        <option value="" checked></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" id="chooseObjGroupDiv" style="display: none;">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <select name="" id="chooseObjGroup" lay-filter="objId" lay-verify="">
+                        <option value="" checked></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" id="chooseObjPersonDiv" style="display: none;">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <select name="" id="chooseObjPerson" lay-filter="objId" lay-verify="">
+                        <option value="" checked></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容:</label>
+                <div class="layui-input-block">
+                    <textarea name="content" class="layui-textarea" placeholder="请输入内容" rows="4" cols="80"></textarea>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="filterNoticeContent">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">对象<br>类型:</label>
+                <div class="layui-input-block">
+                    <select class="" name="" lay-filter="noticeObjType">
+                        <option value="0"></option>
+                        <option value="1">全体客服</option>
+                        <option value="2">客服组</option>
+                        <option value="3">客服个人</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">通知<br>类型:</label>
+                <div class="layui-input-block">
+                    <select class="" name="" lay-filter="noticeType">
+                        <option value="0"></option>
+                        <option value="1">聊天转接通知</option>
+                        <option value="2">系统通知</option>
+                        <option value="3">普通通知</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template id="customerServiceDivisionalStructuresContent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="division">
+                                    <div class="division-box">
+                                        <a href="#">黑曜石房地产集团</a>
+                                    </div>
+                                    <div class="division-btn-first">
+                                        <button class="layui-btn" id="addCustomerServiceGroupBtn">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="customerServiceDivisionalStructures">
+                                    <div class="division">
+                                        <div class="tab"></div>
+                                        <div class="division-box">
+                                            <a href="#">楼盘售后组&nbsp;&nbsp;&nbsp;</a>
+                                            <i>质量问题、退钱、买了房</i>
+                                        </div>
+                                        <div class="division-btn">
+                                            <button class="layui-btn editCustomerServiceGroupBtn">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger deteleCustomerServiceGroupBtn">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="division">
+                                        <div class="tab"></div>
+                                        <div class="division-box">
+                                            <a href="#">楼盘售前组&nbsp;&nbsp;&nbsp;</a>
+                                            <i>要买房、买房、想买房</i>
+                                        </div>
+                                        <div class="division-btn">
+                                            <button class="layui-btn editCustomerServiceGroupBtn">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger" data-click="delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="division">
+                                        <div class="tab"></div>
+                                        <div class="division-box">
+                                            <a href="#">广告投送组&nbsp;&nbsp;&nbsp;</a>
+                                            <i>咨询</i>
+                                        </div>
+                                        <div class="division-btn">
+                                            <button class="layui-btn editCustomerServiceGroupBtn">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger" data-click="delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="division">
+                                        <div class="tab"></div>
+                                        <div class="division-box">
+                                            <a href="#">贷款咨询组&nbsp;&nbsp;&nbsp;</a>
+                                            <i>资金、钱、按揭、贷款、首付</i>
+                                        </div>
+                                        <div class="division-btn">
+                                            <button class="layui-btn editCustomerServiceGroupBtn">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger" data-click="delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="addCustomerServiceGroupContent">
+        <form action="" class="layui-form" id="addCustomerServiceGroupForm">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">组名:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="groupName" placeholder="请输入内容" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签:</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="tag" id="keyWordInput" placeholder="请输入内容" value="">
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" type="button" id="addTag">添加</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <div class="tags" id="keyWords">
+                        <!-- <div class="tag">
+                            发热
+                            <i class="layui-icon tag-close-local">&#x1006;</i>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </template>
+</body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/layui/layui.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/masonry-docs.min.js" charset="utf-8"></script>
+<script src="js/src/admin/admin.js" charset="utf-8"></script>
+</html>

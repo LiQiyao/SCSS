@@ -1,0 +1,42 @@
+body{
+    background-image: url("../img/mbg.jpg");
+    /*background:#0f0f0f;*/
+    font-family: "Roboto",sans-serif;
+
+}
+.bottom span{
+    font-size: 120%;
+}
+.bottom a{
+    text-decoration: none;
+    color: #f8f8f8;
+}
+.bottom a:hover{
+    font-weight: bold;
+}
+.container{
+    margin-top: 3%;
+}
+.text-center{
+    color: #f8f8f8;
+}
+.form-box{
+    background: #e3e3e3;
+    border-radius: 4px;
+    margin-top: 40px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+.form-top{
+    background: #fbfbfb;
+    overflow: hidden;
+    border-radius: 4px;
+    padding: 5px 20px 15px 20px;
+}
+.form-top-right{
+    padding-top: 10px;
+}
+.form-body{
+    padding: 20px 20px 40px 20px;
+}

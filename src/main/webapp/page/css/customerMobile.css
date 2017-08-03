@@ -1,0 +1,84 @@
+#kfWindow{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#header{
+    height: 60px;
+    color: white;
+    background-color: #5FB878;
+    font-family: '黑体';
+    overflow: hidden;
+    line-height: 60px;
+}
+#header-title{
+    height: 60px;
+    font-size: 22px;
+    position: absolute;
+    left: calc(50% - 2em);
+}
+#header-back{
+    font-size: 18px;
+    position: absolute;
+    left: 10px;
+}
+#header-back > i{
+    font-size: 27px;
+}
+#header-rengong{
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+}
+#chatMain{
+    width: 100%;
+    height: 100%;
+}
+#chatMain-msgList{
+	height: calc(100% - 60px - 50px); /*-上部标题 -下部按钮区 -编辑器区*/
+	overflow: auto;
+	overflow-y: auto;
+}
+.chatMain-bottom{
+	height: 40px;
+	padding: 5px;
+}
+.chatMain-bottom button{
+	float: right;
+	width: 100px;
+}
+.chatMain-bottom-tip{
+	line-height: 40px;
+	float: right;
+	margin-right: 20px;
+	color: #212121;
+}
+
+.layim-chat-text hr{
+    margin:0 0;
+    background-color: #a5a5a5;
+}
+
+.questionPush{
+    cursor: pointer;
+    color: blue !important;
+}
+.questionPush:hover{
+    text-decoration: underline;
+}
+#inputBar{
+    height: 50px;
+    background-color: #EEEEEE;
+}
+#input{
+    height: 28px;
+    margin: 10px 0 10px 5px;
+    width: 80%;
+}
+.sendBtn{
+    height: 28px;
+    font-size: inherit;
+    width: calc(20% - 20px);
+}

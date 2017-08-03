@@ -1,0 +1,71 @@
+#bg{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url(../img/bg.jpg);
+    background-size: 100% 100%;
+    z-index: -9999;
+    overflow: hidden;
+}
+#wenzi{
+    position: absolute;
+    text-align: center;
+    top: 100px;
+    left: 200px;
+    color: rgba(251,251,251,0.9);
+    font-size: 3em;
+    font-family: '楷体'
+}
+#kfWindow{
+    display: none;
+}
+#chatMain{
+    width: 400px;
+    height: 600px;
+}
+#chatMain-msgList{
+	height: calc(100% - 50px - 145px); /*-上部标题 -下部按钮区 -编辑器区*/
+	overflow: auto;
+	overflow-y: auto;
+}
+.chatMain-bottom{
+	height: 40px;
+	padding: 5px;
+}
+.chatMain-bottom button{
+	float: right;
+	width: 100px;
+}
+.chatMain-bottom-tip{
+	line-height: 40px;
+	float: right;
+	margin-right: 20px;
+	color: #212121;
+}
+
+.layim-chat-text hr{
+    margin:0 0;
+    background-color: #a5a5a5;
+}
+
+.questionPush{
+    cursor: pointer;
+    color: blue !important;
+}
+.questionPush:hover{
+    text-decoration: underline;
+}
+#scoreWindow{
+    font-size: 30px;
+}
+.scoreWindow-starList{
+    padding-left: 60px;
+    padding-right: 60px;
+    line-height: 60px;
+}
+.golden{
+    color: goldenrod;
+    cursor: pointer;
+}

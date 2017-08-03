@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="js/layui/css/layui.css">
+	<link rel="stylesheet" href="css/layim.css">
+	<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+	<link rel="stylesheet" href="css/clientService.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/layui/layui.js"></script>
+	<script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src="js/echarts.min.js"></script>
+</head>
+
+<body>
+	<div style="overflow:hidden;">
+		<div class="header">
+			<img id="logo" src="img/logo.png">
+			<div class="headBar layui-form">
+				<span>欢迎您，客服人员：</span>
+				<span id="headBar-name">kefu009</span>
+				<input type="checkbox" name="onlineSwitch" lay-skin="switch" lay-text="在线|离线" checked>
+				<a href="#">登出</a>
+			</div>
+		</div>
+		<div class="leftNavBar">
+			<div id="navtab-chat" class="tab chosed"><i class="layui-icon icon">&#xe63a;</i></div>
+			<div id="navtab-dashboard" class="tab"><i class="layui-icon icon">&#xe628;</i></div>
+			<div id="navtab-knowledge" class="tab"><i class="layui-icon icon">&#xe62a;</i></div>
+			<div id="navtab-client" class="tab"><i class="layui-icon icon">&#xe613;</i></div>
+			<div id="navtab-setting" class="tab"><i class="layui-icon icon">&#xe620;</i></div>
+		</div>
+		<div id="outContent">
+			<div id="content" style="width:100%;height:100%;">
+				<div class="full" id="chatApp">
+					<div id="chatLeft">
+						<div id="chatLeft-top">
+							<blockquote class="layui-elem-quote" style="font-size: 18px">当前会话</blockquote>
+							<button class="layui-btn layui-btn-small" id="btn-newTalk" onclick="newTalk()"><i class="layui-icon">&#xe608;</i>接入新会话</button>
+						</div>
+						<div id="chatLeft-list">
+							<div class="chatLeft-list-item" v-for="conversation in conversationList" @click="chooseConversation(conversation)" :class="{'item-chosed': (currentConversation==conversation) }">
+								<img class="chatLeft-list-item-avatar" :src="conversation.avatar">
+								<div class="chatLeft-list-item-name">{{ nickNameManager[1][conversation.userId] }}</div>
+								<div class="chatLeft-list-item-time">{{ conversation.msgList.length-1 >=0 ? conversation.msgList[conversation.msgList.length-1].time.Format('hh:mm') :null
+									}}
+								</div>
+								<div class="chatLeft-list-item-msg">{{ conversation.msgList.length-1 >=0 ? conversation.msgList[conversation.msgList.length-1].content :null }}</div>
+								<div class="chatLeft-list-item-reddot" v-if="conversation.hasNewMsg"></div>
+							</div>
+
+						</div>
+					</div>
+					<div id="chatMain">
+						<div id="chatMain-head">
+							<img class="chatMain-head-avatar" :src="currentConversation==null ? 'img/tx.png' : currentConversation.avatar">
+							<span class="chatMain-head-name">{{ nickNameManager[1][currentConversation.userId] }}</span>
+							<div class="chatMain-head-btnGroup">
+								<button class="layui-btn layui-btn-primary layui-btn-small" onclick="openTransferWindow()">转接会话</button>
+								<button class="layui-btn layui-btn-danger layui-btn-small" @click="endConversation(currentConversation)">结束会话</button>
+							</div>
+						</div>
+						<div id="chatMain-msgList">
+							<div class="layim-chat-main">
+								<ul>
+									<li v-for="msg in currentConversation.msgList" :class="{'layim-chat-mine': !msg.fromClient }">
+										<div class="layim-chat-user">
+											<img src="img/tx.png"><cite>{{ msg.fromClient==0 ? null : nickNameManager[1][msg.senderId] }}<i>{{ msg.time.Format('yyyy-MM-dd hh:mm:ss') }}</i>{{ msg.fromClient==0 ? nickNameManager[0][msg.senderId] : null }}</cite>
+										</div>
+										<div class="layim-chat-text" v-html="msg.content">
+
+										</div>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+						<form class="layui-form">
+							<textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_editor"></textarea>
+						</form>
+						<div class="chatMain-bottom">
+							<button class="layui-btn" @click="sendChatMsg(currentConversation)">发送</button>
+							<div class="chatMain-bottom-tip">按Enter发送消息，Shift+Enter换行</div>
+						</div>
+					</div>
+					<div id="chatRight">
+						<div id="chatRight-a">
+
+							<div class="layui-tab layui-tab-card chatRight-tab" lay-filter="chatRight-a">
+								<ul class="layui-tab-title" id="chatRight-a-tab">
+									<li>用户资料</li>
+									<li class="layui-this" lay-id="tab-zhishiku">知识库</li>
+								</ul>
+								<div class="layui-tab-content rin-tab-content" id="chatRight-a-content">
+									<div class="layui-tab-item">
+										<div v-if="clientDetailManager[currentConversation.userId] != null">
+											<form class="layui-form layui-form-pane" action="">
+												<center><button type="button" onclick="openClientSearch();" class="layui-btn layui-btn-small layui-btn-radius layui-btn-primary"
+													    style="width:90%;">改变当前会话指向用户</button></center>
+												<hr>
+												<label class="layui-form-label rin-form-label">姓名</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].clientName"></input>
+												</div>
+
+
+												<label class="layui-form-label rin-form-label">性别</label>
+												<div class="layui-input-block rin-input-block">
+													<div style="height: 20px; line-height:22px; width: calc(100% - 2px); border: 1px solid #e6e6e6;">
+														<input type="radio" class="rin-radio" name="sex" value="1" title="男" style="display:initial" lay-ignore v-model="clientDetailManager[currentConversation.userId].sex"><span>男</span>
+														<input type="radio" class="rin-radio" name="sex" value="2" title="女" style="display:initial" lay-ignore v-model="clientDetailManager[currentConversation.userId].sex"><span>女</span>
+														<input type="radio" class="rin-radio" name="sex" value="0" title="未知" style="display:initial" lay-ignore v-model="clientDetailManager[currentConversation.userId].sex"><span>未知</span>
+													</div>
+												</div>
+
+
+												<label class="layui-form-label rin-form-label">电话</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].phoneNum"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">电子邮箱</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].email"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">微信</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].wx"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">QQ</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].qq"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">微博</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].weibo"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">淘宝</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].taobao"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">支付宝</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].alipay"></input>
+												</div>
+												<label class="layui-form-label rin-form-label">地址</label>
+												<div class="layui-input-block rin-input-block">
+													<input type="text" name="clientName" class="layui-input rin-input" v-model="clientDetailManager[currentConversation.userId].address"></input>
+												</div>
+
+												<div style="overflow: hidden;">
+													<div style="float: right;">
+														<button type="button" class="layui-btn layui-btn-small" @click="changeClientDetail(currentConversation)">更改</button>
+														<button type="button" class="layui-btn layui-btn-primary layui-btn-small" @click="resetClientDetail(currentConversation)">重置</button>
+													</div>
+												</div>
+											</form>
+											<fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+												<legend style="font-size: 16px;">已添加的标签</legend>
+												<div class="layui-field-box">
+													<ul class="tagList">
+														<li><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini" v-for="tag in clientDetailManager[currentConversation.userId].tagList"
+															    @click="removeTag(currentConversation,tag,clientDetailManager[currentConversation.userId])">{{ tag }}</button></li>
+													</ul>
+												</div>
+											</fieldset>
+											<fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+												<legend style="font-size: 16px;">可添加的标签</legend>
+												<div class="layui-field-box">
+													<ul class="tagList">
+														<li>
+															<button class="layui-btn layui-btn-radius layui-btn-normal layui-btn-mini" v-for="tag in clientDetailManager[currentConversation.userId].recommandTagList"
+															    @click="addTagRecommand(currentConversation,tag,clientDetailManager[currentConversation.userId])">{{ tag }}</button>
+															<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-mini" v-for="tag in clientDetailManager[currentConversation.userId].unusedTagList"
+															    @click="addTag(currentConversation,tag,clientDetailManager[currentConversation.userId])">{{ tag }}</button>
+														</li>
+													</ul>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+									<div class="layui-tab-item layui-show">
+										<div>
+											<div class="layui-input-inline" style="width: calc(80% - 6px);">
+												<input type="text" id="knowledgeFastSearchInput" name="keyword" placeholder="请输入关键词" class="layui-input" style="height: 30px;line-height: 30px;">
+											</div>
+											<button type="button" class="layui-btn layui-btn-small" style="width: 20%;" onclick="knowledgeFastSearch()"><i class="layui-icon icon" style="line-height: 25px;">&#xe615;</i></button>
+										</div>
+										<div>
+											<div class="fastKnowledgeItem" v-for="knowledge in currentConversation.knowledgeList" :style="{backgroundColor: knowledge.bgColor}"
+											    @click="clickKnowledge(knowledge.answer)">
+												<div class="fastKnowledgeItem-key"><span v-for="keyword in knowledge.keyWord">{{ keyword }}</span></div>
+												<div class="fastKnowledgeItem-info">{{ knowledge.answer }}</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+						<div id="chatRight-b">
+							<div class="layui-tab layui-tab-card chatRight-tab" lay-filter="chatRight-b">
+								<ul class="layui-tab-title">
+									<li class="layui-this" lay-id="tab-changyongyu">常用语</li>
+									<li>聊天记录</li>
+								</ul>
+								<div class="layui-tab-content rin-tab-content" id="chatRight-b-content">
+									<div class="layui-tab-item layui-show" id="chatRight-b-content-1">
+										<ul class="common-language">
+											<li v-for="commonLang in commonLangManager.commonLangList" @click="commonLangManager.send(commonLang)">{{ commonLang.content }}</li>
+										</ul>
+									</div>
+									<div class="layui-tab-item" id="chatRight-b-content-2">
+										<div class="chatHistory">
+											<div class="chatHistory-item" v-for="historyMsg in currentConversation.historyList">
+												<div class="chatHistory-item-title"><span>{{ nickNameManager[historyMsg.fromClient][historyMsg.senderId] }}</span><span class="chatHistory-item-time">{{ historyMsg.time.Format('yyyy-MM-dd hh:mm:ss') }}</span></div>
+												<div class="chatHistory-item-content">{{ historyMsg.content }}</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="full" style="display: none;" id="tongji">
+					<div class="tongji-top">
+						<img src="img/tx.png" class="tongji-top-avatar">
+						<div style="margin:10px 30px;float:left">
+							<div style="overflow:hidden;line-height:24px;margin-top:20px;">
+								<div style="float:left; margin-right:32px; font-size:24px;">售后组李刚</div>
+								<i class="fa fa-star fa-lg" style="color:#e3cf7a"></i>
+								<i class="fa fa-star fa-lg" style="color:#e3cf7a"></i>
+								<i class="fa fa-star fa-lg" style="color:#e3cf7a"></i>
+								<i class="fa fa-star fa-lg" style="color:#e3cf7a"></i>
+								<i class="fa fa-star-o fa-lg" style="color:#e3cf7a"></i>
+								<span style="margin-left:0.5em;">4.5分</span>
+							</div>
+							<div style="font-size:18px;margin-top:18px;">售后组</div>
+						</div>
+					</div>
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>今日统计</legend>
+						<div class="layui-field-box" style="overflow:hidden;">
+							<div style="overflow:hidden;">
+								<div class="overview-div">
+									<div class="overview-num-div panel-success">
+										<i class="fa fa-bar-chart pull-left"></i>
+										<span class="total">我的会话数/排名</span>
+										<span class="total-num">46/4</span>
+									</div>
+								</div>
+								<div class="overview-div">
+									<div class="overview-num-div panel-info">
+										<i class="fa fa-bar-chart pull-left"></i>
+										<span class="total">我的服务时长/排名</span>
+										<span class="total-num">11/3</span>
+									</div>
+								</div>
+								<div class="overview-div">
+									<div class="overview-num-div panel-primary">
+										<i class="fa fa-bar-chart pull-left"></i>
+										<span class="total">我的平均评价/排名</span>
+										<span class="total-num">4.9/1</span>
+									</div>
+								</div>
+								<div class="overview-div">
+									<div class="overview-num-div panel-warning">
+										<i class="fa fa-bar-chart pull-left"></i>
+										<span class="total">今日会话总数</span>
+										<span class="total-num">188</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>会话统计</legend>
+						<div class="layui-field-box">
+							<div class="panel rin-panel">
+								<div class="panel-heading">
+									<i class="fa fa-line-chart pull-left"></i> &nbsp;近24小时接待状况
+								</div>
+								<div class="panel-body">
+									<div id="dayInfo" style="width: 100%; height: 300px; float:left;"></div>
+								</div>
+							</div>
+							<div class="panel rin-panel">
+								<div class="panel-heading">
+									<i class="fa fa-line-chart pull-left"></i> &nbsp;近24小时接待状况
+								</div>
+								<div class="panel-body">
+									<div id="weekInfo" style="width: 100%; height: 300px; float:left;"></div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="full" style="display: none">ccc</div>
+				<div class="full" style="display: none">ddd</div>
+				<div class="full" style="display: none">
+					<div class="layui-tab layui-tab-card" lay-filter="demo">
+						<ul class="layui-tab-title">
+							<li class="layui-this">网站设置</li>
+							<li>用户管理</li>
+							<li>权限分配</li>
+							<li>商品管理</li>
+							<li>订单管理</li>
+						</ul>
+						<div class="layui-tab-content" style="height: 100px;">
+							<div class="layui-tab-item layui-show">1</div>
+							<div class="layui-tab-item">2</div>
+							<div class="layui-tab-item">3</div>
+							<div class="layui-tab-item">4</div>
+							<div class="layui-tab-item">5</div>
+							<div class="layui-tab-item">6</div>
+							<div class="layui-tab-item">7</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div id="notificationApp">
+				<div id="notification">
+					<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>{{ notificationList.length>0 ? notificationList[notificationList.length-1].title
+						: null }}</div>
+					<div class="notification-off" onclick="hideNotification()"><i class="layui-icon icon">&#x1006;</i></div>
+					<div class="notification-msg">{{ notificationList.length>0 ? notificationList[notificationList.length-1].notiContent : null }}</div>
+				</div>
+				<div id="notificationCenter">
+					<div class="notificationCenter-title">通知中心</div>
+					<div class="notification-off" onclick="closeNotificationCenter()"><i class="layui-icon icon">&#x1006;</i></div>
+					<hr style="margin:3px 0;">
+					<div class="notificationCenter-list">
+						<div class="notificationCenter-item" v-for="notification in notificationList">
+							<div class="notification-title"><i class="layui-icon icon" style="padding-right:5px;">&#xe60b;</i>{{ notification.title }}</div>
+							<div>{{ notification.notiContent }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="statusBar" id="statusBar">
+			<span>当前会话数：{{ serviceInfo.conversationCount }}</span>
+			<span>队列等待人数：{{ serviceInfo.queuePeopleCount }}</span>
+			<span>工号：{{ serviceInfo.employeeId }}</span>
+			<span>组别：{{ serviceInfo.groupName }}</span>
+			<span>内部名称：{{ serviceInfo.serviceName }}</span>
+			<span>对外昵称：{{ serviceInfo.nickName }}</span>
+			<div id="notificationCenterBtn" onclick="openNotificationCenter()">通知中心<span id="notificationNumTag">(0)</span></div>
+		</div>
+
+	</div>
+</body>
+<div id="clientSearch">
+	<div>
+		<div class="layui-input-inline" style="width: calc(80% - 6px);">
+			<input type="text" id="clientSearchKeyword" name="keyword" placeholder="请输入客户名称" class="layui-input">
+		</div>
+		<button type="button" onclick="searchClientByName()" class="layui-btn" style="width: 20%;"><i class="layui-icon icon" style="line-height: inital;"></i></button>
+	</div>
+	<ul id="clientSearch-list">
+		<li v-for="client in matchList" :class="{ 'clientSearch-li-chosed': selectedClient==client }" @click="selectClient(client)">
+			<i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">{{ client.name }}</span>
+		</li>
+		<!-- <li><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">李四</span></li>
+		<li class="clientSearch-li-chosed"><i class="layui-icon icon">&#xe612;</i><span class="clientSearch-li-name">高育良</span></li> -->
+	</ul>
+	<center>
+		<button type="button" class="layui-btn" style="width:45%;" @click="confirm(selectedClient)">确定</button>
+		<button type="button" class="layui-btn layui-btn-primary" style="width:45%;" @click="cancel()">取消</button>
+	</center>
+</div>
+
+<div id="transferWindow">
+	<div id="transfer-serviceList">
+		<div v-for="group in groupList">
+			<div class="transfer-item" :class="{'transfer-item-chosed': selected == group}" @click="chooseGroup(group)"><i class="layui-icon" @click="expand(group)">{{ group.expanded ? '&#xe625;' : '&#xe623;' }}</i><i class="layui-icon">&#xe622;</i>{{
+				group.name }}</div>
+			<div class="transfer-item" v-if="group.expanded" v-for="member in group.onlineMembers" @click="chooseMember(member)" :class="{'transfer-item-chosed': selected == member}">
+				<i class="layui-icon transfer-member-avatar">&#xe612;</i>{{ member.name }}
+			</div>
+		</div>
+	</div>
+	<center>
+		<button type="button" class="layui-btn" style="width:45%;" @click="confirm()">确定</button>
+		<button type="button" class="layui-btn layui-btn-primary" style="width:45%;" @click="cancel()">取消</button>
+	</center>
+</div>
+
+</html>
+
+<script src="js/src/service/serviceMessage.js"></script>
+<script src="js/src/service/clientService.js"></script>
+<script src="js/src/service/serviceHandle.js"></script>
+<script>
+	let isInChatTab = true;
+
+	let DoubleBarMode = true;
+
+	function hideNotification() {
+		$('#notification').animate({
+			right: "-400px"
+		});
+	}
+
+	function showNotification() {
+		$('#notification').animate({
+			right: "0px"
+		});
+		setTimeout(hideNotification, 5000);
+	}
+
+	function openNotificationCenter() {
+		$('#notificationCenter').animate({
+			bottom: "0px"
+		});
+	}
+
+	function closeNotificationCenter() {
+		$('#notificationCenter').animate({
+			bottom: "-600px"
+		});
+	}
+
+	function hideBBar() {
+		if (DoubleBarMode) {
+			$('#chatRight-b').hide();
+			// dom操作
+			$('#chatRight-a-content').append($('#chatRight-b-content-1'));
+			$('#chatRight-a-content').append($('#chatRight-b-content-2'));
+			$('#chatRight-a-tab').append($('<li id="tempTab1"></li>').text('常用语'));
+			$('#chatRight-a-tab').append($('<li id="tempTab2"></li>').text('聊天记录'));
+			$('#chatRight-a').width('100%');
+
+			DoubleBarMode = false;
+		}
+	}
+
+	function showBBar() {
+		if (DoubleBarMode == false) {
+			// dom操作
+			$('#chatRight-b-content').prepend($('#chatRight-b-content-2'));
+			$('#chatRight-b-content').prepend($('#chatRight-b-content-1'));
+			$('#tempTab1').remove();
+			$('#tempTab2').remove();
+			element.tabChange('chatRight-a', 'tab-zhishiku');
+			element.tabChange('chatRight-b', 'tab-changyongyu');
+			$('#chatRight-a').width('50%');
+			$('#chatRight-b').width('50%').show();
+
+			DoubleBarMode = true;
+		}
+
+	}
+
+	function checkRightWidth() {
+		if ($('#chatRight').width() < 400) {
+			hideBBar();
+		} else {
+			showBBar();
+		}
+	}
+
+
+
+	let leftNavBtnList = $('.leftNavBar').children();
+	for (let i = 0; i < leftNavBtnList.length; i++) {
+		leftNavBtnList[i].index = i;
+	}
+	leftNavBtnList.click(function () {
+		$('#content').children().hide();
+		$($('#content').children()[this.index]).show();
+		leftNavBtnList.attr("class", "tab");
+		$(this).addClass('chosed');
+		if (this.index == 0) {
+			isInChatTab = true;
+		} else {
+			isInChatTab = false;
+		}
+	});
+
+	//调大小
+	$('#chatLeft').resizable({
+		handles: 'e',
+		/*maxWidth:500,
+		minWidth:230,*/
+		resize: function (event, ui) {
+			$('#chatMain').width($('#content').width() - ui.size.width - $('#chatRight').width());
+		}
+	});
+	$('#chatMain').resizable({
+		handles: 'e',
+		/*maxWidth:($('#content').width()-$('#chatLeft').width())*0.7,
+		minWidth:450,*/
+		resize: function (event, ui) {
+			$('#chatRight').width($('#content').width() - ui.size.width - $('#chatLeft').width());
+			checkRightWidth();
+		}
+	});
+	$(window).resize(function () {
+		let bili = $('#content').width() / ($('#chatLeft').width() + $('#chatMain').width() + $('#chatRight').width());
+		$('#chatLeft').width($('#chatLeft').width() * bili);
+		$('#chatMain').width($('#chatMain').width() * bili);
+		$('#chatRight').width($('#chatRight').width() * bili);
+
+		checkRightWidth();
+	});
+	$('body').bind('resize', function () {
+		return false;
+	})
+
+	function openClientSearch() {
+		layerClientSearchIndex = layer.open({
+			type: 1,
+			content: $('#clientSearch'),
+			title: '改变当前会话指向用户',
+		});
+	}
+
+	function openTransferWindow() {
+		//拿数据
+		$.ajax({
+			type: "get",
+			url: "/api/onlineGroup",
+			dataType: "json",
+			success: function (data) {
+				transferApp.groupList = data;
+			}
+		})
+
+		layerTransferWindowIndex = layer.open({
+			type: 1,
+			content: $('#transferWindow'),
+			title: '转接会话',
+		});
+	}
+
+	//echarts 统计图表
+	let chart24h=echarts.init(document.getElementById('dayInfo'));
+	let chart24h_option = {
+		
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+			data:['个人','平台']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		},
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: [
+				'12:00',
+				'13:00',
+				'14:00',
+				'15:00',
+				'16:00',
+				'17:00',
+				'18:00',
+				'19:00',
+				'20:00',
+				'21:00',
+				'22:00',
+				'23:00',
+				'00:00',
+				'1:00',
+				'2:00',
+				'3:00',
+				'4:00',
+				'5:00',
+				'6:00',
+				'7:00',
+				'8:00',
+				'9:00',
+				'10:00',
+				'11:00',
+				]
+		},
+		yAxis: {
+			type: 'value',
+			name: '会话数'
+		},
+		series: [
+			{
+				name:'个人',
+				type:'line',
+				smooth:true,
+				data:[19,18,21,29,24,22,32,48,
+				49,41,37,18,11,0,0,0,
+				0,0,0,0,13,16,17,18]
+			},
+			{
+				name:'平台',
+				type:'line',
+				smooth:true,
+				data:[86, 95, 107, 139, 119, 101, 136, 204, 200, 174, 157, 91, 55, 0, 0, 0, 0, 0, 0, 0, 54, 83, 79, 96]
+			},
+		]
+	};
+	chart24h.setOption(chart24h_option);
+
+
+	let chartWeek=echarts.init(document.getElementById('weekInfo'));
+	let chartWeek_option = {
+		
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+			data:['平台会话数']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		},
+		xAxis: {
+			type: 'category',
+			name: '日期',
+			boundaryGap: false,
+			data: [
+				'8月3日',
+				'8月4日',
+				'8月5日',
+				'8月6日',
+				'8月7日',
+				'8月8日',
+				'8月9日',
+				]
+		},
+		yAxis: {
+			type: 'value',
+			name: '会话数'
+		},
+		series: [
+			{
+				name:'平台会话数',
+				type:'line',
+				smooth:true,
+				data:[186, 195, 107, 139, 119, 101, 136]
+			},
+		]
+	};
+	chartWeek.setOption(chartWeek_option);
+
+	$('#navtab-dashboard').click(function(){
+		chart24h.resize();
+		chartWeek.resize();
+	});
+	$(window).resize(function(){
+		chart24h.resize();
+		chartWeek.resize();
+	});
+</script>

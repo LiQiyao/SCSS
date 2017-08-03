@@ -53,6 +53,7 @@ public class ServiceWS implements WebSocket {
 
     @OnError
     public void onError(Throwable t){
+        System.out.println("service" +t);
         workTimeService.offline(serviceId);
         conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);
@@ -60,6 +61,7 @@ public class ServiceWS implements WebSocket {
 
     @OnClose
     public void onClose(){
+        System.out.println("Service close");
         workTimeService.offline(serviceId);
         conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理中心-登录</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/m_login_css.css" rel="stylesheet">
+</head>
+<body class="background">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 text-center">
+            <h1>管理员登录</h1>
+            <span>Manager Login Form</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6 form-box">
+            <div class="form-top">
+                <div class="form-top-left pull-left">
+                    <h3 class="">输入用户名及密码登录</h3>
+                    <h1></h1>
+                    <p>Enter your username and password to log on</p>
+                </div>
+                <div class="form-top-right pull-right">
+                    <h1 class="glyphicon glyphicon-pencil"></h1>
+                </div>
+
+            </div>
+            <div class="form-body">
+                <form action="/index/adminDoLogin" method="post">
+                <div class="form">
+
+                    <div class="form-group">
+                        <label for="InputUsername">账号</label>
+                        <input type="text" class="form-control" id="InputUsername"
+                               placeholder="Username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputUserPsd">密码</label>
+                        <input type="password" class="form-control" id="InputUserPsd" placeholder="Password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block btn-lg" id="btn_login">登录</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 text-center bottom">
+            <span>不是管理员？</span>
+            <a href="">返回首页</a>
+        </div>
+    </div>
+</div>
+<script src="js/html5shiv.min.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    //用户登录
+    var btn_login=$("#btn_login");
+    var InputUsername=$("#InputUsername");
+    InputUsername.val("");
+    var InputUserPsd=$("#InputUserPsd");
+    InputUserPsd.val("");
+    btn_login.attr("disabled", "disabled");
+    btn_login.attr("class", "btn btn-block btn-lg ");
+    $(document).bind('input propertychange', function(){
+        var user=InputUsername.val();
+        var psd=InputUserPsd.val();
+        if (user==""||psd=="") {
+            btn_login.attr("class", "btn btn-block btn-lg");
+            btn_login.attr("disabled","disabled");
+        }else {
+            btn_login.removeAttr("disabled");
+            btn_login.attr("class", "btn  btn-success btn-block btn-lg");
+        }
+    });
+</script>
+</body>
+</html>
