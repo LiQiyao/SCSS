@@ -49,7 +49,11 @@ public class ClientController {
         List<Client> clients = clientService.selectAllClient();
         for (int i = 0 ; i <clients.size();i++){
             boolean flag = false;
-            flag = clients.get(i).getName().contains(name);
+            if (clients.get(i).getName() != null){
+                flag = clients.get(i).getName().contains(name);
+            }else{
+             continue;   
+            }
             ClientAndFlag clientAndFlag = new ClientAndFlag();
             List<Flag> flags = clientService.selectAllFlag(clients.get(i).getClientId());
             if (flags != null){
