@@ -219,8 +219,19 @@
     </if>
   </update>
   <select id="selectClientAndServerChatLog" resultType="org.obsidian.scss.entity.ChatLogAndSendRecInfo">
-    SELECT
-	a.*,b.`name` as senderName, c.`name` as receiverName
+  SELECT
+	a.*,
+IF (
+	a.sender_id = 30,
+	b.`name` ,
+	c.`name`
+)AS senderName,
+
+IF (
+	a.sender_id = 30,
+	b.`name` ,
+	c.`name`
+)AS receiverName
 FROM
 	chat_log a,
 	client b,
@@ -240,8 +251,19 @@ AND((a.sender_id = #{clientId} AND a.receiver_id = #{serviceId}) OR (a.sender_id
 ORDER BY  a.time DESC
   </select>
   <select id="selectClientChatLog" resultType="org.obsidian.scss.entity.ChatLogAndSendRecInfo">
-    SELECT
-	a.*,b.`name` as senderName, c.`name` as receiverName
+   SELECT
+	a.*,
+IF (
+	a.sender_id = 30,
+	b.`name` ,
+	c.`name`
+)AS senderName,
+
+IF (
+	a.sender_id = 30,
+	b.`name` ,
+	c.`name`
+)AS receiverName
 FROM
 	chat_log a,
 	client b,
