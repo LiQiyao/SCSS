@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-04 15:21:26
+Date: 2017-08-04 22:03:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,7 +88,7 @@ CREATE TABLE `chat_log` (
   UNIQUE KEY `chat_log_id` (`chat_log_id`) USING BTREE,
   KEY `conversation_id` (`conversation_id`) USING BTREE,
   CONSTRAINT `chat_log_ibfk_1` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`conversation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=742 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=772 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chat_log
@@ -793,6 +793,36 @@ INSERT INTO `chat_log` VALUES ('738', '211', '36', '0', '0', '转接到人工客
 INSERT INTO `chat_log` VALUES ('739', '211', '0', '36', '0', '正在为您转接人工客服，请稍后……', '1501829434652', '0');
 INSERT INTO `chat_log` VALUES ('740', '211', '1', '36', '0', 'Hello，我是客服小李，请问有什么可以帮您得吗', '1501829439841', '0');
 INSERT INTO `chat_log` VALUES ('741', '211', '3', '36', '0', 'Hello，我是客服小王，请问有什么可以帮您得吗', '1501830097829', '0');
+INSERT INTO `chat_log` VALUES ('742', '211', '36', '3', '0', 'DSA', '1501831567382', '1');
+INSERT INTO `chat_log` VALUES ('743', '214', '36', '0', '0', '<p class=\"MsoNormal\"><span>我想知道一下你们公司的</span><span><font face=\"宋体\">楼盘</font> <font face=\"宋体\">信息</font></span><span>？</span></p>', '1501831670939', '1');
+INSERT INTO `chat_log` VALUES ('744', '214', '0', '36', '0', '您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。', '1501831671218', '0');
+INSERT INTO `chat_log` VALUES ('745', '214', '36', '0', '0', '<p class=\"MsoNormal\"><span>楼盘</span><span>的</span><span>位置</span><span>在</span><span>哪里</span><span>啊？</span></p>', '1501831737745', '1');
+INSERT INTO `chat_log` VALUES ('746', '214', '0', '36', '0', '在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1501831737760', '0');
+INSERT INTO `chat_log` VALUES ('747', '215', '37', '0', '0', '<p>我想知道一下你们公司的楼盘信息？</p>', '1501837094823', '1');
+INSERT INTO `chat_log` VALUES ('748', '215', '0', '37', '0', '您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。', '1501837094843', '0');
+INSERT INTO `chat_log` VALUES ('749', '215', '37', '0', '0', '<p>楼盘的位置在哪里啊？</p>', '1501837102271', '1');
+INSERT INTO `chat_log` VALUES ('750', '215', '0', '37', '0', '在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1501837102287', '0');
+INSERT INTO `chat_log` VALUES ('751', '215', '37', '0', '0', '<p>你们楼盘都有哪些户型啊，有大户型的吗？</p>', '1501837213330', '1');
+INSERT INTO `chat_log` VALUES ('752', '215', '0', '37', '0', '我们目前在售户型是78方（小户型）、120方（中户型）、135（大户型）方的都有，户型很方正的。', '1501837213816', '0');
+INSERT INTO `chat_log` VALUES ('753', '215', '37', '0', '0', '<p>你们公司的营业时间是什么时候，我想来看房？</p>', '1501837220511', '1');
+INSERT INTO `chat_log` VALUES ('754', '215', '0', '37', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501837220517', '0');
+INSERT INTO `chat_log` VALUES ('755', '215', '37', '0', '0', '我们公司楼盘的具体位置？', '1501837225019', '1');
+INSERT INTO `chat_log` VALUES ('756', '215', '0', '37', '0', '在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！', '1501837225034', '0');
+INSERT INTO `chat_log` VALUES ('757', '215', '37', '0', '0', '<p>你们公司的营业时间是什么时候，我想来看房？</p>', '1501837260727', '1');
+INSERT INTO `chat_log` VALUES ('758', '215', '0', '37', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501837260734', '0');
+INSERT INTO `chat_log` VALUES ('759', '215', '37', '0', '0', '转接到人工客服', '1501837265687', '1');
+INSERT INTO `chat_log` VALUES ('760', '215', '0', '37', '0', '正在为您转接人工客服，请稍后……', '1501837265696', '0');
+INSERT INTO `chat_log` VALUES ('761', '216', '38', '0', '0', '<p>我想买房， 首付多少啊？</p>', '1501837412678', '1');
+INSERT INTO `chat_log` VALUES ('762', '216', '0', '38', '0', '不同户型的首付不同的哦，我们的首付最低十几万起喔，很实惠。', '1501837412823', '0');
+INSERT INTO `chat_log` VALUES ('763', '216', '38', '0', '0', 'asdasd', '1501837416754', '1');
+INSERT INTO `chat_log` VALUES ('764', '216', '0', '38', '0', '不好意思喔，小Robot没有听懂您说的话，如果有需要的话您可以转接人工客服喔！', '1501837416759', '0');
+INSERT INTO `chat_log` VALUES ('765', '216', '38', '0', '0', '转接到人工客服', '1501837417711', '1');
+INSERT INTO `chat_log` VALUES ('766', '216', '0', '38', '0', '正在为您转接人工客服，请稍后……', '1501837417721', '0');
+INSERT INTO `chat_log` VALUES ('767', '216', '1', '38', '0', 'Hello，我是客服小李，请问有什么可以帮您得吗', '1501837446406', '0');
+INSERT INTO `chat_log` VALUES ('768', '216', '38', '1', '0', '大户型', '1501837533836', '1');
+INSERT INTO `chat_log` VALUES ('769', '216', '3', '38', '0', 'Hello，我是客服小王，请问有什么可以帮您得吗', '1501837706036', '0');
+INSERT INTO `chat_log` VALUES ('770', '216', '38', '3', '0', '<p>我想咨询房贷问题</p>', '1501837757142', '1');
+INSERT INTO `chat_log` VALUES ('771', '216', '3', '38', '0', '房贷的利息是根据您付的首付多少和其它情况来计算，一般情况下在4%左右。', '1501837767367', '0');
 
 -- ----------------------------
 -- Table structure for client
@@ -807,7 +837,7 @@ CREATE TABLE `client` (
   `sex` int(20) DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `client_id` (`client_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of client
@@ -847,6 +877,8 @@ INSERT INTO `client` VALUES ('33', '312', '123', '123', '123', '1');
 INSERT INTO `client` VALUES ('34', null, null, null, null, '0');
 INSERT INTO `client` VALUES ('35', null, null, null, null, '0');
 INSERT INTO `client` VALUES ('36', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('37', null, null, null, null, '0');
+INSERT INTO `client` VALUES ('38', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for client_flag
@@ -876,6 +908,8 @@ INSERT INTO `client_flag` VALUES ('33', '2');
 INSERT INTO `client_flag` VALUES ('30', '2');
 INSERT INTO `client_flag` VALUES ('35', '3');
 INSERT INTO `client_flag` VALUES ('36', '3');
+INSERT INTO `client_flag` VALUES ('37', '2');
+INSERT INTO `client_flag` VALUES ('38', '3');
 
 -- ----------------------------
 -- Table structure for common_language
@@ -920,7 +954,7 @@ CREATE TABLE `conversation` (
   KEY `service_id` (`service_id`),
   CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of conversation
@@ -931,11 +965,11 @@ INSERT INTO `conversation` VALUES ('3', '1', '1', '1499616000000', '150183081018
 INSERT INTO `conversation` VALUES ('4', '1', '4', '1499991300000', '1499991500000', '4');
 INSERT INTO `conversation` VALUES ('5', '1', '4', '1499991000000', '1500168287499', null);
 INSERT INTO `conversation` VALUES ('6', '2', '1', '1500518098602', '1501830810186', null);
-INSERT INTO `conversation` VALUES ('7', '2', '3', '1500518362645', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('7', '2', '3', '1500518362645', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('8', '2', '2', '1500523956671', '1501826614204', null);
 INSERT INTO `conversation` VALUES ('9', '2', '1', '1500524087661', '1501830810186', null);
 INSERT INTO `conversation` VALUES ('10', '2', '1', '1500524619044', '1501830810186', null);
-INSERT INTO `conversation` VALUES ('11', '2', '3', '1500524802896', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('11', '2', '3', '1500524802896', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('12', '2', '5', '1500524813836', '1501811609730', null);
 INSERT INTO `conversation` VALUES ('13', '2', '5', '1500524976193', '1501811609730', null);
 INSERT INTO `conversation` VALUES ('14', '2', '2', '1500525268658', '1501826614204', null);
@@ -955,15 +989,15 @@ INSERT INTO `conversation` VALUES ('27', '2', '1', '1500686219648', '15018308101
 INSERT INTO `conversation` VALUES ('28', '2', '5', '1500686695117', null, null);
 INSERT INTO `conversation` VALUES ('29', '3', '4', '1500692316501', null, null);
 INSERT INTO `conversation` VALUES ('30', '3', '1', '1500692614959', '1501830810186', null);
-INSERT INTO `conversation` VALUES ('31', '3', '3', '1500693172586', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('31', '3', '3', '1500693172586', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('32', '4', '4', '1500693191041', '1500871680075', null);
 INSERT INTO `conversation` VALUES ('33', '5', '2', '1500693366792', '1501826614204', null);
 INSERT INTO `conversation` VALUES ('34', '5', '1', '1500693497198', '1501830810186', null);
-INSERT INTO `conversation` VALUES ('35', '6', '3', '1500693742563', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('35', '6', '3', '1500693742563', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('36', '7', '4', '1500693978355', '1500871680075', null);
 INSERT INTO `conversation` VALUES ('37', '8', '4', '1500694214698', '1500871680075', null);
 INSERT INTO `conversation` VALUES ('38', '9', '5', '1500694355252', '1500871680075', null);
-INSERT INTO `conversation` VALUES ('39', '10', '3', '1500694809684', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('39', '10', '3', '1500694809684', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('40', '11', '2', '1500696874864', '1501826614204', null);
 INSERT INTO `conversation` VALUES ('41', '12', '0', '1500697057001', '1500871680075', null);
 INSERT INTO `conversation` VALUES ('42', '13', '0', '1500697202135', '1500871680075', null);
@@ -1105,7 +1139,7 @@ INSERT INTO `conversation` VALUES ('179', '29', '1', '1501733295890', '150183081
 INSERT INTO `conversation` VALUES ('180', '25', '0', '1501742622899', '1501742634334', null);
 INSERT INTO `conversation` VALUES ('181', '25', '0', '1501742627727', '1501742634121', null);
 INSERT INTO `conversation` VALUES ('182', '25', '0', '1501744245243', '1501755004013', null);
-INSERT INTO `conversation` VALUES ('183', '25', '3', '1501809474065', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('183', '25', '3', '1501809474065', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('184', '30', '0', '1501810063873', '1501811103692', null);
 INSERT INTO `conversation` VALUES ('185', '30', '0', '1501811522879', '1501811721747', null);
 INSERT INTO `conversation` VALUES ('186', '30', '0', '1501811721864', '1501815880565', null);
@@ -1127,15 +1161,18 @@ INSERT INTO `conversation` VALUES ('201', '33', '1', '1501823285077', '150183081
 INSERT INTO `conversation` VALUES ('202', '33', '1', '1501823409921', '1501830810186', null);
 INSERT INTO `conversation` VALUES ('203', '33', '1', '1501823463517', '1501830810186', null);
 INSERT INTO `conversation` VALUES ('204', '33', '1', '1501823886026', '1501830810186', null);
-INSERT INTO `conversation` VALUES ('205', '30', '3', '1501824169758', '1501830784393', '5');
+INSERT INTO `conversation` VALUES ('205', '30', '3', '1501824169758', '1501832168444', '5');
 INSERT INTO `conversation` VALUES ('206', '30', '0', '1501825361724', '1501826614372', null);
 INSERT INTO `conversation` VALUES ('207', '30', '0', '1501827583749', '1501827607934', null);
 INSERT INTO `conversation` VALUES ('208', '30', '0', '1501827596044', '1501827607795', null);
 INSERT INTO `conversation` VALUES ('209', '34', '0', '1501828537316', '1501828563350', null);
 INSERT INTO `conversation` VALUES ('210', '35', '1', '1501829220509', '1501830810186', '5');
-INSERT INTO `conversation` VALUES ('211', '36', '3', '1501829384643', '1501830784393', null);
+INSERT INTO `conversation` VALUES ('211', '36', '3', '1501829384643', '1501832168444', null);
 INSERT INTO `conversation` VALUES ('212', '35', '0', '1501830809873', '1501830852428', null);
-INSERT INTO `conversation` VALUES ('213', '35', '0', '1501830852543', null, null);
+INSERT INTO `conversation` VALUES ('213', '35', '0', '1501830852543', '1501832168610', null);
+INSERT INTO `conversation` VALUES ('214', '36', '0', '1501831646164', '1501832168488', null);
+INSERT INTO `conversation` VALUES ('215', '37', '0', '1501837054243', '1501837392284', null);
+INSERT INTO `conversation` VALUES ('216', '38', '3', '1501837406177', '1501839914828', null);
 
 -- ----------------------------
 -- Table structure for customer_service
@@ -1233,7 +1270,7 @@ CREATE TABLE `join_up` (
   KEY `access_id` (`access_id`) USING BTREE,
   CONSTRAINT `join_up_ibfk_1` FOREIGN KEY (`access_id`) REFERENCES `access` (`access_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `join_up_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of join_up
@@ -1450,6 +1487,9 @@ INSERT INTO `join_up` VALUES ('211', '1', '35', '1501829220178', '5080527028');
 INSERT INTO `join_up` VALUES ('212', '1', '36', '1501829384641', '8522433172');
 INSERT INTO `join_up` VALUES ('213', '1', '35', '1501830809867', '5080527028');
 INSERT INTO `join_up` VALUES ('214', '1', '35', '1501830852536', '5080527028');
+INSERT INTO `join_up` VALUES ('215', '1', '36', '1501831646138', '8522433172');
+INSERT INTO `join_up` VALUES ('216', '1', '37', '1501837054132', '4223850421');
+INSERT INTO `join_up` VALUES ('217', '1', '38', '1501837406093', '5511928648');
 
 -- ----------------------------
 -- Table structure for keyword
@@ -1587,6 +1627,29 @@ INSERT INTO `keyword_heat` VALUES ('39', '1501829319169');
 INSERT INTO `keyword_heat` VALUES ('9', '1501829329313');
 INSERT INTO `keyword_heat` VALUES ('39', '1501829429349');
 INSERT INTO `keyword_heat` VALUES ('9', '1501829434648');
+INSERT INTO `keyword_heat` VALUES ('42', '1501831670956');
+INSERT INTO `keyword_heat` VALUES ('41', '1501831670959');
+INSERT INTO `keyword_heat` VALUES ('44', '1501831737755');
+INSERT INTO `keyword_heat` VALUES ('45', '1501831737757');
+INSERT INTO `keyword_heat` VALUES ('41', '1501831737759');
+INSERT INTO `keyword_heat` VALUES ('42', '1501837094839');
+INSERT INTO `keyword_heat` VALUES ('41', '1501837094843');
+INSERT INTO `keyword_heat` VALUES ('45', '1501837102277');
+INSERT INTO `keyword_heat` VALUES ('44', '1501837102281');
+INSERT INTO `keyword_heat` VALUES ('41', '1501837102283');
+INSERT INTO `keyword_heat` VALUES ('50', '1501837213346');
+INSERT INTO `keyword_heat` VALUES ('53', '1501837213351');
+INSERT INTO `keyword_heat` VALUES ('41', '1501837213812');
+INSERT INTO `keyword_heat` VALUES ('48', '1501837225024');
+INSERT INTO `keyword_heat` VALUES ('44', '1501837225029');
+INSERT INTO `keyword_heat` VALUES ('41', '1501837225032');
+INSERT INTO `keyword_heat` VALUES ('9', '1501837265694');
+INSERT INTO `keyword_heat` VALUES ('49', '1501837412689');
+INSERT INTO `keyword_heat` VALUES ('39', '1501837412815');
+INSERT INTO `keyword_heat` VALUES ('9', '1501837417717');
+INSERT INTO `keyword_heat` VALUES ('53', '1501837533847');
+INSERT INTO `keyword_heat` VALUES ('50', '1501837533851');
+INSERT INTO `keyword_heat` VALUES ('65', '1501837757150');
 
 -- ----------------------------
 -- Table structure for knowledge
@@ -1683,7 +1746,7 @@ CREATE TABLE `notification` (
   KEY `not_id` (`not_id`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`nt_id`) REFERENCES `notification_type` (`nt_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`not_id`) REFERENCES `notification_object_type` (`not_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notification
@@ -1809,6 +1872,8 @@ INSERT INTO `notification` VALUES ('119', '1', '3', '3', '编号为30的客户�
 INSERT INTO `notification` VALUES ('120', '1', '3', '1', '编号为35的客户接入到会话中', '1501829357907');
 INSERT INTO `notification` VALUES ('121', '1', '3', '1', '编号为36的客户接入到会话中', '1501829439845');
 INSERT INTO `notification` VALUES ('122', '1', '3', '3', '编号为36的客户接入到会话中', '1501830097832');
+INSERT INTO `notification` VALUES ('123', '1', '3', '1', '编号为38的客户接入到会话中', '1501837446411');
+INSERT INTO `notification` VALUES ('124', '1', '3', '3', '编号为38的客户接入到会话中', '1501837706040');
 
 -- ----------------------------
 -- Table structure for notification_object_type
@@ -1913,7 +1978,7 @@ CREATE TABLE `work_time` (
   PRIMARY KEY (`work_time_id`),
   KEY `service_id` (`service_id`),
   CONSTRAINT `work_time_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `customer_service` (`service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of work_time
@@ -2111,4 +2176,6 @@ INSERT INTO `work_time` VALUES ('190', '1', '1501828988373', '1501828993249');
 INSERT INTO `work_time` VALUES ('191', '1', '1501828994219', '1501829201749');
 INSERT INTO `work_time` VALUES ('192', '1', '1501829316137', '1501830809741');
 INSERT INTO `work_time` VALUES ('193', '3', '1501829410490', '1501830784288');
-INSERT INTO `work_time` VALUES ('194', '3', '1501830784784', null);
+INSERT INTO `work_time` VALUES ('194', '3', '1501830784784', '1501832168365');
+INSERT INTO `work_time` VALUES ('195', '1', '1501836999388', null);
+INSERT INTO `work_time` VALUES ('196', '3', '1501837679402', null);

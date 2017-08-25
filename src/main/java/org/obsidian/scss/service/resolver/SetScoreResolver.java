@@ -39,5 +39,6 @@ public class SetScoreResolver implements ContentResolver {
         System.out.println("!!" + score + conversationId);
         System.out.println(conversationMapper + "!!");
         conversationMapper.updateScore(conversationId,score);
+        webSocket.setServiceId(0);
     }
 }
