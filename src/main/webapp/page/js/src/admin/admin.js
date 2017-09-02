@@ -598,6 +598,7 @@ function addCustomerServiceTr([searType, parameter])
                             <td>${tmp.password}</td>
                             <td>${tmp.autoMessage}</td>
                             <td>
+                                <button type="button" class="layui-btn layui-btn-small layui-btn-primary editCustomerService" groupId="${tmp.groupId}" serviceId="${tmp.serviceId}" name="">编辑</button>
                                 <button type="button" class="layui-btn layui-btn-small layui-btn-normal customerServiceChatLog" name="" serviceId="${tmp.serviceId}" serviceName="${tmp.name}" id="">聊天记录</button>
                             </td>
                         </tr>`)
@@ -844,90 +845,93 @@ $(document).on("click", "#searchCustomerServiceBtn", function()
     }
 )
 
-// $(document).on("click", ".editCustomerService", function()
-//     {
-//         var parentTr = $($(this).parents("tr").get(0));
-//         var serviceIdOld = $(this).attr("serviceId");
-//         var groupNameOld = $(parentTr.children().get(1)).text();
-//         var nameOld = $(parentTr.children().get(2)).text();
-//         var nicknameOld = $(parentTr.children().get(3)).text();
-//         var employeeIdOld = $(parentTr.children().get(4)).text();
-//         var autoMessageOld = $(parentTr.children().get(5)).text();
-//
-//         layui.use(['layer', 'form'], function()
-//             {
-//                 var layer = layui.layer;
-//                 var form = layui.form();
-//
-//                 layer.open(
-//                     {
-//                         title: "编辑人员",
-//                         content: $("#addCustomerServiceContent").html(),
-//                         area: ['800px', '600px'],
-//                         btn1: function(index)
-//                         {
-//                             var addCustomerServiceForm = $("#addCustomerServiceForm").get(0);
-//                             var name = addCustomerServiceForm.name.value;
-//                             var nickname = addCustomerServiceForm.nickname.value;
-//                             var employeeId = addCustomerServiceForm.employeeId.value;
-//                             var autoMessage = addCustomerServiceForm.autoMessage.value;
-//                             var personList = [];
-//                             personList.push(
-//                                 {
-//                                     "serviceId": serviceIdOld,
-//                                     "name": name,
-//                                     "groupId": groupId,
-//                                     "nickname": nickname,
-//                                     "employeeId": employeeId,
-//                                     "autoMessage": autoMessage
-//                                 }
-//                             )
-//
-//                             $.ajax(
-//                                 {
-//                                     url: ip + "addServerPerson" + ends,
-//                                     dataType: 'json',
-//                                     data: "personList=" + personList,
-//                                     type: 'post',
-//                                     success: function(data)
-//                                     {
-//                                         layer.msg(data.message);
-//                                     }
-//                                 }
-//                             )
-//
-//                             layer.close(index);
-//                             addCustomerServiceTr(['allCustom']);
-//                         }
-//                     }
-//                 )
-//
-//                 var formOld = $("#addCustomerServiceForm").get(0);
-//                 formOld.name.value = nameOld;
-//                 formOld.nickname.value = nicknameOld;
-//                 formOld.employeeId.value = employeeIdOld;
-//                 formOld.autoMessage.value = autoMessageOld;
-//
-//                 for(let i = 0; i < customerServiceGroup.length; i++)
-//                 {
-//                     if(customerServiceGroup[i] != undefined)
-//                     {
-//                         $("#chooseCustomerServiceGroup").append("<option value=" + i + ">" + customerServiceGroup[i] + "</option>");
-//                     }
-//                 }
-//                 $("#chooseCustomerServiceGroup option:contains(" + groupNameOld + ")").attr("selected", true);
-//
-//                 form.render();
-//
-//                 form.on('select(chooseCustomerServiceGroup)', function(data)
-//                     {
-//                         groupId = data.value;
-//                     }
-//                 );
-//             }
-//         );
-//     }
-// )
+$(document).on("click", ".editCustomerService", function()
+    {
+        var parentTr = $($(this).parents("tr").get(0));
+        var serviceIdOld = $(this).attr("serviceId");
+        var groupNameOld = $(parentTr.children().get(1)).text();
+        var nameOld = $(parentTr.children().get(2)).text();
+        var nicknameOld = $(parentTr.children().get(3)).text();
+        var employeeIdOld = $(parentTr.children().get(4)).text();
+        var autoMessageOld = $(parentTr.children().get(6)).text();
+        var groupId = $(this).attr("groupId");
+
+        layui.use(['layer', 'form'], function()
+            {
+                var layer = layui.layer;
+                var form = layui.form();
+
+                layer.open(
+                    {
+                        title: "编辑人员",
+                        content: $("#addCustomerServiceContent").html(),
+                        area: ['800px', '600px'],
+                        btn1: function(index)
+                        {
+                            var addCustomerServiceForm = $("#addCustomerServiceForm").get(0);
+                            var name = addCustomerServiceForm.name.value;
+                            var nickname = addCustomerServiceForm.nickname.value;
+                            var employeeId = addCustomerServiceForm.employeeId.value;
+                            var autoMessage = addCustomerServiceForm.autoMessage.value;
+                            var personList = [];
+                            personList.push(
+                                {
+                                    "serviceId": serviceIdOld,
+                                    "name": name,
+                                    "groupId": groupId,
+                                    "nickname": nickname,
+                                    "employeeId": employeeId,
+                                    "autoMessage": autoMessage,
+                                }
+                            );
+
+
+                            $.ajax(
+                                {
+                                    url: ip + "updateService" + ends,
+                                    dataType: 'json',
+                                    data: "personList=" + JSON.stringify(personList),
+                                    type: 'get',
+                                    success: function(data)
+                                    {
+                                        layer.msg(data.message);
+                                        flash();
+                                    }
+                                }
+                            )
+
+                            layer.close(index);
+                            addCustomerServiceTr(['allCustom']);
+                        }
+                    }
+                )
+
+                var formOld = $("#addCustomerServiceForm").get(0);
+                formOld.name.value = nameOld;
+                formOld.nickname.value = nicknameOld;
+                formOld.employeeId.value = employeeIdOld;
+                formOld.autoMessage.value = autoMessageOld;
+
+                for(let i = 0; i < customerServiceGroup.length; i++)
+                {
+                    if(customerServiceGroup[i] != undefined)
+                    {
+                        $("#chooseCustomerServiceGroup").append("<option value=" + i + ">" + customerServiceGroup[i] + "</option>");
+                    }
+                }
+                $("#chooseCustomerServiceGroup option:contains(" + groupNameOld + ")").attr("selected", true);
+
+                form.render();
+
+                form.on('select(chooseCustomerServiceGroup)', function(data)
+                    {
+                        groupId = data.value;
+                    }
+                );
+            }
+        );
+    }
+)
 
 $(document).on("click", ".customerServiceChatLog", function()
     {
@@ -969,6 +973,10 @@ $(document).on("click", ".customerServiceChatLog", function()
                                 for(let i = 0; i < data.length; i++)
                                 {
                                     var tmp = data[i];
+                                    if(tmp.name == null)
+                                    {
+                                        tmp.name = "匿名用户";
+                                    }
                                     $clientList.append(`
                                         <div class="chat-list-item" serviceId="${serviceId}" clientId="${tmp.clientId}">
                                             <img class="chat-list-item-img" src="img/tx.png" alt="">
@@ -995,7 +1003,7 @@ $(document).on("click", ".chat-list-item", function()
         $.ajax(
             {
                 url: ip + "clientAndServerChatLog" + ends,
-                type: 'post',
+                type: 'get',
                 data: "serviceId=" + serviceId + "&clientId=" + clientId,
                 dataType: 'json',
                 success: function(data)
@@ -1004,7 +1012,7 @@ $(document).on("click", ".chat-list-item", function()
                     {
                         data = data.data;
                         var $customerServiceChatLog = $("#customerServiceChatLog");
-                        $customerServiceChatLog.html(" ");
+                        $customerServiceChatLog.html("");
                         for(let i = 0; i < data.length; i++)
                         {
                             var tmp = data[i];
@@ -1363,7 +1371,7 @@ function addPersonalPerformanceTr(startTime, endsTime)
                 data:
                 {
                     'startTime': startTime,
-                    'stoptime': endsTime
+                    'stopTime': new Date(+endsTime + 24 * 60 * 60 * 1000).getTime()
                 },
                 dataType: 'json',
                 success: function(data)
@@ -1372,18 +1380,45 @@ function addPersonalPerformanceTr(startTime, endsTime)
                     {
                         data = data.data;
                         var $personalPerformance = $("#personalPerformance");
-                        // $personalPerformance.html(" ");
+                        $personalPerformance.html("");
                         for(let i = 0; i < data.length; i++)
                         {
                             var tmp = data[i];
-                            var time = new Date(tmp.timeAndRanks[0].tottime);
+                            var conNumAndRanks = tmp.conNumAndRanks[0];
+                            if(conNumAndRanks == null)
+                            {
+                                conNumAndRanks = {};
+                                conNumAndRanks.num = "暂无";
+                                conNumAndRanks.numrank = "暂无";
+                            }
+                            var scoreAndRanks = tmp.scoreAndRanks[0];
+                            if(scoreAndRanks == null)
+                            {
+                                scoreAndRanks = {};
+                                scoreAndRanks.grades = "暂无";
+                                scoreAndRanks.gradesrank = "暂无";
+                            }
+                            var timeAndRanks = tmp.timeAndRanks[0];
+                            if(timeAndRanks == null)
+                            {
+                                timeAndRanks = {};
+                                timeAndRanks.timerank = "暂无";
+                                var tmpTime = new Date();
+                                tmpTime.setHours(0);
+                                tmpTime.setMinutes(0);
+                                tmpTime.setSeconds(0);
+                                tmpTime.setMilliseconds(0);
+                                timeAndRanks.tottime = tmpTime.getTime();
+                            }
+
+                            var time = new Date(timeAndRanks.tottime);
                             $personalPerformance.append(`
                                 <tr>
                                     <td>${tmp.customerService.name}</td>
                                     <td>${tmp.serviceGroup.name}</td>
-                                    <td>50&nbsp;&nbsp;/&nbsp;&nbsp;5</td>
-                                    <td>${[jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(":")}&nbsp;&nbsp;/&nbsp;&nbsp;${tmp.timeAndRanks[0].timerank}</td>
-                                    <td>4.8&nbsp;&nbsp;/&nbsp;&nbsp;1</td>
+                                    <td>${conNumAndRanks.num}&nbsp;&nbsp;/&nbsp;&nbsp;${conNumAndRanks.numrank}</td>
+                                    <td>${[jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(":")}&nbsp;&nbsp;/&nbsp;&nbsp;${timeAndRanks.timerank}</td>
+                                    <td>${scoreAndRanks.grades}&nbsp;&nbsp;/&nbsp;&nbsp;${scoreAndRanks.gradesrank}</td>
                                 </tr>`);
                         }
                     }
@@ -1545,7 +1580,6 @@ function addKeyWordDiv(value, flag)
 
 function appendKeyWord()
 {
-    console.log(newKeyWords);
     var tagsDiv = "";
     for(let i = 0; i < newKeyWords.length; i++)
     {
@@ -1560,12 +1594,14 @@ $(document).on("click", ".editKnowledge", function()
         var quesOld = parentDiv.find("div[ques]").attr("ques");
         var ansOld = parentDiv.find("div[ans]").attr("ans");
         var levelOld = parentDiv.find("div[level]").attr("level");
+        var knowledgeId = $(this).attr("knowledgeId");
         newKeyWords = [];
         parentDiv.find(".tag").each(function()
             {
                 newKeyWords.push($(this).text().trim());
             }
-        )
+        );
+        console.log(newKeyWords);
 
         layui.use(['layer', 'form'], function()
             {
@@ -1585,18 +1621,26 @@ $(document).on("click", ".editKnowledge", function()
 
                             $.ajax(
                                 {
-                                    url: ip + "addKnowledge" + ends,
-                                    type: 'post',
-                                    data: "question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + level,
+                                    url: ip + "updateKnowledge" + ends,
+                                    type: 'get',
+                                    data: JSON.stringify(
+                                            {
+                                                "knowledgeId": knowledgeId,
+                                                "question": ques,
+                                                "ans": ans,
+                                                "tag": newKeyWords.join(" "),
+                                                "level": levelOld,
+                                            }
+                                        ),
                                     dataType: 'json',
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
 
-                            addKnowledgeBaseDiv(['knowledgeSearch', 'keyword=""']);
                             newKeyWords = [];
                         },
                         cancle: function()
@@ -1618,7 +1662,7 @@ $(document).on("click", ".editKnowledge", function()
                 form.on('radio(level)', function(data)
                     {
                         console.log(data.value); //被点击的radio的value值
-                        level = data.value;
+                        levelOld = data.value;
                     }
                 )
             }
@@ -1845,94 +1889,94 @@ var commonLanguage =
 
 function addCommonLanguageTr()
 {
-    // $.ajax(
-    //     {
-    //         // url: ip + searType + ends,
-    //         url: ip + "allCommonLanguage" + ends,
-    //         dataType: 'json',
-    //         // data: parameter,
-    //         type: "get",
-    //         success: function(data)
-    //         {
-    //             if(data && data.status >= 1)
-    //             {
-    //                 // $("#commonLanguage").html(" ");
-    //                 data = data.data;
-    //                 for(let i = 0; i < data.length; i++)
-    //                 {
-    //                     let tmp = data[i];
-    //                     $("#commonLanguage").append(`<tr>
-    //                         <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonLanguageId="${tmp.commonLanguageId}"></td>
-    //                         <td>${tmp.content}</td>
-    //                         <td>${tmp.frequency}</td>
-    //                     </tr>`);
-    //                 }
-    //             }
-    //
-    //
-    //         }
-    //     }
-    // )
-
-    layui.use('form', function()
+    $.ajax(
         {
-            var form = layui.form();
-
-            //全选
-            form.on('checkbox(allChooseCommonLanguage)', function(data)
+            // url: ip + searType + ends,
+            url: ip + "commonLanguage" + ends,
+            dataType: 'json',
+            // data: parameter,
+            type: "get",
+            success: function(data)
+            {
+                if(data && data.status >= 1)
                 {
-                    commonLanguageDetele = [];
-                    var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-                    child.each(function(index, item)
-                        {
-                            item.checked = data.elem.checked;
-                            if(data.elem.checked)
+                    $("#commonLanguage").html("");
+                    data = data.data;
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        let tmp = data[i];
+                        $("#commonLanguage").append(`<tr>
+                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonLanguageId="${tmp.commonLanguageId}"></td>
+                            <td>${tmp.content}</td>
+                            <td>${tmp.frequency}</td>
+                        </tr>`);
+                    }
+                }
+
+                layui.use('form', function()
+                    {
+                        var form = layui.form();
+
+                        //全选
+                        form.on('checkbox(allChooseCommonLanguage)', function(data)
                             {
-                                if(index != 0)
+                                commonLanguageDetele = [];
+                                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                                child.each(function(index, item)
+                                    {
+                                        item.checked = data.elem.checked;
+                                        if(data.elem.checked)
+                                        {
+                                            if(index != 0)
+                                            {
+                                                commonLanguageDetele.push(
+                                                    {
+                                                        "id": $(item).attr("commonLanguageId"),
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                );
+                                form.render('checkbox');
+                            }
+                        );
+
+                        form.on('checkbox(commonLanguage)', function(data)
+                            {
+                                var commonLanguageId = $(data.elem).attr("commonLanguageId");
+
+                                if(data.elem.checked)
                                 {
                                     commonLanguageDetele.push(
                                         {
-                                            "id": $(item).attr("commonLanguageId"),
+                                            "id": commonLanguageId,
                                         }
                                     )
                                 }
+                                else
+                                {
+                                    for(let  i = 0; i < commonLanguageDetele.length; i++)
+                                    {
+                                        if(commonLanguageDetele[i].id == commonLanguageId)
+                                        {
+                                            commonLanguageDetele.splice(i, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                                form.render('checkbox');
                             }
-                        }
-                    );
-                    form.render('checkbox');
-                }
-            );
+                        );
 
-            form.on('checkbox(commonLanguage)', function(data)
-                {
-                    var commonLanguageId = $(data.elem).attr("commonLanguageId");
-
-                    if(data.elem.checked)
-                    {
-                        commonLanguageDetele.push(
-                            {
-                                "id": commonLanguageId,
-                            }
-                        )
+                        form.render('checkbox');
                     }
-                    else
-                    {
-                        for(let  i = 0; i < commonLanguageDetele.length; i++)
-                        {
-                            if(commonLanguageDetele[i].id == commonLanguageId)
-                            {
-                                commonLanguageDetele.splice(i, 1);
-                                break;
-                            }
-                        }
-                    }
-                    form.render('checkbox');
-                }
-            );
-
-            form.render('checkbox');
+                );
+            }
         }
-    );
+    )
+
+
 }
 
 $(document).on("click", "#deleteCommonLanguageBtn", function()
@@ -1949,13 +1993,14 @@ $(document).on("click", "#deleteCommonLanguageBtn", function()
                     {
                         $.ajax(
                             {
-                                type: 'post',
+                                type: 'get',
                                 url: ip + "deleteCommonLanguage" + ends,
                                 dataType: 'json',
                                 data: "deleteId=" + commonLanguageDetele,
                                 success: function(data)
                                 {
                                     layer.msg(data.message);
+                                    flash();
                                 }
                             }
                         )
@@ -1988,17 +2033,18 @@ $(document).on("click", "#addCommonLanguageBtn", function()
                         btn1: function()
                         {
                             var addCommonLanguageForm = $("#addCommonLanguageForm").get(0);
-                            var content = addCommonLanguageForm.content;
+                            var content = addCommonLanguageForm.content.value;
 
                             $.ajax(
                                 {
                                     url: ip + "addCommonLanguage" + ends,
-                                    type: 'post',
+                                    type: 'get',
                                     data: "content=" + content,
                                     dataType: 'json',
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
@@ -2057,25 +2103,30 @@ function addClientTr(parameter)
                 if(data && data.status >= 1)
                 {
                     data = data.data;
-                    $("#client").html(" ");
+                    $("#client").html("");
                     for(let i = 0; i < data.length; i++)
                     {
                         var tmp = data[i];
-                        if(tmp.flags == 1)
+                        var flags = tmp.flags;
+                        var flagsTmp = [];
+                        for(let j = 0; j < flags.length; j++)
                         {
+                            flagsTmp.push(flags[j].name);
+                        }
                             tmp = tmp.client;
-                            $("#client").append(`<tr>
-                                <td>${tmp.name}</td>
-                                <td>${tmp.sex}</td>
-                                <td>${tmp.address}</td>
-                                <td>${tmp.telephone}</td>
-                                <td>${tmp.email}</td>
+
+                        $("#client").append(`<tr>
+                                <td>${tmp.name?tmp.name:"未知"}</td>
+                                <td>${tmp.sex?tmp.sex:"未知"}</td>
+                                <td>${tmp.address?tmp.address:"未知"}</td>
+                                <td>${flagsTmp.join("、")}</td>
+                                <td>${tmp.telephone?tmp.telephone:"未知"}</td>
+                                <td>${tmp.email?tmp.email:"未知"}</td>
                                 <td>
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientId="${tmp.clientId}" clientName="${tmp.name}" name="" id="">聊天记录</button>
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientId="${tmp.clientId}" name="" id="">详细信息</button>
                                 </td>
                             </tr>`);
-                        }
                     }
                 }
             }
@@ -2330,6 +2381,7 @@ $(document).on("click", "#addAdvertisementBtn", function()
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
@@ -2376,7 +2428,7 @@ $(document).on("click", "#deleteAdvertisementBtn", function()
                         )
 
                         advertisementDetele = [];
-                        addAdvertisement(['advertisement']);
+                        flash();
                     },
                     function()
                     {
@@ -2412,8 +2464,55 @@ var notice =
 
     'chart': function()
     {
-
+        addNoticeTr();
     }
+}
+
+function addNoticeTr() {
+    $.ajax(
+        {
+            url: ip + "notification" + ends,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if(data && data.status >= 1)
+                {
+                    data = data.data;
+                    var $notice = $("#notice");
+                    $notice.html("");
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        var tmp = data[i];
+                        var notification = tmp.notification;
+                        var getMessageObject = tmp.getMessageObject;
+                        var getMessageName;
+                        var not = noticeObjTypeArray[notification.notId];
+                        var nt = noticeTypeArray[notification.ntId];
+                        var content = notification.content;
+                        var time = new Date(notification.time);
+
+                        if(typeof getMessageObject == "object")
+                        {
+                            getMessageName = getMessageObject.name;
+                        }
+                        else
+                        {
+                            getMessageName = getMessageObject;
+                        }
+
+                        $notice.append(`
+                            <tr>
+                                <td>${getMessageName}</td>
+                                <td>${not}</td>
+                                <td>${nt}</td>
+                                <td>${[time.getFullYear(), jia0(time.getMonth() + 1), jia0(time.getDate())].join('-') + ' ' + [jia0(time.getHours()), jia0(time.getMinutes()), jia0(time.getSeconds())].join(':')}</td>
+                                <td>${content}</td>
+                            </tr>`)
+                    }
+                }
+            }
+        }
+    )
 }
 
 $(document).on("click", "#addNoticeBtn", function()
@@ -2471,7 +2570,7 @@ $(document).on("click", "#addNoticeBtn", function()
                             $.ajax(
                                 {
                                     url: ip + "addNotification" + ends,
-                                    type: 'post',
+                                    type: 'get',
                                     data:
                                     {
                                         'ntId': 2,
@@ -2510,6 +2609,7 @@ $(document).on("click", "#addNoticeBtn", function()
                         var $chooseObjGroupDiv = $("#chooseObjGroupDiv");
                         if(noticeObjType == 1)
                         {
+                            objId = 1;
                             $chooseObjPersonDiv.hide();
                             $chooseObjGroupDiv.hide();
                         }
@@ -2636,7 +2736,7 @@ function addCustomerServiceDivisionalStructureDiv()
                         {
                             groupWordsTmp.push(groupWords[j].word);
                         }
-                        console.log(groupWordsTmp);
+
                         $("#customerServiceDivisionalStructures").append(`
                             <div class="division">
                                 <div class="tab"></div>
@@ -2645,10 +2745,10 @@ function addCustomerServiceDivisionalStructureDiv()
                                     <i>${groupWordsTmp.join("、")}</i>
                                 </div>
                                 <div class="division-btn">
-                                    <button class="layui-btn editCustomerServiceDivisionalStructure" groupId="${i}">
+                                    <button class="layui-btn editCustomerServiceDivisionalStructureBtn" groupId="${i}">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="layui-btn layui-btn-danger deleteCustomerServiceDivisionalStructure" groupId="${i}">
+                                    <button class="layui-btn layui-btn-danger deleteCustomerServiceDivisionalStructureBtn" groupId="${i}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
@@ -2658,14 +2758,6 @@ function addCustomerServiceDivisionalStructureDiv()
             }
         }
     )
-
-    for(let i = 0; i < customerServiceGroup.length; i++)
-    {
-        if(customerServiceGroup[i] != undefined)
-        {
-
-        }
-    }
 }
 
 $(document).on("click", "#addCustomerServiceGroupBtn", function()
@@ -2681,6 +2773,30 @@ $(document).on("click", "#addCustomerServiceGroupBtn", function()
                         title: '添加组别',
                         content: $("#addCustomerServiceGroupContent").html(),
                         area: ['600px', '400px'],
+                        btn1: function () {
+                            var addCustomerServiceGroupForm = $("#addCustomerServiceGroupForm").get(0);
+                            var groupName = addCustomerServiceGroupForm.groupName.value;
+
+                            $.ajax(
+                                {
+                                    url: ip + "addGroup" + ends,
+                                    type: 'get',
+                                    data:
+                                        {
+                                            'groupName': groupName,
+                                            'groupTag': newKeyWords.join(" "),
+                                        },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if(data && data.status >= 1)
+                                        {
+                                            layer.msg(data.message);
+                                            flash();
+                                        }
+                                    }
+                                }
+                            )
+                        }
                     }
                 )
 
@@ -2690,7 +2806,7 @@ $(document).on("click", "#addCustomerServiceGroupBtn", function()
     }
 )
 
-$(document).on("click", ".editCustomerServiceGroupBtn", function()
+$(document).on("click", ".editCustomerServiceDivisionalStructureBtn", function()
     {
         var $parentDiv = $(this).parents(".division-btn").prev();
         var groupName = $parentDiv.children("a").text();
@@ -2719,3 +2835,41 @@ $(document).on("click", ".editCustomerServiceGroupBtn", function()
         )
     }
 )
+
+$(document).on("click", ".deleteCustomerServiceDivisionalStructureBtn", function ()
+    {
+        var groupId = $(this).attr("groupId");
+        layui.use(['layer'], function()
+            {
+                var layer = layui.layer;
+
+                layer.confirm('确认删除？',
+                    {
+                        icon: 0
+                    },
+                    function()
+                    {
+                        $.ajax(
+                            {
+                                type: 'get',
+                                url: ip + "deleteGroupById" + ends,
+                                dataType: 'json',
+                                data: "groupId=" + groupId,
+                                success: function(data)
+                                {
+                                    layer.msg(data.message);
+                                    flash();
+                                }
+                            }
+                        )
+
+                        advertisementDetele = [];
+                    },
+                    function()
+                    {
+                        // layer.msg("no");
+                    }
+                )
+            }
+        )
+})

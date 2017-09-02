@@ -67,6 +67,35 @@ public class KeyWordAndKnowledgeManagementController {
         return show;
     }
     
+    @RequestMapping("addKnowledgeTag")
+    @ResponseBody
+    public Show addKnowledgeTag(@RequestParam("tagName") String tagName,@RequestParam("knowledgeId") int knowledgeId){
+        Show show = new Show();
+        int flag = 0;
+        org.obsidian.scss.entity.Keyword keyword = keywordService.selectByValue(tagName);
+        if (keyword==null) {
+                KnowledgeKeyword knowledgeKeyword = new KnowledgeKeyword();
+                knowledgeKeyword.setKnowledgeId(knowledgeId);
+                keywordService.insertKeyword(tagName);
+                int keyId = keywordService.selectByValue(tagName).getKeywordId();
+                knowledgeKeyword.setKeywordId(keyId);
+                flag = knowledgeKeywordService.insert(knowledgeKeyword);
+            }else {
+                KnowledgeKeyword knowledgeKeyword = new KnowledgeKeyword();
+                knowledgeKeyword.setKnowledgeId(knowledgeId);
+                int keyId = keywordService.selectByValue(tagName).getKeywordId();
+                knowledgeKeyword.setKeywordId(keyId);
+                flag = knowledgeKeywordService.insert(knowledgeKeyword);
+            }
+        if (flag==0){
+            show.setStatus(0);
+            show.setMessage("添加失败");
+        }else{
+            
+        }
+        return show;
+    }
+    
     @RequestMapping("deleteKnowledgeTag")
     @ResponseBody
     public Show deleteKnowledgeTag(@RequestParam("tagName") String tagName,@RequestParam("knowledgeId") int knowledgeId){
@@ -116,6 +145,7 @@ public class KeyWordAndKnowledgeManagementController {
     public Show updateKnowledge(@RequestParam("knowledge") String knowledgeStr){
         Show show = new Show();
         Gson gson = new Gson();
+        System.out.println(knowledgeStr);
         Knowledge knowledge = gson.fromJson(knowledgeStr,new TypeToken<Knowledge>(){}.getType());
         int res = knowledgeService.updateKnowledge(knowledge);
         if (res == 0){

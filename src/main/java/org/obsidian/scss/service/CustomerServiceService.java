@@ -14,7 +14,7 @@ public interface CustomerServiceService {
     int deleteCustomerService(int serviceId);
 
     int updateCustomerService(int serviceId,String name,int groupId,String nickName,
-                              String employeeId,String autoMessage,int isDimission);
+                              String employeeId,String autoMessage);
 
     List<CustomerService> selectAllCustomerService();
 

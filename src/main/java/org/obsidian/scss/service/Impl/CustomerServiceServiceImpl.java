@@ -65,7 +65,7 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
      */
     @Transactional
     public int updateCustomerService(int serviceId,String name,int groupId,String nickName,
-                                     String employeeId,String autoMessage,int isDimission){
+                                     String employeeId,String autoMessage){
         CustomerService customerService = new CustomerService();
         customerService.setServiceId(serviceId);
         customerService.setName(name);
@@ -73,12 +73,12 @@ public class CustomerServiceServiceImpl implements CustomerServiceService {
         customerService.setNickname(nickName);
         customerService.setEmployeeId(employeeId);
         customerService.setAutoMessage(autoMessage);
-        customerService.setIsDimission(isDimission);
+        //customerService.setIsDimission(isDimission);
         CustomerServiceExample example = new CustomerServiceExample();
         CustomerServiceExample.Criteria criteria = example.createCriteria();
         criteria.andServiceIdEqualTo(serviceId);
         System.out.println(customerService.getIsDimission() + "xxxxxxxxxxxx");
-        customerServiceMapper.updateDimission(serviceId);
+        //customerServiceMapper.updateDimission(serviceId);
         int updateSum = customerServiceMapper.updateByExample(customerService,example);
         return updateSum;
 
