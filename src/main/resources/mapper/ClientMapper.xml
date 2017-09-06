@@ -195,4 +195,20 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+ 
+  <select id="selectClientDetail" resultType="org.obsidian.scss.entity.ClientAndImlInfo">
+    SELECT
+        client.*,
+        access.access_id,
+        access.`name` as accessName
+    FROM
+        client,
+        access,
+        join_up
+    WHERE
+        client.client_id = join_up.client_id
+    AND join_up.access_id = access.access_id
+    AND client.client_id = #{clientId}
+  </select>
 </mapper>

@@ -598,7 +598,7 @@ function addCustomerServiceTr([searType, parameter])
                             <td>${tmp.password}</td>
                             <td>${tmp.autoMessage}</td>
                             <td>
-                                <button type="button" class="layui-btn layui-btn-small layui-btn-primary editCustomerService" name="">编辑</button>
+                                <button type="button" class="layui-btn layui-btn-small layui-btn-primary editCustomerService" groupId="${tmp.groupId}" serviceId="${tmp.serviceId}" name="">编辑</button>
                                 <button type="button" class="layui-btn layui-btn-small layui-btn-normal customerServiceChatLog" name="" serviceId="${tmp.serviceId}" serviceName="${tmp.name}" id="">聊天记录</button>
                             </td>
                         </tr>`)
@@ -854,7 +854,7 @@ $(document).on("click", ".editCustomerService", function()
         var nicknameOld = $(parentTr.children().get(3)).text();
         var employeeIdOld = $(parentTr.children().get(4)).text();
         var autoMessageOld = $(parentTr.children().get(6)).text();
-        var groupId;
+        var groupId = $(this).attr("groupId");
 
         layui.use(['layer', 'form'], function()
             {
@@ -882,7 +882,6 @@ $(document).on("click", ".editCustomerService", function()
                                     "nickname": nickname,
                                     "employeeId": employeeId,
                                     "autoMessage": autoMessage,
-                                    "isDimission": 0,
                                 }
                             );
 
@@ -1526,7 +1525,6 @@ function addKnowledgeBaseDiv([searType, parameter])
                                         tagsDiv += addKeyWordDiv(keyWordsArray[i].value);
                                     }
                                 }
-                                appendKeyWord();
 
                                 $("#masonry").append(`
                                     <div class="col-lg-3">
@@ -1624,7 +1622,15 @@ $(document).on("click", ".editKnowledge", function()
                                 {
                                     url: ip + "updateKnowledge" + ends,
                                     type: 'get',
-                                    data: "knowledgeId="+ knowledgeId + "&question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + levelOld,
+                                    data: JSON.stringify(
+                                            {
+                                                "knowledgeId": knowledgeId,
+                                                "question": ques,
+                                                "ans": ans,
+                                                "tag": newKeyWords.join(" "),
+                                                "level": levelOld,
+                                            }
+                                        ),
                                     dataType: 'json',
                                     success: function(data)
                                     {
@@ -1773,12 +1779,13 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                             console.log({
                                 'question': ques,
                                 'ans': ans,
-                                'tag': newKeyWords?newKeyWords.join(" "):null,
+                                //'tag': newKeyWords?newKeyWords.join(" "):null,
                                 'level': level
                             });
 
                             $.ajax(
                                 {
+                                    async: 'false',
                                     url: ip + "addKnowledge" + ends,
                                     type: 'post',
                                     // data: "question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + level,
@@ -1786,14 +1793,30 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                                     {
                                         'question': ques,
                                         'ans': ans,
-                                        'tag': newKeyWords.join(" "),
+                                        'tag': null,
                                         'level': level
                                     },
                                     dataType: 'json',
                                     success: function(data)
                                     {
-                                        layer.msg(data.message);
-                                        flash();
+                                        console.log(data);
+                                        data = data.data;
+                                        var knowledgeId = data[0].knowledgeId;
+                                        for(let i = 0; i < newKeyWords.length; i++)
+                                        {
+                                            $.ajax({
+                                                async: 'false',
+                                                url: ip + "addKnowledgeTag" + ends,
+                                                type: 'post',
+                                                data: "tagName=" + newKeyWords[i] + "&knowledgeId=" + knowledgeId,
+                                                dataType: 'json',
+                                                success: function(data)
+                                                {
+
+                                                }
+                                            });
+                                        }
+                                        //flash();
                                     }
                                 }
                             )

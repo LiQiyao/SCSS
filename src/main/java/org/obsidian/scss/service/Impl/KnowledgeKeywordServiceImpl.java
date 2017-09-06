@@ -8,6 +8,9 @@ import org.obsidian.scss.entity.KnowledgeKeywordExample;
 import org.obsidian.scss.service.KnowledgeKeywordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class KnowledgeKeywordServiceImpl implements KnowledgeKeywordService {
     @Autowired
     KnowledgeKeywordMapper knowledgeKeywordMapper;
     
+    @Transactional
     public List<KnowledgeKeyword> selectKeywordId(int knowledgeId) {
         KnowledgeKeywordExample example = new KnowledgeKeywordExample();
         KnowledgeKeywordExample.Criteria criteria = example.createCriteria();
@@ -26,6 +30,7 @@ public class KnowledgeKeywordServiceImpl implements KnowledgeKeywordService {
         return knowledgeKeywordMapper.selectByExample(example);
     }
 
+    @Transactional
     public int selectKeywordIdNum(int keywordId) {
         System.out.println(keywordId);
         KnowledgeKeywordExample example = new KnowledgeKeywordExample();
@@ -34,11 +39,16 @@ public class KnowledgeKeywordServiceImpl implements KnowledgeKeywordService {
         return knowledgeKeywordMapper.selectByExample(example).size();
     }
 
+    @Transactional
     public int delete(int keyword, int knowledgeId) {
         KnowledgeKeywordExample example = new KnowledgeKeywordExample();
         KnowledgeKeywordExample.Criteria criteria = example.createCriteria();
         criteria.andKeywordIdEqualTo(keyword);
         criteria.andKnowledgeIdEqualTo(knowledgeId);
         return knowledgeKeywordMapper.deleteByExample(example);
+    }
+
+    public int insert(KnowledgeKeyword knowledgeKeyword) {
+        return knowledgeKeywordMapper.insert(knowledgeKeyword);
     }
 }

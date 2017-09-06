@@ -12,4 +12,5 @@ public interface KnowledgeKeywordService {
     List<KnowledgeKeyword> selectKeywordId(int  knowledgeId);
     int selectKeywordIdNum(int  keywordId);
     int delete(int keyword,int knowledgeId);
+    int insert(KnowledgeKeyword knowledgeKeyword);
 }

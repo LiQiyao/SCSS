@@ -31,4 +31,6 @@ public interface KnowledgeService {
     List<Knowledge> selectKnowledgeBySearchName(String keyword);
     List<Knowledge> selectKnowledge();
     int updateKnowledge (Knowledge knowledge);
+    Knowledge selectById(int id);
+    Knowledge selectByContent(String content);
 }

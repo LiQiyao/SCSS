@@ -162,10 +162,34 @@ public class KnowledgeServiceImpl implements KnowledgeService{
     }
 
     public int updateKnowledge(Knowledge knowledge) {
+        knowledge.setAuthor(selectById(knowledge.getKnowledgeId()).getAuthor());
+        knowledge.setTime(selectById(knowledge.getKnowledgeId()).getTime());
         KnowledgeExample example = new KnowledgeExample();
         KnowledgeExample.Criteria criteria = example.createCriteria();
         criteria.andKnowledgeIdEqualTo(knowledge.getKnowledgeId());
         int res = knowledgeMapper.updateByExample(knowledge,example);
         return res;
+    }
+
+    public Knowledge selectById(int id) {
+        KnowledgeExample example = new KnowledgeExample();
+        KnowledgeExample.Criteria criteria = example.createCriteria();
+        criteria.andKnowledgeIdEqualTo(id);
+       List<Knowledge> list = knowledgeMapper.selectByExample(example);
+        if (list == null || list.size()==0){
+           return null;
+        }
+        return list.get(0);
+    }
+
+    public Knowledge selectByContent(String content) {
+        KnowledgeExample example = new KnowledgeExample();
+        KnowledgeExample.Criteria criteria = example.createCriteria();
+        criteria.andQuestionEqualTo(content);
+        List<Knowledge> list = knowledgeMapper.selectByExample(example);
+        if (list == null || list.size()==0){
+            return null;
+        }
+        return list.get(0);
     }
 }

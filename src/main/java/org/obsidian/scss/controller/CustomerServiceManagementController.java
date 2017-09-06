@@ -179,12 +179,13 @@ public class CustomerServiceManagementController {
     public Show updateService(@RequestParam("personList") String personList){
         Show show = new Show();
         Gson gson = new Gson();
+        System.out.println(personList);
         List<CustomerService> customerServices = gson.fromJson(personList,new TypeToken<List<CustomerService>>(){}.getType());
         System.out.println("xxxxxxxxxxxxxxxxxxxxxx");
         int res = 0 ;
         for (int i=0 ; i < customerServices.size(); i++){
             int re= customerServiceService.updateCustomerService(customerServices.get(i).getServiceId(),customerServices.get(i).getName(),customerServices.get(i).getGroupId(),customerServices.get(i).getNickname(),
-                    customerServices.get(i).getEmployeeId(),customerServices.get(i).getAutoMessage(),customerServices.get(i).getIsDimission());
+                    customerServices.get(i).getEmployeeId(),customerServices.get(i).getAutoMessage());
             if (re ==1){
                 res++;
             }

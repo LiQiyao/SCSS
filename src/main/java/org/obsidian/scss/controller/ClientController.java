@@ -7,6 +7,7 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.obsidian.scss.bean.Show;
 import org.obsidian.scss.entity.Client;
 import org.obsidian.scss.entity.ClientAndFlag;
+import org.obsidian.scss.entity.ClientAndImlInfo;
 import org.obsidian.scss.entity.Flag;
 import org.obsidian.scss.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,20 @@ public class ClientController {
         }else{
             show.setStatus(0);
             show.setMessage("未查到对应的姓名或者标签所对应的用户");
+        }
+        return show;
+    }
+
+    @RequestMapping("clientInfoMore")
+    @ResponseBody
+    public Show clientInfoMore(@RequestParam("clientId") int id){
+        Show show = new Show();
+        List<ClientAndImlInfo>list = clientService.selectClientAndImlInfo(id);
+        if(list == null || list.size() == 0){
+            show.setStatus(0);
+            show.setMessage("该客户未接入过本平台");
+        }else{
+            show.setData(list);
         }
         return show;
     }
