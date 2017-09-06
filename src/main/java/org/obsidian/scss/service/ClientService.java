@@ -1,6 +1,7 @@
 package org.obsidian.scss.service;
 
 import org.obsidian.scss.entity.Client;
+import org.obsidian.scss.entity.ClientAndImlInfo;
 import org.obsidian.scss.entity.Flag;
 
 import java.util.List;
@@ -31,5 +32,7 @@ public interface ClientService {
      * creaete By cjn
      */
     List<Client> selectAllClient();
+    
+    List<ClientAndImlInfo> selectClientAndImlInfo(int clientId);
     
 }

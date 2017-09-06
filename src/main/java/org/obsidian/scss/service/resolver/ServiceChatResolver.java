@@ -50,6 +50,7 @@ public class ServiceChatResolver implements ContentResolver{
                 for(WebSocket ws : ClientWS.wsVector){
                     if (ws.getClientId() == serviceChat.getClientId()){
                         System.out.println("serviceChatResolver 5" + ws.getClientId());
+                        System.out.println("aaa " + ws.getClientId() + " " +ws.getSession() + " " +ws.getSession().getBasicRemote());
                         ws.getSession().getBasicRemote().sendText(gson.toJson(message));
                         System.out.println("serviceChatResolver 6");
                     }

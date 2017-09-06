@@ -181,4 +181,15 @@ public class KnowledgeServiceImpl implements KnowledgeService{
         }
         return list.get(0);
     }
+
+    public Knowledge selectByContent(String content) {
+        KnowledgeExample example = new KnowledgeExample();
+        KnowledgeExample.Criteria criteria = example.createCriteria();
+        criteria.andQuestionEqualTo(content);
+        List<Knowledge> list = knowledgeMapper.selectByExample(example);
+        if (list == null || list.size()==0){
+            return null;
+        }
+        return list.get(0);
+    }
 }

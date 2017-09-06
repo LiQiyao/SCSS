@@ -91,7 +91,7 @@ public class KeyWordAndKnowledgeManagementController {
             show.setStatus(0);
             show.setMessage("添加失败");
         }else{
-            
+            show.setData(keywordService.selectByValue(tagName));
         }
         return show;
     }
@@ -127,16 +127,18 @@ public class KeyWordAndKnowledgeManagementController {
                              @RequestParam("tag") String tag,
                              @RequestParam("level") int level){
         List<String> keyList = new ArrayList<String>();
-        String [] arr = tag.split("\\s+");
-        for(String ss : arr){
-            System.out.println("!!!!!"+ss);
-            keyList.add(ss);
-        }
+//        String [] arr = tag.split("\\s+");
+//        for(String ss : arr){
+//            System.out.println("!!!!!"+ss);
+//            keyList.add(ss);
+//        }
         int res = knowledgeService.addKnowledgeAndKey(ques,ans,level,1,0,keyList);
         Show show = new Show();
         if(res ==0){
             show.setStatus(0);
             show.setMessage("插入失败!");
+        }else{
+            show.setData(knowledgeService.getKnowledgeByContent(ques));
         }
         return show;
     }

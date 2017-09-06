@@ -87,35 +87,36 @@ public class JoinUpServiceImpl implements JoinUpService {
     @Transactional
     public int updateAllJoinUp(int clientId,String qq, String wx, String weibo) {
         int qqSum = this.selectByAccessIdAndClientId(2,clientId);
-        if((qq.equals("") || qq.length() == 0) && qqSum > 0){
-            this.deleteJoinUp(2,clientId);
+        String nowQQ = this.selectAccountByAccessIdAndClientId(2,clientId);
+        if(qqSum > 0 && "".equals(qq)) {
+            this.deleteJoinUp(2, clientId);
         }
-        else if(!qq.equals("") && qq.length() > 0 && qqSum == 0){
+        else if(qqSum == 0 && !"".equals(qq) && qq.length() > 0){
             this.insertJoinUp(2,clientId,qq);
         }
-        else if(!this.selectAccountByAccessIdAndClientId(2,clientId).equals(qq) && qqSum > 0){
+        else if(qqSum > 0 && nowQQ != null && nowQQ.equals(qq)){
             this.updateJoinUp(2,clientId,qq);
         }
-
         int wxSum = this.selectByAccessIdAndClientId(3,clientId);
-        if((wx.equals("") || wx.length() == 0) && wxSum > 0){
+        String nowWx = this.selectAccountByAccessIdAndClientId(3,clientId);
+        if(wxSum > 0 && "".equals(wx)){
             this.deleteJoinUp(3,clientId);
         }
-        else if(!wx.equals("") && wx.length() > 0 && wxSum == 0){
+        else if(wxSum == 0 && !"".equals(wx) && wx.length() > 0){
             this.insertJoinUp(3,clientId,wx);
         }
-        else if(!this.selectAccountByAccessIdAndClientId(3,clientId).equals(wx) && wxSum > 0){
+        else if(wxSum > 0 && nowWx != null && !nowWx.equals(wx)){
             this.updateJoinUp(3,clientId,wx);
         }
-
         int weiboSum = this.selectByAccessIdAndClientId(4,clientId);
-        if((weibo.equals("") || weibo.length() == 0) && weiboSum > 0){
+        String nowWeibo = this.selectAccountByAccessIdAndClientId(4,clientId);
+        if(weiboSum > 0 && "".equals(weibo)){
             this.deleteJoinUp(4,clientId);
         }
-        else if(!weibo.equals("") && weibo.length() > 0 && weiboSum == 0){
+        else if(weiboSum == 0 && !"".equals(weibo) && weibo.length() > 0){
             this.insertJoinUp(4,clientId,weibo);
         }
-        else if(!this.selectAccountByAccessIdAndClientId(4,clientId).equals(weibo) && weiboSum > 0){
+        else if(weiboSum > 0 && nowWeibo != null && !nowWeibo.equals(weibo)){
             this.updateJoinUp(4,clientId,weibo);
         }
         return 0;

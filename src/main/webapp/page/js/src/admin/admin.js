@@ -1470,7 +1470,7 @@ var knowledgeBase =
     'chart': function()
     {
         addKnowledgeBaseDiv(['knowledgeSearch', 'keyword=']);
-        // setTimeout('waterfall()', 100);
+        // setTimeout('waterfall()', 400);
     }
 }
 
@@ -1553,7 +1553,7 @@ function addKnowledgeBaseDiv([searType, parameter])
 
 
                             }
-
+                            waterfall();
                         }
                         else
                         {
@@ -1780,7 +1780,7 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                             console.log({
                                 'question': ques,
                                 'ans': ans,
-                                'tag': newKeyWords.join(" "),
+                                'tag': newKeyWords?newKeyWords.join(" "):null,
                                 'level': level
                             });
 
@@ -2109,15 +2109,27 @@ function addClientTr(parameter)
                         var tmp = data[i];
                         var flags = tmp.flags;
                         var flagsTmp = [];
-                        for(let j = 0; j < flags.length; j++)
+                        if(flags != null)
                         {
-                            flagsTmp.push(flags[j].name);
+                            for(let j = 0; j < flags.length; j++)
+                            {
+                                flagsTmp.push(flags[j].name);
+                            }
                         }
-                            tmp = tmp.client;
+
+                        tmp = tmp.client;
+                        if(tmp.sex != null)
+                        {
+                            tmp.sex = tmp.sex==1?"男":"女";
+                        }
+                        else
+                        {
+                            tmp.sex = "未知";
+                        }
 
                         $("#client").append(`<tr>
                                 <td>${tmp.name?tmp.name:"未知"}</td>
-                                <td>${tmp.sex?tmp.sex:"未知"}</td>
+                                <td>${tmp.sex}</td>
                                 <td>${tmp.address?tmp.address:"未知"}</td>
                                 <td>${flagsTmp.join("、")}</td>
                                 <td>${tmp.telephone?tmp.telephone:"未知"}</td>

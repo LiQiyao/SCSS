@@ -2,6 +2,7 @@ package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.dao.ClientMapper;
 import org.obsidian.scss.entity.Client;
+import org.obsidian.scss.entity.ClientAndImlInfo;
 import org.obsidian.scss.entity.ClientExample;
 import org.obsidian.scss.entity.Flag;
 import org.obsidian.scss.service.ClientFlagService;
@@ -157,5 +158,13 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> selectAllClient() {
         ClientExample clientExample = new ClientExample();
         return  clientMapper.selectByExample(clientExample);
+    }
+
+    public List<ClientAndImlInfo> selectClientAndImlInfo(int clientId) {
+        List<ClientAndImlInfo> list = clientMapper.selectClientDetail(clientId);
+        if(list == null || list.size() == 0){
+            return null;
+        }
+        return list;
     }
 }
