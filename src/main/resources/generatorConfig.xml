@@ -16,7 +16,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/scss?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"
                         userId="root"
-                        password="admin">
+                        password="123456">
         </jdbcConnection>
 
         <javaTypeResolver>
