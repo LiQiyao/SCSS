@@ -891,7 +891,7 @@ $(document).on("click", ".editCustomerService", function()
                                     url: ip + "updateService" + ends,
                                     dataType: 'json',
                                     data: "personList=" + JSON.stringify(personList),
-                                    type: 'get',
+                                    type: 'post',
                                     success: function(data)
                                     {
                                         layer.msg(data.message);
@@ -1589,6 +1589,38 @@ function appendKeyWord()
 
 $(document).on("click", ".editKnowledge", function()
     {
+        $(document).on("click", "#addTag", function()
+            {
+                console.log(newKeyWords);
+                var keyWordsDiv = $("#keyWords");
+                var newKeyWord = $("#keyWordInput").val();
+                if(newKeyWord != "" && keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0) == undefined)
+                {
+                    keyWordsDiv.append(`
+                <div class="tag">
+                    ${newKeyWord}
+                    <i class="layui-icon tag-close-local">&#x1006;</i>
+                </div>`);
+                    newKeyWords.push(newKeyWord);
+                    $("#keyWordInput").val("");
+                }
+            }
+        );
+
+        $(document).on("click", ".tag .tag-close-local", function()
+            {
+                var thisTag = $(this).parents(".tag");
+                for(let i = 0; i < newKeyWords.length; i++)
+                {
+                    if(thisTag.text().includes(newKeyWords[i]))
+                    {
+                        newKeyWords.splice(i, 1);
+                    }
+                }
+                thisTag.remove();
+            }
+        );
+
         var parentDiv = $(this).parents(".panel-body");
         var quesOld = parentDiv.find("div[ques]").attr("ques");
         var ansOld = parentDiv.find("div[ans]").attr("ans");
@@ -1707,7 +1739,7 @@ $(document).on("click", ".deteleKnowledge", function()
             }
         )
     }
-)
+);
 
 // $(document).on("click", "#filterKnowledgeBaseBtn", function()
 //     {
@@ -1760,6 +1792,38 @@ $(document).on("click", ".deteleKnowledge", function()
 
 $(document).on("click", "#addKnowledgeBaseBtn", function()
     {
+        $(document).on("click", "#addTag", function()
+            {
+                console.log(newKeyWords);
+                var keyWordsDiv = $("#keyWords");
+                var newKeyWord = $("#keyWordInput").val();
+                if(newKeyWord != "" && keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0) == undefined)
+                {
+                    keyWordsDiv.append(`
+                <div class="tag">
+                    ${newKeyWord}
+                    <i class="layui-icon tag-close-local">&#x1006;</i>
+                </div>`);
+                    newKeyWords.push(newKeyWord);
+                    $("#keyWordInput").val("");
+                }
+            }
+        )
+
+        $(document).on("click", ".tag .tag-close-local", function()
+            {
+                var thisTag = $(this).parents(".tag");
+                for(let i = 0; i < newKeyWords.length; i++)
+                {
+                    if(thisTag.text().includes(newKeyWords[i]))
+                    {
+                        newKeyWords.splice(i, 1);
+                    }
+                }
+                thisTag.remove();
+            }
+        );
+
         newKeyWords = [];
         layui.use(['layer', 'form'], function()
             {
@@ -1771,7 +1835,7 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                         title: "添加知识",
                         content: $("#addKnowledgeBaseContent").html(),
                         area: ['600px', '750px'],
-                        btn1: function()
+                        btn1: function(index)
                         {
                             var addKnowledgeBaseForm = $("#addKnowledgeBaseForm").get(0);
                             var ques = addKnowledgeBaseForm.ques.value;
@@ -1779,7 +1843,7 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                             console.log({
                                 'question': ques,
                                 'ans': ans,
-                                //'tag': newKeyWords?newKeyWords.join(" "):null,
+                                'tag': newKeyWords?newKeyWords.join(" "):null,
                                 'level': level
                             });
 
@@ -1793,34 +1857,18 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                                     {
                                         'question': ques,
                                         'ans': ans,
-                                        'tag': null,
+                                        'tag': newKeyWords?newKeyWords.join(" "):null,
                                         'level': level
                                     },
                                     dataType: 'json',
                                     success: function(data)
                                     {
                                         console.log(data);
-                                        data = data.data;
-                                        var knowledgeId = data[0].knowledgeId;
-                                        for(let i = 0; i < newKeyWords.length; i++)
-                                        {
-                                            $.ajax({
-                                                async: 'false',
-                                                url: ip + "addKnowledgeTag" + ends,
-                                                type: 'post',
-                                                data: "tagName=" + newKeyWords[i] + "&knowledgeId=" + knowledgeId,
-                                                dataType: 'json',
-                                                success: function(data)
-                                                {
-
-                                                }
-                                            });
-                                        }
+                                        layer.close(index);
                                         flash();
                                     }
                                 }
-                            )
-
+                            );
 
                             newKeyWords = [];
                         },
@@ -1851,37 +1899,6 @@ $(document).on("click", "#searchKnowledgeBaseBtn", function()
     }
 )
 
-$(document).on("click", "#addTag", function()
-    {
-        console.log(newKeyWords);
-        var keyWordsDiv = $("#keyWords");
-        var newKeyWord = $("#keyWordInput").val();
-        if(newKeyWord != "" && keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0) == undefined)
-        {
-            keyWordsDiv.append(`
-                <div class="tag">
-                    ${newKeyWord}
-                    <i class="layui-icon tag-close-local">&#x1006;</i>
-                </div>`);
-            newKeyWords.push(newKeyWord);
-            $("#keyWordInput").val("");
-        }
-    }
-)
-
-$(document).on("click", ".tag .tag-close-local", function()
-    {
-        var thisTag = $(this).parents(".tag");
-        for(let i = 0; i < newKeyWords.length; i++)
-        {
-            if(thisTag.text().includes(newKeyWords[i]))
-            {
-                newKeyWords.splice(i, 1);
-            }
-        }
-        thisTag.remove();
-    }
-)
 
 var commonLanguageDetele = [];
 var commonLanguage =

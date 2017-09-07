@@ -56,7 +56,7 @@ function openKF() {
     layerIndex = layer.open({
         type: 1,
         content: $('#kfWindow'),
-        title: '<span id="kf-title">在线客服</span><a style="margin-left:1em;color:blue" href="javascript:fxx(\'转接到人工服务\')">人工服务</a>',
+        title: '<span id="kf-title">在线客服</span><a style="margin-left:1em;color:blue" href="javascript:fxx(\'转接到人工客服\')">人工客服</a>',
         area: '400px',
         move: '#kf-title',
     });
