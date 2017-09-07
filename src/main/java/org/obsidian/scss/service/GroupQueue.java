@@ -32,6 +32,9 @@ public class GroupQueue implements Serializable {
     private ServiceGroupService serviceGroupService;
 
     @Autowired
+    private ServiceGroupPeople serviceGroupPeople;
+
+    @Autowired
     private CustomerServiceService customerServiceService;
 
     private Map<Integer, Queue<Client>> groupQueueMap = new HashMap<Integer, Queue<Client>>();
@@ -48,6 +51,9 @@ public class GroupQueue implements Serializable {
     //根据客服组id加入客户到队列
     @Transactional
     public int joinQueueByGroupId(int groupId, int clientId){
+        if (serviceGroupPeople.groupIsEmpty(groupId)){
+            groupId = serviceGroupPeople.findNotEmptyGroup();
+        }
         Queue<Client> queue = groupQueueMap.get(groupId);
         queue.add(new Client(clientId));
         this.updateServiceStatus(groupId,queue.size());
@@ -58,9 +64,12 @@ public class GroupQueue implements Serializable {
     @Transactional
     public int joinLeastClientQueue(int clientId){
         int leastClient = 999999999;
-        int groupId = 0;
+        int groupId = 2;
         System.out.println(groupQueueMap);
         for (Integer i : groupQueueMap.keySet()){
+            if (serviceGroupPeople.groupIsEmpty(i)){
+                continue;
+            }
             System.out.println(groupQueueMap.get(i) + "!!");
             if (groupQueueMap.get(i).size() < leastClient){
                 leastClient = groupQueueMap.get(i).size();
@@ -86,6 +95,7 @@ public class GroupQueue implements Serializable {
         updateServiceStatus(groupId,groupQueueMap.get(groupId).size() - 1);
         return groupQueueMap.get(groupId).poll();
     }
+
 
     private void updateServiceStatus(int groupId, int queuePeopleCount){
         //更新客服状态

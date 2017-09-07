@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.apache.catalina.websocket.WebSocketServlet;
 import org.obsidian.scss.bean.ConversationEndSignal;
 import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.ServiceChat;
 import org.obsidian.scss.bean.ServiceStatus;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.service.ConversationService;
@@ -37,8 +38,6 @@ public class ClientWS implements WebSocket{
     @Autowired
     private GroupQueue groupQueue;
 
-    private Gson gson = new Gson();
-
     private Session session;
 
     public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
@@ -47,11 +46,14 @@ public class ClientWS implements WebSocket{
 
     private int serviceId = 0;
 
+    private Gson gson = new Gson();
+
     @OnOpen
     public void onOpen(Session session){
         System.out.println("!!!open" +session);
         this.session = session;
         wsVector.add(this);
+
     }
 
     @OnMessage
