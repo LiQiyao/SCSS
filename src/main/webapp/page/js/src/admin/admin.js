@@ -1816,7 +1816,7 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                                                 }
                                             });
                                         }
-                                        //flash();
+                                        flash();
                                     }
                                 }
                             )
