@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.obsidian.scss.bean.ClientLogin;
 import org.obsidian.scss.bean.ConversationStart;
 import org.obsidian.scss.bean.Message;
+import org.obsidian.scss.bean.ServiceChat;
 import org.obsidian.scss.conversation.WebSocket;
 import org.obsidian.scss.entity.JoinUp;
 import org.obsidian.scss.service.ChatLogService;
@@ -75,6 +76,18 @@ public class ClientLoginResolver implements ContentResolver {
         webSocket.setClientId(clientId);
         try {
             session.getBasicRemote().sendText(gson.toJson(ret));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ServiceChat serviceChat = new ServiceChat();
+        serviceChat.setServiceId(0);
+        serviceChat.setTime(new Date().getTime());
+        serviceChat.setClientId(clientId);
+        serviceChat.setContentType(0);
+        serviceChat.setContent("您好，我是智能客服，请问有什么可以帮助您的吗？");
+        try {
+            System.out.println(serviceChat);
+            session.getBasicRemote().sendText(gson.toJson(new Message<ServiceChat>(serviceChat)));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package org.obsidian.scss.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
@@ -15,6 +16,9 @@ import java.util.Map;
  */
 @Service
 public class OnlineService {
+
+    @Autowired
+    private ServiceGroupPeople serviceGroupPeople;
 
     private Map<String, String> map = new HashMap<String, String>();
 

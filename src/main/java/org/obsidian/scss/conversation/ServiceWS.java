@@ -3,6 +3,7 @@ package org.obsidian.scss.conversation;
 import com.google.gson.Gson;
 import org.obsidian.scss.service.ConversationService;
 import org.obsidian.scss.service.KnowledgeService;
+import org.obsidian.scss.service.ServiceGroupPeople;
 import org.obsidian.scss.service.WorkTimeService;
 import org.obsidian.scss.service.resolver.ResolverFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.socket.server.standard.SpringConfigurator;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.io.PipedReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -29,6 +31,9 @@ public class ServiceWS implements WebSocket {
 
     @Autowired
     private ResolverFactory resolverFactory;
+
+    @Autowired
+    private ServiceGroupPeople serviceGroupPeople;
 
     public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
 
@@ -57,6 +62,7 @@ public class ServiceWS implements WebSocket {
         workTimeService.offline(serviceId);
         conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);
+        serviceGroupPeople.quit(serviceId);
     }
 
     @OnClose
@@ -65,6 +71,7 @@ public class ServiceWS implements WebSocket {
         workTimeService.offline(serviceId);
         conversationService.finishAllByServiceId(serviceId);
         wsVector.remove(this);
+        serviceGroupPeople.quit(serviceId);
     }
 
     public Vector<WebSocket> getWsVector() {
