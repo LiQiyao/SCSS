@@ -61,7 +61,7 @@ public class ConversationServiceImpl implements ConversationService {
 
 
     @Transactional
-    public int getLastIdByClientId(int clientId) {
+    public Integer getLastIdByClientId(int clientId) {
         return conversationMapper.selectLastIdByClientId(clientId);
     }
 

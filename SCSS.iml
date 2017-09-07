@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration />
-    </facet>
     <facet type="web" name="Web">
       <configuration>
         <descriptors>
@@ -18,6 +15,9 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -30,6 +30,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:4.3.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.6" level="project" />
@@ -47,7 +48,11 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_131/lib/jconsole.jar!/" />
+<<<<<<< Updated upstream
+          <root url="jar://G:/Java/jdk1.8.0_73/lib/jconsole.jar!/" />
+=======
+          <root url="jar://D:/Program Files/Java/jdk1.8.0_71/lib/jconsole.jar!/" />
+>>>>>>> Stashed changes
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -56,7 +61,11 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_131/lib/tools.jar!/" />
+<<<<<<< Updated upstream
+          <root url="jar://G:/Java/jdk1.8.0_73/lib/tools.jar!/" />
+=======
+          <root url="jar://D:/Program Files/Java/jdk1.8.0_71/lib/tools.jar!/" />
+>>>>>>> Stashed changes
         </CLASSES>
         <JAVADOC />
         <SOURCES />

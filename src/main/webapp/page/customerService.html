@@ -3,9 +3,11 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>客服中心</title>
+	<link rel="stylesheet" href="css/admin_for_cs.css">
 	<link rel="stylesheet" href="js/layui/css/layui.css">
 	<link rel="stylesheet" href="css/layim.css">
+	<link rel="stylesheet" href="css/layout.css">
 	<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
 	<link rel="stylesheet" href="css/clientService.css">
 	<link rel="stylesheet" href="css/font-awesome.css">
@@ -16,12 +18,14 @@
 	<script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
 	<script src="js/jquery.cookie.js"></script>
 	<script src="js/echarts.min.js"></script>
+	<script src="js/masonry-docs.min.js"></script>
 </head>
 
 <body>
 	<div style="overflow:hidden;">
 		<div class="header">
 			<img id="logo" src="img/logo.png">
+			<span style="line-height: 50px;font-size:20px;">客服中心 <span style="font-size:22px"> | </span>全渠道整合智能在线客服</span>
 			<div class="headBar layui-form">
 				<span>欢迎您，客服人员：</span>
 				<span id="headBar-name">kefu009</span>
@@ -302,26 +306,701 @@
 						</div>
 					</fieldset>
 				</div>
-				<div class="full" style="display: none">ccc</div>
-				<div class="full" style="display: none">ddd</div>
+				<div class="full sunqi" style="display: none;background-color: #f0f3f3;overflow: auto;">
+					<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+					  <ul class="layui-tab-title">
+					    <li class="layui-this">知识库管理</li>
+					    <li>常用语管理</li>
+					  </ul>
+					  <div class="layui-tab-content">
+					  	<div class="layui-tab-item layui-show">
+					  		<div class="row">
+					  		    <div class="col-lg-12">
+					  		        <div class="panel">
+					  		            <div class="panel-heading">
+					  		                <div class="btn-local-left">
+					  		                    <button class="layui-btn layui-btn-normal" id="addKnowledgeBaseBtn">添加知识</button>
+					  		                </div>
+					  		                <div class="search-local-right">
+					  		                    <!-- <div class="btn-local-left">
+					  		                                <button class="layui-btn layui-btn-primary" id="filterKnowledgeBaseBtn">
+					  		                                    <i class="fa fa-filter"></i>&nbsp;筛选
+					  		                                </button>
+					  		                            </div> -->
+					  		                    <div class="search">
+					  		                        <div class="search-div" id="searchKnowledgeBaseDiv">
+					  		                            <input type="search" name="" value="">
+					  		                        </div>
+					  		                        <div class="search-icon-div" id="searchKnowledgeBaseBtn">
+					  		                            <div class="search-icon">
+					  		                                <i class="layui-icon"></i>
+					  		                            </div>
+					  		                        </div>
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		</div>
+					  		<div class="row" id="masonry" style="position: relative; height: 742px;">
+					  		    <div class="col-lg-3" style="position: absolute; left: 0px; top: 0px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="4" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="4" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="转接到人工客服">
+					  		                    问题： 转接到人工客服
+					  		                </div>
+					  		                <div class="ans" ans="正在为您转接人工客服，请稍后……">
+					  		                    答案： 正在为您转接人工客服，请稍后……
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 243px; top: 0px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="24" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="24" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="本公司的楼盘信息？">
+					  		                    问题： 本公司的楼盘信息？
+					  		                </div>
+					  		                <div class="ans" ans="您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。">
+					  		                    答案： 您好，我们是黑曜石售楼部的，我们这里有不限购不限贷的，70年产权的多层电梯洋房，自住投资都可以，低至8000元/平方喔。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        房产
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        售楼
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        买房
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        洋房
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        楼盘
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        信息
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 486px; top: 0px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="25" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="25" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="我们公司楼盘的具体位置？">
+					  		                    问题： 我们公司楼盘的具体位置？
+					  		                </div>
+					  		                <div class="ans" ans="在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！">
+					  		                    答案： 在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        楼盘
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        位置
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        哪里
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        哪儿
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        哪个地方
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 729px; top: 0px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="26" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="26" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="买房的首付问题？">
+					  		                    问题： 买房的首付问题？
+					  		                </div>
+					  		                <div class="ans" ans="不同户型的首付不同的哦，我们的首付最低十几万起喔，很实惠。">
+					  		                    答案： 不同户型的首付不同的哦，我们的首付最低十几万起喔，很实惠。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        买房
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        首付
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        户型
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        多少钱
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 0px; top: 236px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="27" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="27" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="楼盘有哪些户型？">
+					  		                    问题： 楼盘有哪些户型？
+					  		                </div>
+					  		                <div class="ans" ans="我们目前在售户型是78方（小户型）、120方（中户型）、135（大户型）方的都有，户型很方正的。">
+					  		                    答案： 我们目前在售户型是78方（小户型）、120方（中户型）、135（大户型）方的都有，户型很方正的。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        户型
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        大户型
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        小户型
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        中户型
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        平方
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 486px; top: 371px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="28" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="28" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="这一期楼盘有别墅吗">
+					  		                    问题： 这一期楼盘有别墅吗
+					  		                </div>
+					  		                <div class="ans" ans="我们这期的楼盘有别墅、小高层和排屋，而且设计风格都很美观喔。">
+					  		                    答案： 我们这期的楼盘有别墅、小高层和排屋，而且设计风格都很美观喔。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        楼盘
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        别墅
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        小高层
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        排屋
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        一期
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 729px; top: 371px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="29" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="29" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="房贷的利息怎么样？">
+					  		                    问题： 房贷的利息怎么样？
+					  		                </div>
+					  		                <div class="ans" ans="房贷的利息是根据您付的首付多少和其它情况来计算，一般情况下在4%左右。">
+					  		                    答案： 房贷的利息是根据您付的首付多少和其它情况来计算，一般情况下在4%左右。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                    <div class="tag">
+					  		                        首付
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        贷款
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        利息
+
+					  		                    </div>
+					  		                    <div class="tag">
+					  		                        房贷
+
+					  		                    </div>
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		    <div class="col-lg-3" style="position: absolute; left: 243px; top: 413px;">
+					  		        <div class="panel">
+					  		            <div class="panel-body">
+					  		                <div class="close-local">
+					  		                    <i class="fa fa-pencil editKnowledge" knowledgeid="30" title="编辑"></i>
+					  		                    <i class="layui-icon close-btn deteleKnowledge" knowledgeid="30" title="删除">ဆ</i>
+					  		                </div>
+					  		                <div class="level" level="1">
+					  		                    类别： 公司
+					  		                </div>
+					  		                <div class="ques" ques="楼盘质量怎么样">
+					  		                    问题： 楼盘质量怎么样
+					  		                </div>
+					  		                <div class="ans" ans="我们开发的楼盘都是经过国内外知名设计师设计，然后用的都是高质量的建材，保证您买的放心，住的开心。">
+					  		                    答案： 我们开发的楼盘都是经过国内外知名设计师设计，然后用的都是高质量的建材，保证您买的放心，住的开心。
+					  		                </div>
+					  		                <div class="tags">
+
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  		    </div>
+					  		</div>
+
+					  	</div>
+					  	<div class="layui-tab-item">
+					  		<div class="col-lg-12">
+					  		            <div class="row">
+					  		                <div class="panel" style="border:none;">
+					  		                    <!-- <div class="panel-body"> -->
+					  		                        <table width="100%">
+					  		                            <tbody>
+					  		                                <tr>
+					  		                                    <td>
+					  		                                        <div class="btn-local-left">
+					  		                                            <button class="layui-btn layui-btn-normal" id="addCommonLanguageBtn">添加常用语</button>
+					  		                                            <button class="layui-btn layui-btn-danger" id="deleteCommonLanguageBtn">删除常用语</button>
+					  		                                        </div>
+					  		                                        <!-- <div class="search-local-right">
+					  		                                            <div id="searchCommonLanguageDiv" class="search">
+					  		                                                <div class="search-div">
+					  		                                                    <input type="search" name="" value="">
+					  		                                                </div>
+					  		                                                <div class="search-icon-div">
+					  		                                                    <div class="search-icon">
+					  		                                                        <i class="layui-icon">&#xe615;</i>
+					  		                                                    </div>
+					  		                                                </div>
+					  		                                            </div>
+					  		                                        </div> -->
+					  		                                    </td>
+					  		                                </tr>
+					  		                                <tr>
+					  		                                    <td height="20px" style="background:#F0F3F3"></td>
+					  		                                </tr>
+					  		                                <tr>
+					  		                                    <td style="padding: 0px;">
+					  		                                        <div class="table-div-top">
+					  		                                            <div class="layui-form">
+					  		                                                <table class="layui-table" lay-skin="line">
+					  		                                                    <colgroup>
+					  		                                                        <col width="50">
+					  		                                                        <!-- <col width="200"> -->
+					  		                                                        <col>
+					  		                                                        <col width="100">
+					  		                                                    </colgroup>
+					  		                                                    <thead>
+					  		                                                        <tr>
+					  		                                                            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseCommonLanguage"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></th>
+					  		                                                            <!-- <th>创建者</th> -->
+					  		                                                            <th>常用语</th>
+					  		                                                            <th>使用频率</th>
+					  		                                                        </tr>
+					  		                                                    </thead>
+					  		                                                </table>
+					  		                                            </div>
+					  		                                        </div>
+					  		                                        <div class="table-div-bottom">
+					  		                                            <div class="layui-form">
+					  		                                                <table class="layui-table" lay-skin="line">
+					  		                                                    <colgroup>
+					  		                                                        <col width="50">
+					  		                                                        <col>
+					  		                                                        <col width="100">
+					  		                                                    </colgroup><tbody id="commonLanguage"><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="2"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>您好!很高兴为您服务，有什么可以为您效劳的。</td>
+					  		                            <td>13</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="3"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>亲，您说的我的确无法办到。希望我下次能帮到您。</td>
+					  		                            <td>12</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="1"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>你好，请问我能帮助您什么？</td>
+					  		                            <td>11</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="4"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>呵呵，这真的让我很为难，我请示一下组长，看能不能给您一些折扣，不过估计有点难，亲，请您稍等!</td>
+					  		                            <td>1</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="5"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>好的！谢谢咨询！</td>
+					  		                            <td>1</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="6"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>我们的楼盘在北京南路与绕城南路交叉口，这个位置很好找的，地段很好！</td>
+					  		                            <td>1</td>
+					  		                        </tr><tr>
+					  		                            <td><input type="checkbox" name="" lay-skin="primary" lay-filter="commonLanguage" commonlanguageid="7"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div></td>
+					  		                            <td>再见</td>
+					  		                            <td>0</td>
+					  		                        </tr></tbody>
+					  		                                                </table>
+					  		                                            </div>
+					  		                                        </div>
+					  		                                    </td>
+					  		                                </tr>
+					  		                            </tbody>
+					  		                        </table>
+					  		                    <!-- </div> -->
+					  		                </div>
+					  		            </div>
+					  		        </div>
+					  	</div>
+					  </div>
+					</div>
+				</div>
+				<div class="full sunqi" style="display: none;background-color: #f0f3f3;overflow: auto;">
+					<div class="col-lg-12">
+					    <div class="row">
+					        <div class="panel" style="border:none;margin-top: 20px;">
+					            <!-- <div class="panel-body"> -->
+					                <table width="100%">
+					                    <tbody>
+					                        <tr>
+					                            <td>
+					                                <div class="btn-local-left">
+					                                    <button class="layui-btn layui-btn-normal" id="addCustomerBtn">添加客户</button>
+					                                    <button class="layui-btn layui-btn-danger" id="deleteClientBtn">删除客户</button>
+					                                </div>
+					                                <div class="search-local-right">
+					                                    <div id="searchClientDiv" class="search">
+					                                        <div class="search-div">
+					                                            <input type="search" name="" value="">
+					                                        </div>
+					                                        <div class="search-icon-div" id="searchClientBtn">
+					                                            <div class="search-icon">
+					                                                <i class="layui-icon">&#xe615;</i>
+					                                            </div>
+					                                        </div>
+					                                    </div>
+					                                </div>
+					                            </td>
+					                        </tr>
+					                        <tr>
+					                            <td height="20px" style="background:#F0F3F3"></td>
+					                        </tr>
+					                        <tr>
+					                            <td style="padding: 0px;">
+					                                <div class="table-div-top">
+					                                    <table class="layui-table" id="clientTable" lay-skin="line">
+					                                        <colgroup>
+					                                            <!-- <col width="50"> -->
+					                                            <!-- <col width="80">
+					                                            <col width="60">
+					                                            <col>
+					                                            <col width="140">
+					                                            <col width="140">
+					                                            <col width="150"> -->
+					                                            <col width="10.89%">
+					                                            <col width="4.67%">
+					                                            <col width="26.15%">
+					                                            <col width="15.00%">
+					                                            <col width="8.56%">
+					                                            <col width="10.56%">
+					                                            <col width="24.17%">
+					                                        </colgroup>
+					                                        <thead>
+					                                            <tr>
+					                                                <!-- <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChooseCustomer"></th> -->
+					                                                <th>名字</th>
+					                                                <th>性别</th>
+					                                                <th>地址</th>
+					                                                <th>标签</th>
+					                                                <th>电话</th>
+					                                                <th>email</th>
+					                                                <th></th>
+					                                            </tr>
+					                                        </thead>
+					                                    </table>
+					                                </div>
+					                                <div class="table-div-bottom">
+					                                    <table class="layui-table" lay-skin="line">
+					                                        <colgroup>
+					                                            <col width="10.89%">
+					                                            <col width="4.67%">
+					                                            <col width="26.15%">
+					                                            <col width="15.00%">
+					                                            <col width="8.56%">
+					                                            <col width="10.56%">
+					                                            <col width="24.17%">
+					                                        </colgroup>
+					                                        <tbody id="client"><tr>
+					                                                                        <td>王先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>江苏</td>
+					                                                                        <td>中户型、大户型、大户型</td>
+					                                                                        <td>89320102</td>
+					                                                                        <td>821321@163.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="18" clientname="王先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="18" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>张先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>杭州</td>
+					                                                                        <td>中户型</td>
+					                                                                        <td>82321991</td>
+					                                                                        <td>zhangsd@163.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="19" clientname="张先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="19" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>李女士</td>
+					                                                                        <td>女</td>
+					                                                                        <td>江西</td>
+					                                                                        <td>大户型</td>
+					                                                                        <td>67673456</td>
+					                                                                        <td>lylyly@qq.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="20" clientname="李女士" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="20" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>孙先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>南京</td>
+					                                                                        <td></td>
+					                                                                        <td>63523434</td>
+					                                                                        <td>sdasa@qq.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="21" clientname="孙先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="21" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>赵先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>上海</td>
+					                                                                        <td></td>
+					                                                                        <td>32432423</td>
+					                                                                        <td>23213@126.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="22" clientname="赵先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="22" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>钱先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>广州</td>
+					                                                                        <td></td>
+					                                                                        <td>67657734</td>
+					                                                                        <td>wd2321@qq.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="23" clientname="钱先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="23" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>姚先生</td>
+					                                                                        <td>男</td>
+					                                                                        <td>广西</td>
+					                                                                        <td></td>
+					                                                                        <td>43534543</td>
+					                                                                        <td>3423wdd@163.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="24" clientname="姚先生" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="24" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>蔡女士</td>
+					                                                                        <td>女</td>
+					                                                                        <td>北京</td>
+					                                                                        <td>想买房</td>
+					                                                                        <td>43436546</td>
+					                                                                        <td>28324@qq.com</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="25" clientname="蔡女士" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="25" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>刘女士</td>
+					                                                                        <td>女</td>
+					                                                                        <td>未知</td>
+					                                                                        <td>别墅、大户型</td>
+					                                                                        <td>3432432</td>
+					                                                                        <td>未知</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="30" clientname="刘女士" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="30" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>312</td>
+					                                                                        <td>男</td>
+					                                                                        <td>123</td>
+					                                                                        <td>大户型</td>
+					                                                                        <td>123</td>
+					                                                                        <td>123</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="33" clientname="312" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="33" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr><tr>
+					                                                                        <td>孙女士</td>
+					                                                                        <td>女</td>
+					                                                                        <td>未知</td>
+					                                                                        <td>想买房、大户型、中户型</td>
+					                                                                        <td>未知</td>
+					                                                                        <td>未知</td>
+					                                                                        <td>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientid="39" clientname="孙女士" name="" id="">聊天记录</button>
+					                                                                            <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientid="39" name="" id="">详细信息</button>
+					                                                                        </td>
+					                                                                    </tr></tbody>
+					                                    </table>
+					                                </div>
+					                            </td>
+					                        </tr>
+					                    </tbody>
+					                </table>
+					            <!-- </div> -->
+					        </div>
+					    </div>
+					</div>
+				</div>
 				<div class="full" style="display: none">
-					<div class="layui-tab layui-tab-card" lay-filter="demo">
-						<ul class="layui-tab-title">
-							<li class="layui-this">网站设置</li>
-							<li>用户管理</li>
-							<li>权限分配</li>
-							<li>商品管理</li>
-							<li>订单管理</li>
-						</ul>
-						<div class="layui-tab-content" style="height: 100px;">
-							<div class="layui-tab-item layui-show">1</div>
-							<div class="layui-tab-item">2</div>
-							<div class="layui-tab-item">3</div>
-							<div class="layui-tab-item">4</div>
-							<div class="layui-tab-item">5</div>
-							<div class="layui-tab-item">6</div>
-							<div class="layui-tab-item">7</div>
-						</div>
+					<div style="position: absolute;left: 20px;right: 20px;top: 10px;bottom: 20px;">
+						<fieldset class="layui-elem-field">
+						  <legend>基本设置</legend>
+						  <div class="layui-field-box">
+						    <form class="layui-form" action="">
+								<div class="layui-form-item">
+								  <label class="layui-form-label">对外昵称</label>
+								  <div class="layui-input-block">
+								    <input type="text" name="title" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input" value="小张">
+								  </div>
+								</div>
+								<div class="layui-form-item">
+								  <label class="layui-form-label">自动接入</label>
+								  <div class="layui-input-block">
+								    <input type="checkbox" name="zdjr" lay-skin="switch" lay-text="开启|关闭">
+								  </div>
+								</div>
+								<div class="layui-form-item">
+								  <label class="layui-form-label">最大会话数</label>
+								  <div class="layui-input-block" style="width: 200px">
+								    <select name="largest-conversation-num" lay-verify="">
+								      <option value="">5</option>
+								      <option value="5">5</option>
+								      <option value="10">10</option>
+								      <option value="15">15</option>
+								      <option value="20">20</option>
+								      <option value="20">30</option>
+								      <option value="99">不限</option>
+								    </select>    
+								  </div>
+								</div>
+								<div class="layui-form-item">
+								  <label class="layui-form-label">自动问候</label>
+								  <div class="layui-input-block">
+								    <div style="float: left;">
+								    	<input type="checkbox" name="zdwh" lay-skin="switch" lay-text="开启|关闭" checked>
+								    </div>
+								    <div style="float: left;padding-top: 10px;padding-left: 1em;color: grey;">（当有新会话接入时自动发送问候文本）</div>
+								  </div>
+								</div>
+								<div class="layui-form-item">
+								  <label class="layui-form-label">问候文本</label>
+								  <div class="layui-input-block">
+								    <input type="text" name="title" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input" value="欢迎光临">
+								  </div>
+								</div>
+						    </form>
+						  </div>
+						</fieldset>
+						<button class="layui-btn" style="width: 100px;">保存</button>
+						<button class="layui-btn layui-btn-primary" style="width: 100px;">重置</button>
 					</div>
 				</div>
 
@@ -664,5 +1343,29 @@
 	$(window).resize(function(){
 		chart24h.resize();
 		chartWeek.resize();
+	});
+
+
+
+
+	var $container;
+	function waterfall()
+	{
+	    $container = $('#masonry');
+	    $container.imagesLoaded(function()
+	        {
+	            $container.masonry(
+	                {
+	                    itemSelector: '.col-lg-3',
+	                    gutter: 0,
+	                    isAnimated: true,
+	                }
+	            );
+	        }
+	    );
+	}
+	waterfall();
+	$('#navtab-knowledge').click(function(){
+		$container.masonry();
 	});
 </script>

@@ -708,11 +708,11 @@ $(document).on("click", "#addCustomerServiceBtn", function()
                                 {
                                     url: ip + "addServerPerson" + ends,
                                     dataType: 'json',
-                                    data: "personList=" + personList,
+                                    data: "personList=" + JSON.stringify(personList),
                                     type: 'post',
                                     success: function(data)
                                     {
-                                        layer.msg(data.message);
+                                        flash();
                                     }
                                 }
                             )
@@ -758,9 +758,9 @@ $(document).on("click", "#deleteCustomerServiceBtn", function()
                         $.ajax(
                             {
                                 type: 'post',
-                                url: ip + "deteleServerPerson" + ends,
+                                url: ip + "deleteServerPerson" + ends,
                                 dataType: 'json',
-                                data: "deteleGroup=" + customerServiceDetele,
+                                data: "deleteGroup=" + JSON.stringify(customerServiceDetele),
                                 success: function(data)
                                 {
                                     layer.msg(data.message);
@@ -1525,7 +1525,6 @@ function addKnowledgeBaseDiv([searType, parameter])
                                         tagsDiv += addKeyWordDiv(keyWordsArray[i].value);
                                     }
                                 }
-                                appendKeyWord();
 
                                 $("#masonry").append(`
                                     <div class="col-lg-3">
@@ -1780,12 +1779,13 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                             console.log({
                                 'question': ques,
                                 'ans': ans,
-                                'tag': newKeyWords?newKeyWords.join(" "):null,
+                                //'tag': newKeyWords?newKeyWords.join(" "):null,
                                 'level': level
                             });
 
                             $.ajax(
                                 {
+                                    async: 'false',
                                     url: ip + "addKnowledge" + ends,
                                     type: 'post',
                                     // data: "question=" + ques + "&ans=" + ans + "&tag="+ newKeyWords.join(" ") + "&level=" + level,
@@ -1793,14 +1793,30 @@ $(document).on("click", "#addKnowledgeBaseBtn", function()
                                     {
                                         'question': ques,
                                         'ans': ans,
-                                        'tag': newKeyWords.join(" "),
+                                        'tag': null,
                                         'level': level
                                     },
                                     dataType: 'json',
                                     success: function(data)
                                     {
-                                        layer.msg(data.message);
-                                        flash();
+                                        console.log(data);
+                                        data = data.data;
+                                        var knowledgeId = data[0].knowledgeId;
+                                        for(let i = 0; i < newKeyWords.length; i++)
+                                        {
+                                            $.ajax({
+                                                async: 'false',
+                                                url: ip + "addKnowledgeTag" + ends,
+                                                type: 'post',
+                                                data: "tagName=" + newKeyWords[i] + "&knowledgeId=" + knowledgeId,
+                                                dataType: 'json',
+                                                success: function(data)
+                                                {
+
+                                                }
+                                            });
+                                        }
+                                        //flash();
                                     }
                                 }
                             )
@@ -2270,7 +2286,6 @@ function addAdvertisement([searchType, parameter])
                             <td>2017-07-31</td>
                             <td>
                                 <button type="button" class="layui-btn layui-btn-small layui-btn-normal putList" advId="${advertisement.advId}" name="" id="">推送名单</button>
-                                <button type="button" class="layui-btn layui-btn-small layui-btn-warm" advId="${advertisement.advId}" name="" id="">详细信息</button>
                             </td>
                         </tr>`);
                     }
