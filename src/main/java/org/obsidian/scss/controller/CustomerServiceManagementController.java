@@ -58,7 +58,7 @@ public class CustomerServiceManagementController {
     @ResponseBody
     public  Show person(){
         Show show = new Show();
-        show.setData(customerServiceService.selectAllCustomerService());
+        show.setData(customerServiceService.selectNotDimissionPerson());
         return show;
     }
     
