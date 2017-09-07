@@ -127,18 +127,24 @@ public class KeyWordAndKnowledgeManagementController {
                              @RequestParam("tag") String tag,
                              @RequestParam("level") int level){
         List<String> keyList = new ArrayList<String>();
-//        String [] arr = tag.split("\\s+");
-//        for(String ss : arr){
-//            System.out.println("!!!!!"+ss);
-//            keyList.add(ss);
-//        }
+        String [] arr = tag.split("\\s+");
+        for(String ss : arr){
+            System.out.println("!!!!!"+ss);
+            keyList.add(ss);
+        }
         int res = knowledgeService.addKnowledgeAndKey(ques,ans,level,1,0,keyList);
         Show show = new Show();
         if(res ==0){
             show.setStatus(0);
             show.setMessage("插入失败!");
         }else{
-            show.setData(knowledgeService.getKnowledgeByContent(ques));
+            Knowledge knowledge = knowledgeService.selectByContent(ques);
+            List<org.obsidian.scss.entity.Keyword> keywords = new ArrayList<org.obsidian.scss.entity.Keyword>();
+            for (int i=0;i<keyList.size();i++){
+                keywords.add(keywordService.selectByValue(keyList.get(i)));
+            }
+            knowledge.setKeywordList(keywords);
+            show.setData(knowledge);
         }
         return show;
     }
@@ -156,6 +162,8 @@ public class KeyWordAndKnowledgeManagementController {
         }
         return show;
     }
+    
+    
     
     @RequestMapping("deleteKnowledge")
     @ResponseBody
