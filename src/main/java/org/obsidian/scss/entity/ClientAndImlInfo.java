@@ -21,6 +21,8 @@ public class ClientAndImlInfo {
     private int accessId;
     
     private String accessName; 
+    
+    private String account;
 
     public Integer getClientId() {
         return clientId;
@@ -84,5 +86,13 @@ public class ClientAndImlInfo {
 
     public void setAccessName(String accessName) {
         this.accessName = accessName;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }
