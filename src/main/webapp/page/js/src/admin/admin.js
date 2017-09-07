@@ -1569,7 +1569,7 @@ function addKeyWordDiv(value, flag)
 {
     //  ${!flag?'keywordId="${tmp.keywordId}"':''}
     var div = `
-    <div class="tag">
+    <div class="tag" tagName="${value}">
         ${value}
         ${flag?'<i class="layui-icon tag-close-local">&#x1006;</i>':''}
     </div>`;
@@ -1589,38 +1589,6 @@ function appendKeyWord()
 
 $(document).on("click", ".editKnowledge", function()
     {
-        $(document).on("click", "#addTag", function()
-            {
-                console.log(newKeyWords);
-                var keyWordsDiv = $("#keyWords");
-                var newKeyWord = $("#keyWordInput").val();
-                if(newKeyWord != "" && keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0) == undefined)
-                {
-                    keyWordsDiv.append(`
-                <div class="tag">
-                    ${newKeyWord}
-                    <i class="layui-icon tag-close-local">&#x1006;</i>
-                </div>`);
-                    newKeyWords.push(newKeyWord);
-                    $("#keyWordInput").val("");
-                }
-            }
-        );
-
-        $(document).on("click", ".tag .tag-close-local", function()
-            {
-                var thisTag = $(this).parents(".tag");
-                for(let i = 0; i < newKeyWords.length; i++)
-                {
-                    if(thisTag.text().includes(newKeyWords[i]))
-                    {
-                        newKeyWords.splice(i, 1);
-                    }
-                }
-                thisTag.remove();
-            }
-        );
-
         var parentDiv = $(this).parents(".panel-body");
         var quesOld = parentDiv.find("div[ques]").attr("ques");
         var ansOld = parentDiv.find("div[ans]").attr("ans");
@@ -1653,13 +1621,13 @@ $(document).on("click", ".editKnowledge", function()
                             $.ajax(
                                 {
                                     url: ip + "updateKnowledge" + ends,
-                                    type: 'get',
-                                    data: JSON.stringify(
+                                    type: 'post',
+                                    data: "knowledge=" + JSON.stringify(
                                             {
                                                 "knowledgeId": knowledgeId,
                                                 "question": ques,
-                                                "ans": ans,
-                                                "tag": newKeyWords.join(" "),
+                                                "answer": ans,
+                                                // "tag": newKeyWords.join(" "),
                                                 "level": levelOld,
                                             }
                                         ),
@@ -1696,6 +1664,64 @@ $(document).on("click", ".editKnowledge", function()
                         levelOld = data.value;
                     }
                 )
+            }
+        );
+
+        $(document).on("click", "#addTag", function()
+            {
+                var keyWordsDiv = $("#keyWords");
+                var newKeyWord = $("#keyWordInput").val();
+                console.log(keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0));
+                if(newKeyWord != "" && keyWordsDiv.find(".tag:contains(" + newKeyWord + ")").get(0) == undefined)
+                {
+                    console.log("123");
+                    $.ajax({
+                        url: ip + "addKnowledgeTag" + ends,
+                        type: 'get',
+                        data:{
+                            'tagName': newKeyWord,
+                            'knowledgeId': knowledgeId,
+                        },
+                        dataType: 'json',
+                        success:function(data)
+                        {
+                            console.log(data);
+                            if(data.status >= 1)
+                            {
+                                keyWordsDiv.append(`
+                                <div class="tag" tagName="${newKeyWord}">
+                                    ${newKeyWord}
+                                    <i class="layui-icon tag-close-local">&#x1006;</i>
+                                </div>`);
+                                $("#keyWordInput").val("");
+                            }
+                        }
+                    });
+                }
+            }
+        );
+
+        $(document).on("click", ".tag .tag-close-local", function()
+            {
+                var thisTag = $(this).parents(".tag");
+                var tagName = thisTag.attr("tagName");
+                $.ajax({
+                    url: ip + "deleteKnowledgeTag" + ends,
+                    type: 'get',
+                    data:{
+                        'tagName': tagName,
+                        'knowledgeId': knowledgeId,
+                    },
+                    dataType: 'json',
+                    success: function(data)
+                    {
+                        console.log(data);
+                        if(data.status >= 1)
+                        {
+                            thisTag.remove();
+                        }
+                    }
+                });
             }
         );
     }
@@ -2153,7 +2179,7 @@ function addClientTr(parameter)
                         tmp = tmp.client;
                         if(tmp.sex != null)
                         {
-                            tmp.sex = tmp.sex==1?"男":"女";
+                            tmp.sex = tmp.sex==0?"未知":(tmp.sex==1?"男":"女");
                         }
                         else
                         {
@@ -2302,7 +2328,7 @@ function addAdvertisement([searchType, parameter])
                             <td>2017-07-01</td>
                             <td>2017-07-31</td>
                             <td>
-                                <button type="button" class="layui-btn layui-btn-small layui-btn-normal putList" advId="${advertisement.advId}" name="" id="">推送名单</button>
+                                <button type="button" class="layui-btn layui-btn-small layui-btn-normal pushList" advId="${advertisement.advId}" name="" id="">推送名单</button>
                             </td>
                         </tr>`);
                     }
@@ -2375,22 +2401,54 @@ function addAdvertisement([searchType, parameter])
 $(document).on("click", ".pushList", function()
     {
         var advId = $(this).attr("advId");
-        $.ajax(
-            {
-                url: ip + "advertiseClient" + ends,
-                type: 'get',
-                data: "advId=" + advId,
-                dataType: 'json',
-                success: function(data)
-                {
-                    if(data && data.status >= 1)
-                    {
-                        data = data.data;
+        layui.use(['layer'], function()
+        {
+            var layer = layui.layer;
 
+            $.ajax(
+                {
+                    url: ip + "advertiseClient" + ends,
+                    type: 'get',
+                    data: "advId=" + advId,
+                    dataType: 'json',
+                    success: function(data)
+                    {
+                        if(data && data.status >= 1)
+                        {
+                            data = data.data;
+                            layer.open({
+                                title: "推送名单",
+                                content: $("#pushListContent").html(),
+                                area: ['1660px', '600px'],
+                            });
+
+                            $("#pushList").html("");
+                            for(let i = 0; i < data.length; i++)
+                            {
+                                var tmp = data[i];
+
+                                if(tmp.sex != null)
+                                {
+                                    tmp.sex = tmp.sex==0?"未知":(tmp.sex==1?"男":"女");
+                                }
+                                else
+                                {
+                                    tmp.sex = "未知";
+                                }
+
+                                $("#pushList").append(`<tr>
+                                    <td>${tmp.name?tmp.name:"未知"}</td>
+                                    <td>${tmp.sex}</td>
+                                    <td>${tmp.address?tmp.address:"未知"}</td>
+                                    <td>${tmp.telephone?tmp.telephone:"未知"}</td>
+                                    <td>${tmp.email?tmp.email:"未知"}</td>
+                                </tr>`);
+                            }
+                        }
                     }
                 }
-            }
-        )
+            )
+        })
     }
 )
 
