@@ -15,6 +15,9 @@
 <body>
     <div class="layui-layout layui-layout-admin" id="main">
         <div class="layui-header">
+            <div class="layui-logo">
+                <img src="img/logo.png" style="width: 50px;" />
+            </div>
             <div class="admin-header">
                 <ul class="layui-nav" lay-filter="user">
                     <li class="layui-nav-item">
@@ -949,6 +952,42 @@
                 </div>
             </div>
         </div>
+    </template>
+    <template id="clientInfoMoreContent">
+        <table class="layui-table" lay-even lay-skin="nob">
+            <colgroup>
+                <col width="100">
+                <col>
+            </colgroup>
+            <tbody id="clientInfoMore">
+            </tbody>
+        </table>
+    </template>
+    <template id="clientInfoMoreTpl">
+        <tr>
+            <td>名字</td>
+            <td>{{ d.name }}</td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td>{{ d.sex }}</td>
+        </tr>
+        <tr>
+            <td>地址</td>
+            <td>{{ d.address }}</td>
+        </tr>
+        <tr>
+            <td>电话</td>
+            <td>{{ d.telephone }}</td>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>{{ d.email }}</td>
+        </tr>
+        <tr>
+            <td>接入方式</td>
+            <td>{{ d.accessName }}</td>
+        </tr>
     </template>
     <template id="advertisementContent">
         <div class="col-lg-12">

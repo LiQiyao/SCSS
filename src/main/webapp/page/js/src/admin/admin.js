@@ -2195,7 +2195,7 @@ function addClientTr(parameter)
                                 <td>${tmp.email?tmp.email:"未知"}</td>
                                 <td>
                                     <button type="button" class="layui-btn layui-btn-small layui-btn-normal clientChatLog" clientId="${tmp.clientId}" clientName="${tmp.name}" name="" id="">聊天记录</button>
-                                    <button type="button" class="layui-btn layui-btn-small layui-btn-warm" clientId="${tmp.clientId}" name="" id="">详细信息</button>
+                                    <button type="button" class="layui-btn layui-btn-small layui-btn-warm clientInfoMore" clientId="${tmp.clientId}" name="" id="">详细信息</button>
                                 </td>
                             </tr>`);
                     }
@@ -2210,7 +2210,7 @@ $(document).on("click", "#searchClientBtn", function()
         var searchName = $(this).prev().children("input").val();
         addClientTr("searchName=" + searchName);
     }
-)
+);
 
 $(document).on("click", ".clientChatLog", function()
     {
@@ -2273,7 +2273,44 @@ $(document).on("click", ".clientChatLog", function()
             }
         )
     }
-)
+);
+
+$(document).on('click', ".clientInfoMore", function()
+{
+    var clientId = $(this).attr('clientId');
+    layui.use(['layer', 'form', 'laytpl'], function()
+    {
+        var layer = layui.layer;
+        var laytpl = layui.laytpl;
+        var form = layui.form();
+
+        $.ajax({
+            url: ip + "clientInfoMore" + ends,
+            type: 'get',
+            data: "clientId=" + clientId,
+            dataType: 'json',
+            success: function(data)
+            {
+                if(data && data.status >= 1)
+                {
+                    data = data.data[0];
+                    data.sex = data.sex==0?"未知":(data.sex==1?"男":"女");
+                    console.log(data);
+                    layer.open({
+                        title: '详细信息',
+                        content: $("#clientInfoMoreContent").html(),
+                        area: ['400px', '400px'],
+                    });
+
+                    laytpl($("#clientInfoMoreTpl").html()).render(data, function(html)
+                    {
+                        $("#clientInfoMore").html(html);
+                    })
+                }
+            }
+        });
+    })
+})
 
 var advertisementDetele = [];
 var advertisement =
