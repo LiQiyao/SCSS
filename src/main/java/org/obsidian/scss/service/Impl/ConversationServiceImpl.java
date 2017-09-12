@@ -1,7 +1,6 @@
 package org.obsidian.scss.service.Impl;
 
 import org.obsidian.scss.bean.AvgScoreList;
-import org.obsidian.scss.bean.ConversationEndReq;
 import org.obsidian.scss.bean.ScoreAndNum;
 import org.obsidian.scss.dao.ConversationMapper;
 import org.obsidian.scss.dao.CustomerServiceMapper;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -108,6 +106,11 @@ public class ConversationServiceImpl implements ConversationService {
         return 0;
     }
 
+
+    @Transactional
+    public int selectClientIdByConversationId(int conversationId) {
+        return conversationMapper.selectClientIdByConversationId(conversationId);
+    }
 
     public int getAvgScoreRankByServiceId(int serviceId){
         List<AvgScoreList> list = conversationMapper.selectAllAvgScore();

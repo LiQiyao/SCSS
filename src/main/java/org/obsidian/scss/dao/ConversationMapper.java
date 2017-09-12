@@ -8,6 +8,8 @@ import org.obsidian.scss.entity.*;
 import java.util.List;
 
 public interface ConversationMapper {
+    int selectClientIdByConversationId(int conversationId);
+
     List<AvgScoreList> selectAllAvgScore();
 
     int updateClientId(@Param("conversationId")int conversationId,@Param("clientId")int clientId);

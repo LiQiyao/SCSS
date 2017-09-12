@@ -47,16 +47,36 @@ public class ChangeClientConversationRelationshipResolver implements ContentReso
         ChangeClientConversationRelationship changeClientConversationRelationship = message.getContent();
         int conversationId = changeClientConversationRelationship.getConversationId();
         int clientId = changeClientConversationRelationship.getClientId();
-        conversationService.updateClientId(conversationId,clientId);
+        int nowClientId = conversationService.selectClientIdByConversationId(conversationId);
+        System.out.println(conversationId + " " + clientId + " " + nowClientId);
         Client client = clientService.selectClientByClientId(clientId);
+        Client nowClient = clientService.selectClientByClientId(nowClientId);
+
         String clientName = client.getName();
         int sex = client.getSex();
         Long phoneNum = client.getTelephone();
         String email = client.getEmail();
         String address = client.getAddress();
+        if(nowClient.getName() != null && !nowClient.getName().equals(clientName)){
+            clientName = nowClient.getName();
+        }
+        if(!nowClient.getSex().equals(sex)){
+            sex = nowClient.getSex();
+        }
+        if(nowClient.getTelephone() != null && !nowClient.getTelephone().equals(phoneNum)){
+            phoneNum = nowClient.getTelephone();
+        }
+        if(nowClient.getEmail() != null && !nowClient.getEmail().equals(email)){
+            email = nowClient.getEmail();
+        }
+        if(nowClient.getAddress() != null && !nowClient.getAddress().equals(address)){
+            address = nowClient.getAddress();
+        }
+        clientService.updateClient(nowClientId,clientName,address,email,phoneNum,sex);
         String wx = "";
         String qq = "";
         String weibo = "";
+        System.out.println(client.toString());
         List<JoinUp> joinUpList = joinUpService.getByClientId(clientId);
         for(int i=0;i<joinUpList.size();i++){
             if(joinUpList.get(i).getAccess().getName().equals("微信")){
@@ -83,7 +103,7 @@ public class ChangeClientConversationRelationshipResolver implements ContentReso
                 unusedTagList.add(unusedFlagList.get(i).getName());
             }
         }
-        ClientDetailResp2 clientDetailResp2 = new ClientDetailResp2(clientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList,conversationId);
+        ClientDetailResp2 clientDetailResp2 = new ClientDetailResp2(nowClientId,clientName,sex,phoneNum,email,wx,qq,weibo,address,tagList,unusedTagList,conversationId);
         Message<ClientDetailResp> res = new Message<ClientDetailResp>(clientDetailResp2);
         try{
             session.getBasicRemote().sendText(gson.toJson(res));
